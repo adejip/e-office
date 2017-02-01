@@ -68,7 +68,7 @@ class Surat_model extends CI_model{
         $daftar_pesan = $this->db->select("pesan.subjek,pesan.isi_pesan,pesan.waktu_kirim,relasi_pesan.id_pesan")->from("pesan")->join("relasi_pesan","pesan.id_pesan = relasi_pesan.id_pesan")->where("dari_user",$id_user)->group_by("id_pesan")->order_by("waktu_kirim","desc")->get()->result();
         foreach($daftar_pesan as $key=>$pesan) {
             $id = $pesan->id_pesan;
-            $this->db->select("pengguna.nama_lengkap");
+            $this->db->select("relasi_pesan.dibaca,pengguna.nama_lengkap");
             $this->db->from("relasi_pesan");
             $this->db->join("pengguna","relasi_pesan.ke_user = pengguna.id_pengguna","left");
             $this->db->where("relasi_pesan.id_pesan",$id);
@@ -81,7 +81,7 @@ class Surat_model extends CI_model{
         $id_user = $this->session->userdata("id_pengguna");
         $pesan = $this->db->select("pesan.subjek,pesan.isi_pesan,pesan.waktu_kirim,pesan.lampiran,relasi_pesan.id_pesan")->from("pesan")->join("relasi_pesan","pesan.id_pesan = relasi_pesan.id_pesan")->where("relasi_pesan.dari_user",$id_user)->where("pesan.id_pesan",$id_pesan)->group_by("id_pesan")->order_by("waktu_kirim","desc")->get()->row();
 
-        $this->db->select("pengguna.nama_lengkap");
+        $this->db->select("relasi_pesan.dibaca,pengguna.nama_lengkap");
         $this->db->from("relasi_pesan");
         $this->db->join("pengguna","relasi_pesan.ke_user = pengguna.id_pengguna","left");
         $this->db->where("relasi_pesan.id_pesan",$id_pesan);

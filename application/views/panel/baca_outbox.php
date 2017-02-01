@@ -18,11 +18,13 @@
                 </div>
                 <div class="panel-body">
                     <p>Penerima</p>
-                    <ul class="list-group">
-                        <?php foreach($pesan->dikirim as $penerima): ?>
-                        <li class="list-group-item"><?php echo $penerima->nama_lengkap; ?></li>
-                        <?php endforeach;?>
-                    </ul>
+                    <?php foreach($pesan->dikirim as $key=>$penerima):?>
+                        <?php if($penerima->dibaca == 1): ?>
+                        <b style='background-color: rgba(52, 152, 219, 0.76); color: white;'><?php echo $key+1 . ". " . $penerima->nama_lengkap; ?> <i class="fa fa-eye fa-lg fa-fw"></i></b><br />
+                        <?php else:?>
+                            <b><?php echo $key+1 . ". " . $penerima->nama_lengkap; ?></b><br />
+                        <?php endif;?>
+                    <?php endforeach;?><hr />
                     <?php echo $pesan->isi_pesan; ?>
                 </div>
                 <div class="panel-footer">
