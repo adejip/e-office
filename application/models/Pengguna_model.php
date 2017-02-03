@@ -29,7 +29,7 @@ class Pengguna_model extends CI_Model {
     }
 
     public function ambil_semua() {
-        $this->db->select("pengguna.id_pengguna,pengguna.nama_lengkap,pengguna.blokir,pengguna.disposisi,jabatan.nama_jabatan,dinas.nama_dinas");
+        $this->db->select("pengguna.id_pengguna,pengguna.nama_lengkap,pengguna.blokir,pengguna.nip,pengguna.disposisi,jabatan.nama_jabatan,dinas.nama_dinas");
         $this->db->from("pengguna");
         $this->db->join("jabatan","pengguna.id_jabatan = jabatan.id_jabatan","left");
         $this->db->join("dinas","pengguna.id_dinas = dinas.id_dinas");

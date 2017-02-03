@@ -35,6 +35,10 @@
                             <input type="text" name="username" class="form-control" value="<?php echo $pengguna->username ?>" required/>
                         </div>
                         <div class="form-group">
+                            <label for="">Nomor Induk Pegawai</label>
+                            <input type="number" name="nip" class="form-control" value="<?php echo $pengguna->nip ?>" required/>
+                        </div>
+                        <div class="form-group">
                             <label for="">Jabatan</label>
                             <select name="id_jabatan" id="jabatan" class="form-control" required>
                                 <option value=""></option>

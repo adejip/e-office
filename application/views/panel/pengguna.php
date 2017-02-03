@@ -28,6 +28,7 @@
                         <th data-field="nama_lengkap"  data-sortable="true">Nama Lengkap</th>
                         <th data-field="jabatan"  data-sortable="true">Jabatan</th>
                         <th data-field="dinas" data-sortable="true">Dinas</th>
+                        <th data-field="nip" data-sortable="true">NIP</th>
                         <th data-field="disposisi" data-sortable="true">Hak Disposisi</th>
                         <th>Pilihan</th>
                     </tr>
@@ -38,6 +39,7 @@
                             <td><?php echo $pengguna->nama_lengkap; ?></td>
                             <td><?php echo $pengguna->nama_jabatan; ?></td>
                             <td><?php echo $pengguna->nama_dinas; ?></td>
+                            <td><?php echo $pengguna->nip; ?></td>
                             <td><?php echo ($pengguna->disposisi == 1) ? "<b>Y</b>" : "<b>N</b>"; ?></td>
                             <td>
                                 <a href="<?php echo base_url("panel/editpengguna/".$pengguna->id_pengguna); ?>" class="btn btn-primary">Edit</a>
