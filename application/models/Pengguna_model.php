@@ -51,8 +51,9 @@ class Pengguna_model extends CI_Model {
         } else return false;
     }
 
-    public function ambil_berdasarkan_id($id) {
-        $data = $this->db->where("id_pengguna",$id)->get("pengguna")->row();
+    public function ambil_berdasarkan_id($id)
+    {
+        $data = $this->db->where("id_pengguna", $id)->get("pengguna")->row();
         return $data;
     }
 
