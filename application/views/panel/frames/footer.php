@@ -1,18 +1,15 @@
 
 <script src="<?php echo base_url("assets/js/bootstrap.min.js");?>"></script>
 <script src="<?php echo base_url("assets/js/chart.min.js");?>"></script>
-<script src="<?php echo base_url("assets/js/chart-data.js");?>"></script>
+<!--<script src="--><?php //echo base_url("assets/js/chart-data.js");?><!--"></script>-->
 <script src="<?php echo base_url("assets/js/easypiechart.js");?>"></script>
-<script src="<?php echo base_url("assets/js/easypiechart-data.js");?>"></script>
+<!--<script src="--><?php //echo base_url("assets/js/easypiechart-data.js");?><!--"></script>-->
 <script src="<?php echo base_url("assets/js/bootstrap-datepicker.js");?>"></script>
 <script src="<?php echo base_url("assets/js/bootstrap-table.js");?>"></script>
 
 <!-- Include JS file. -->
 <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.4.0/js/froala_editor.min.js'></script>
 <script>
-    $('#calendar').datepicker({
-    });
-
     !function ($) {
         $(document).on("click","ul.nav li.parent > a > span.icon", function(){
             $(this).find('em:first').toggleClass("glyphicon-minus");

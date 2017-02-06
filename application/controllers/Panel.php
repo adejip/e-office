@@ -19,6 +19,7 @@ class Panel extends CI_Controller {
         $this->load->model("Jabatan_model","jabatan");
         $this->load->model("Dinas_model","dinas");
         $this->load->model("Disposisi_model","disposisi");
+        $this->load->model("Pemberitahuan_model","pemberitahuan");
     }
 
     public function index() {

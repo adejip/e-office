@@ -754,7 +754,7 @@ h1.page-header {
 	color: #5f6468;
 }
 
-#checkbox {
+.checkbox input[type='checkbox'] {
 	margin: 0;
 }
 
