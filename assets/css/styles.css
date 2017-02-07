@@ -783,6 +783,12 @@ h1.page-header {
 	color: #ef4040;
 }
 
+#form_pengaturan input {
+	display: block !important;
+}
+#form_pengaturan {
+	text-align: left;
+}
 
 /*Chat Widget*/
 

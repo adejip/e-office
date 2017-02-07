@@ -70,6 +70,34 @@ class Pengguna_model extends CI_Model {
         } else return false;
     }
 
+    public function edit_profil_pribadi() {
+        $data = $this->input->post();
+        if($data["username"] != "" && $data["cpassword"] != "") {
+            if(md5($data["cpassword"]) == $this->session->userdata("password")) {
+                // TO-DO : Update data user
+
+                $this->db->where("id_pengguna",$this->session->userdata("id_pengguna"));
+                unset($data["cpassword"]);
+
+
+                if($data["password"] == ""){
+                    unset($data["password"]);
+                } else {
+                    $data["password"] = md5($data["password"]);
+                    $this->session->set_userdata("password",$data["password"]);
+                }
+
+                $this->session->set_userdata("username",$data["username"]);
+                return $this->db->update("pengguna",$data);
+
+            } else {
+                return 2;
+            }
+        } else {
+            return 1;
+        }
+    }
+
     public function blokir($id) {
         $this->db->where("id_pengguna",$id)->update("pengguna",array("blokir"=>1));
     }

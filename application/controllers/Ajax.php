@@ -17,6 +17,7 @@ class Ajax extends CI_Controller {
         $this->load->helper("pengalih");
         proteksi_login($this->session->userdata());
         $this->load->model("Agenda_model","agenda");
+        $this->load->model("Pengguna_model","pengguna");
     }
 
     public function tambah_agenda() {
@@ -48,6 +49,17 @@ class Ajax extends CI_Controller {
     public  function edit_agenda() {
         $post = $this->input->post();
         $this->agenda->edit($post);
+    }
+
+    public function ambil_data_pengguna() {
+        header("Content-Type: application/json;charset=utf-8");
+        echo json_encode($this->session->userdata());
+    }
+
+    public function edit_data_pengguna() {
+        $code = $this->pengguna->edit_profil_pribadi();
+        header("Content-Type: application/json;charset=utf-8");
+        echo json_encode(array("statusCode" => $code));
     }
 
 }
