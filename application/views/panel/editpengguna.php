@@ -36,7 +36,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">Nomor Induk Pegawai</label>
-                            <input type="number" name="nip" class="form-control" value="<?php echo $pengguna->nip ?>" required/>
+                            <input type="text" name="nip" class="form-control" value="<?php echo $pengguna->nip ?>" required/>
                         </div>
                         <div class="form-group">
                             <label for="">Jabatan</label>

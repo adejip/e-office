@@ -143,7 +143,6 @@
 
 <script>
 
-    BASE_URL = "http://localhost/disposisi";
 
     function edit(str,id) {
 
