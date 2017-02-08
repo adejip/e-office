@@ -48,6 +48,10 @@ $unread2 = $this->db->where("dibaca",0)->where("ke_user",$this->session->userdat
     <script src="<?php echo base_url("assets/js/jquery.magnific-popup.min.js"); ?>"></script>
     <script src="<?php echo base_url("assets/js/jQuery.print.js"); ?>"></script>
 
+    <script>
+        BASE_URL = "http://localhost/disposisi";
+    </script>
+
 </head>
 
 <body>
