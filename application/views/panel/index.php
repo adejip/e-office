@@ -143,11 +143,6 @@
 
 <script>
 
-<<<<<<< HEAD
-    BASE_URL = "http://eoffice.manadokota.go.id";
-=======
->>>>>>> 8c2dd2d6edbc59c433f42d6e9efd398dfdaff7b6
-
     function edit(str,id) {
 
         swal({

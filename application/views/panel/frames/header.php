@@ -48,8 +48,12 @@ $unread2 = $this->db->where("dibaca",0)->where("ke_user",$this->session->userdat
     <script src="<?php echo base_url("assets/js/jquery.magnific-popup.min.js"); ?>"></script>
     <script src="<?php echo base_url("assets/js/jQuery.print.js"); ?>"></script>
 
+    <!-- Include JS file. -->
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.4.0/js/froala_editor.min.js'></script>
+
     <script>
-        BASE_URL = "http://localhost/disposisi";
+        BASE_URL = "http://eoffice.manadokota.go.id";
+	    $.FroalaEditor.DEFAULTS.key = "bvA-21sD-16A-13ojmweC8ahD6f1n==";
     </script>
 
 </head>

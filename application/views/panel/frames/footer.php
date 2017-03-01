@@ -7,8 +7,6 @@
 <script src="<?php echo base_url("assets/js/bootstrap-datepicker.js");?>"></script>
 <script src="<?php echo base_url("assets/js/bootstrap-table.js");?>"></script>
 
-<!-- Include JS file. -->
-<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.4.0/js/froala_editor.min.js'></script>
 <script>
 
     $("#calendar").datepicker({});
