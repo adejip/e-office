@@ -41,7 +41,33 @@
                             </select>
                         </div>
                         <div class="col-md-12">
-
+                            <input type="checkbox" id="external" name="external">
+                            <label for="external" style="text-decoration: none;">&raquo;&nbsp;Surat Eksternal (Centang bila benar)</label>
+                            <div class="panel panel-blue" id="external_wrap">
+                                <div class="panel-body">
+                                    <div class="col-md-6">
+                                        <p>Surat dari : </p>
+                                        <input type="text" name="surat_dari" class="form-control" disabled required/><br />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>Tanggal Surat : </p>
+                                        <input type="text" name="tanggal_surat" class="form-control tanggal" disabled required/><br />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>Tanggal Terima : </p>
+                                        <input type="text" name="tanggal_terima" class="form-control tanggal" disabled required/><br />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>Nomor Surat : </p>
+                                        <input type="text" name="nomor_surat" class="form-control" disabled required/><br />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>Nomor Agenda : </p>
+                                        <input type="text" name="nomor_agenda" class="form-control" disabled required/><br />
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
                             <textarea name="isi_pesan" id="msg" required></textarea><br />
                             <p>Lampiran</p>
                             <input type="file" multiple id="attach" name="attach[]" class="form-control"><br />
@@ -57,10 +83,25 @@
 
 <script>
     $(document).ready(function(){
+        $("#external_wrap").hide();
         $("#msg").froalaEditor({
             height: 300
         });
         $("#penerima").select2();
         $("#attach").fileinput({'showUpload':false, 'previewFileType':'any'});
+
+        $("#external").on("change",function(){
+            if(this.checked){
+                $("#external_wrap").slideDown();
+                $("#external_wrap input").val("").prop("disabled",false);
+            } else {
+                $("#external_wrap").slideUp();
+                $("#external_wrap input").val("").prop("disabled",true);
+            }
+        });
+
+        $(".tanggal").datepicker({
+            format: "yyyy-mm-dd"
+        });
     })
 </script>

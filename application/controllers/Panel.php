@@ -41,6 +41,7 @@ class Panel extends CI_Controller {
                 }
                 $post["lampiran"] = json_encode($gambar);
             }
+            $post["external"] = isset($post["external"]) ? 1 : 0;
             $kirim = $this->surat->kirim($post);
             if($kirim)
                 redirect(base_url("panel/compose/?succ"));

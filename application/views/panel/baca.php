@@ -23,10 +23,19 @@
                     </div>
                 <?php endif; ?>
                 <div class="panel-heading">
-                    Subjek : <?php echo $pesan->subjek; ?>
+                    <?php echo $pesan->subjek; ?>
                 </div>
                 <div class="panel-body">
-                    <i>Oleh <?php echo $pesan->pengirim; ?> pada <?php echo $pesan->waktu_kirim;?></i><hr style="margin: 5px;" />
+                    <i>Oleh <?php echo $pesan->pengirim; ?> pada <?php echo $pesan->waktu_kirim;?></i><hr style="margin-top: 5px;margin-bottom: 5px;" />
+                    <?php if($pesan->external == 1): ?>
+                    <ul>
+                        <li>Nomor surat : <?php echo $pesan->nomor_surat; ?></li>
+                        <li>Surat dari : <?php echo $pesan->surat_dari; ?></li>
+                        <li>Tanggal surat : <?php echo $pesan->tanggal_surat; ?></li>
+                        <li>Tanggal terima : <?php echo $pesan->tanggal_terima; ?></li>
+                        <li>Nomor agenda : <?php echo $pesan->nomor_agenda; ?></li>
+                    </ul>
+                    <?php endif;?>
                     <?php echo $pesan->isi_pesan; ?>
                 </div>
             </div>
