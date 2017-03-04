@@ -67,7 +67,6 @@
                 starred: (curStar.data().starred == 1) ? 0 : 1
             },
             success: function(response){
-                console.log(response);
                 if(curStar.data().starred == 0) {
                     curStar.data("starred",1);
                     curStar.addClass("star-active");
