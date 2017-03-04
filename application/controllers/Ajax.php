@@ -18,6 +18,7 @@ class Ajax extends CI_Controller {
         proteksi_login($this->session->userdata());
         $this->load->model("Agenda_model","agenda");
         $this->load->model("Pengguna_model","pengguna");
+        $this->load->model("Surat_model","surat");
     }
 
     public function tambah_agenda() {
@@ -60,6 +61,11 @@ class Ajax extends CI_Controller {
         $code = $this->pengguna->edit_profil_pribadi();
         header("Content-Type: application/json;charset=utf-8");
         echo json_encode(array("statusCode" => $code));
+    }
+
+    public function update_star() {
+        $this->surat->update_star($_POST["id_relasi_pesan"],$_POST["starred"]);
+        echo 1;
     }
 
 }

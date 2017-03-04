@@ -957,3 +957,13 @@ h1.page-header {
 	height: 100%;
 	border: 0;
 }
+
+
+.star {
+	color: white;
+	text-shadow: 0px 0px 20px #000;
+}
+.star.star-active {
+	color: #f1c40f;
+	text-shadow: 0px 0px 20px #f1c40f;
+}

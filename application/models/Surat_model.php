@@ -31,7 +31,7 @@ class Surat_model extends CI_model{
 
     public function ambil_daftar_surat_masuk() {
         $id_user = $this->session->userdata("id_pengguna");
-        $this->db->select("relasi_pesan.dibaca,pesan.id_pesan,pesan.subjek,pesan.isi_pesan,pesan.waktu_kirim,pengguna.nama_lengkap AS pengirim");
+        $this->db->select("relasi_pesan.id_relasi_pesan,relasi_pesan.starred,relasi_pesan.dibaca,pesan.id_pesan,pesan.subjek,pesan.isi_pesan,pesan.waktu_kirim,pengguna.nama_lengkap AS pengirim");
         $this->db->join("pesan","relasi_pesan.id_pesan = pesan.id_pesan","left");
         $this->db->join("pengguna","relasi_pesan.dari_user = pengguna.id_pengguna","left");
 //        $this->db->join("pengguna","relasi_pesan.ke_user = pengguna.id_pengguna AS ke","left");
@@ -87,6 +87,13 @@ class Surat_model extends CI_model{
         $this->db->where("relasi_pesan.id_pesan",$id_pesan);
         $pesan->dikirim = $this->db->get()->result();
         return $pesan;
+    }
+
+    public function update_star($id_relasi_pesan,$stat) {
+        $this->db->where("id_relasi_pesan",$id_relasi_pesan);
+        $this->db->update("relasi_pesan",array(
+            "starred" => $stat
+        ));
     }
 
 }

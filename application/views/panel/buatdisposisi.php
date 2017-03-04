@@ -58,25 +58,25 @@
                             <label for="">Tanggal Selesai</label>
                             <input type="text" name="tanggal_selesai" class="form-control" id="tanggal" required>
                         </div>
-                        <div class="form-group">
-                            <label for="">Keamanan</label>
-                            <select name="keamanan" id="keamanan" class="form-control" required>
-                                <option value=""></option>
-                                <option value="Biasa">Biasa</option>
-                                <option value="Rahasia terbatas">Rahasia terbatas</option>
-                                <option value="Rahasia">Rahasia</option>
-                                <option value="Sangat Rahasia">Sangat Rahasia</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="">Kecepatan</label>
-                            <select name="kecepatan" id="kecepatan" class="form-control" required>
-                                <option value=""></option>
-                                <option value="Biasa">Biasa</option>
-                                <option value="Segera">Segera</option>
-                                <option value="Amat Segera">Amat Segera</option>
-                            </select>
-                        </div>
+<!--                        <div class="form-group">-->
+<!--                            <label for="">Keamanan</label>-->
+<!--                            <select name="keamanan" id="keamanan" class="form-control">-->
+<!--                                <option value=""></option>-->
+<!--                                <option value="Biasa">Biasa</option>-->
+<!--                                <option value="Rahasia terbatas">Rahasia terbatas</option>-->
+<!--                                <option value="Rahasia">Rahasia</option>-->
+<!--                                <option value="Sangat Rahasia">Sangat Rahasia</option>-->
+<!--                            </select>-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <label for="">Kecepatan</label>-->
+<!--                            <select name="kecepatan" id="kecepatan" class="form-control">-->
+<!--                                <option value=""></option>-->
+<!--                                <option value="Biasa">Biasa</option>-->
+<!--                                <option value="Segera">Segera</option>-->
+<!--                                <option value="Amat Segera">Amat Segera</option>-->
+<!--                            </select>-->
+<!--                        </div>-->
                         <hr />
                         <textarea name="isi_disposisi" id="msg" required></textarea><br />
                         <p>Lampiran</p>
