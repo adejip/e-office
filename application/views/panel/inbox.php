@@ -52,7 +52,7 @@
         $("#inbox-div").on("click",".star.fa-star",function(){
             var curStar = $(this);
             update_star(curStar);
-            curStar.removeClass("fa-star").addClass("fa-spin fa-spinner");
+            curStar.removeClass("fa-star").addClass("fa-spinner fa-pulse");
         });
 
     });
@@ -76,7 +76,7 @@
                     curStar.removeClass("star-active");
                     curStar.parent().children('span').html(0);
                 }
-                curStar.removeClass('fa-spin fa-spinner');
+                curStar.removeClass('fa-spinner fa-pulse');
                 curStar.addClass("fa-star");
             }
         })
