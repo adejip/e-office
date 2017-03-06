@@ -16,6 +16,7 @@
                     <thead>
                     <tr>
                         <th data-field="nama_lengkap"  data-sortable="true">Pengirim</></th>
+                        <th data-field="waktu_kirim" data-sortable="true">Tanggal Kirim</th>
                         <th data-field="instruksi_disposisi"  data-sortable="true">Instruksi</></th>
                         <th data-field="selesai" data-sortable="true">Status</th>
                         <th>Pilihan</th>
@@ -25,6 +26,7 @@
                     <?php foreach($disposisi as $d): ?>
                         <tr class="<?php echo ($d->dibaca == 0) ? "warning" : ""; ?>">
                             <td><?php echo $d->nama_lengkap; ?></td>
+                            <td><?php echo $d->waktu_kirim; ?></td>
                             <td><?php echo $d->instruksi_disposisi; ?></td>
                             <td>
                                 <?php

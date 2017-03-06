@@ -16,6 +16,7 @@
                     <thead>
                     <tr>
                         <th data-field="instruksi_disposisi"  data-sortable="true">Instruksi</></th>
+                        <th data-field="waktu_kirim" data-sortable="true">Tanggal Kirim</th>
                         <th data-field="tanggal_selesai"  data-sortable="true">Tanggal Selesai</th>
                         <!--<th data-field="selesai" data-sortable="true">Status</th>-->
                         <th>Pilihan</th>
@@ -25,6 +26,7 @@
                     <?php foreach($disposisi as $d): ?>
                         <tr>
                             <td><?php echo $d->instruksi_disposisi; ?></td>
+                            <td><?php echo $d->waktu_kirim; ?></td>
                             <td><?php echo $d->tanggal_selesai; ?></td>
                             <!--<td>
                                 <?php
@@ -36,7 +38,7 @@
                             </td>-->
                             <td>
                                 <a href="<?php echo base_url("panel/baca_disposisi_keluar/" . $d->id_disposisi . "/" . $d->kode_disposisi); ?>" class="btn btn-success">Baca</a>
-                                <a href="#" class="btn btn-warning">Hapus</a>
+<!--                                <a href="#" class="btn btn-warning">Hapus</a>-->
                             </td>
                         </tr>
                     <?php endforeach; ?>
