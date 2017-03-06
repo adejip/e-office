@@ -15,7 +15,8 @@
                 <table data-toggle="table" data-url="<?php //echo base_url("panel/json_inbox");?>"  data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
                     <thead>
                     <tr>
-                        <th data-field="id_pesan"  data-sortable="true">Star</></th>
+                        <th data-field="disposed" data-sortable="true">Disposed</th>
+                        <th data-field="starred"  data-sortable="true">Star</></th>
                         <th data-field="subjek"  data-sortable="true">Subjek</th>
                         <th data-field="isi_pesan"  data-sortable="true">Isi Pesan</th>
                         <th data-field="pengirim" data-sortable="true">Pengirim</th>
@@ -26,8 +27,12 @@
                     <tbody>
                     <?php foreach($surat as $sr): ?>
                         <tr class="<?php echo ($sr->dibaca == 0) ? "warning" : ""; ?>">
-                            <td><i class="fa fa-star fa-lg star <?php echo ($sr->starred == 1) ? "star-active" : ""; ?>" data-starred="<?php echo $sr->starred; ?>" data-id="<?php echo $sr->id_relasi_pesan; ?>"></i><span style="display: none;"><?php echo ($sr->starred == 1) ? $sr->id_relasi_pesan : 0; ?></span></td>
-                            <td><?php echo $sr->subjek; ?></td>
+                            <td><?php
+                                echo ($sr->disposed != 0) ?
+                                "<a href='".base_url("panel/baca_disposisi_keluar/".$sr->disposed)."'><i class='fa fa-check fa-lg'></i></a>" : "";
+                                ?></td>
+                            <td><i data-toggle='tooltip' title='Tandai surat' class="fa fa-star fa-lg star <?php echo ($sr->starred == 1) ? "star-active" : ""; ?>" data-starred="<?php echo $sr->starred; ?>" data-id="<?php echo $sr->id_relasi_pesan; ?>"></i><span style="display: none;"><?php echo ($sr->starred == 1) ? $sr->id_relasi_pesan : 0; ?></span></td>
+                            <td><?php echo character_limiter($sr->subjek,20); ?></td>
                             <td><?php echo strip_tags(character_limiter($sr->isi_pesan,20)); ?></td>
                             <td><?php echo $sr->pengirim; ?></td>
                             <td><?php echo $sr->waktu_kirim; ?></td>
@@ -48,6 +53,10 @@
 
 <script>
     $(document).ready(function(){
+
+        setTimeout(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        },1000);
 
         $("#inbox-div").on("click",".star.fa-star",function(){
             var curStar = $(this);

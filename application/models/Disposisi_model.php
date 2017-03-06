@@ -18,6 +18,7 @@ class Disposisi_model extends CI_Model {
         $id_disposisi = $this->db->insert_id();
         $kode_disposisi = sha1(uniqid("ID_")."-".$id_disposisi);
         if($insert) {
+            $this->tandai_disposisi($id_pesan,$id_disposisi . "/" . $kode_disposisi);
             foreach($to_user as $user) {
                 $relasi = array(
                     "id_disposisi" => $id_disposisi,
@@ -30,6 +31,15 @@ class Disposisi_model extends CI_Model {
             }
             return true;
         } else return false;
+    }
+
+    private function tandai_disposisi($id_pesan,$kode) {
+        $this->db->where("id_pesan",$id_pesan);
+        $this->db->where("ke_user",$this->session->userdata("id_pengguna"));
+        $this->db->update("relasi_pesan",array(
+            "disposed" => $kode
+        ));
+        return true;
     }
 
     public function ambil_disposisi_keluar() {

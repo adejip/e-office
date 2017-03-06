@@ -17,8 +17,6 @@
                     <tr>
                         <th data-field="nama_lengkap"  data-sortable="true">Pengirim</></th>
                         <th data-field="instruksi_disposisi"  data-sortable="true">Instruksi</></th>
-                        <th data-field="keamanan"  data-sortable="true">Keamanan</th>
-                        <th data-field="kecepatan" data-sortable="true">Kecepatan</th>
                         <th data-field="selesai" data-sortable="true">Status</th>
                         <th>Pilihan</th>
                     </tr>
@@ -28,8 +26,6 @@
                         <tr class="<?php echo ($d->dibaca == 0) ? "warning" : ""; ?>">
                             <td><?php echo $d->nama_lengkap; ?></td>
                             <td><?php echo $d->instruksi_disposisi; ?></td>
-                            <td><?php echo $d->keamanan; ?></td>
-                            <td><?php echo $d->kecepatan; ?></td>
                             <td>
                                 <?php
                                 if($d->pengguna_selesai == 0)
