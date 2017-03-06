@@ -15,7 +15,7 @@
                 <table data-toggle="table" data-url="<?php //echo base_url("panel/json_inbox");?>"  data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
                     <thead>
                     <tr>
-                        <th data-field="disposed" data-sortable="true">Disposed</th>
+                        <th data-field="disposed" data-sortable="true"><i class="fa fa-external-link fa-lg"></i></th>
                         <th data-field="starred"  data-sortable="true">Star</></th>
                         <th data-field="subjek"  data-sortable="true">Subjek</th>
                         <th data-field="isi_pesan"  data-sortable="true">Isi Pesan</th>

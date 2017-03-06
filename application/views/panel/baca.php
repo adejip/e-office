@@ -47,7 +47,7 @@
                 </div>
                 <ul class="list-group">
                     <?php if($this->session->userdata("disposisi") == 1): ?>
-                        <li class="list-group-item"><a href="<?php echo base_url("panel/buatdisposisi/".$pesan->id_pesan); ?>"><i class="fa fa-paperclip fa-lg fa-fw"></i>&nbsp;Buat Disposisi</a></li>
+                        <li class="list-group-item"><a href="<?php echo base_url("panel/buatdisposisi/".$pesan->id_pesan); ?>"><i class="fa fa-external-link fa-lg fa-fw"></i>&nbsp;Buat Disposisi</a></li>
                     <?php endif; ?>
                     <li class="list-group-item"><a href="<?php echo base_url("panel/compose/?sub=Re : ".$pesan->subjek."&pn=".$pesan->dari_user); ?>"><i class="fa fa-reply fa-lg fa-fw"></i> Balas</a></li>
                 </ul>
