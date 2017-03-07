@@ -99,7 +99,7 @@
                         <?php foreach($daftar_pengguna as $daftar_dinas => $group_pengguna): ?>
                             <optgroup label="<?php echo $daftar_dinas ?>">
                                 <?php foreach($group_pengguna as $pengguna):?>
-                                    <option value="<?php echo $pengguna->id_pengguna; ?>" <?php echo (termasuk_penerima($pengguna->id_pengguna,$penerima_otomatis) || isset($_GET["pn"]) && $_GET["pn"] == $pengguna->id_pengguna) ? "selected" : ""; ?>><?php echo $pengguna->nama_lengkap . ", " . $pengguna->nama_jabatan . " - " . $daftar_dinas; ?></option>
+                                    <option value="<?php echo $pengguna->id_pengguna; ?>" <?php echo (termasuk_penerima($pengguna->id_pengguna,$penerima_otomatis)) ? "selected" : ""; ?>><?php echo $pengguna->nama_lengkap . ", " . $pengguna->nama_jabatan . " - " . $daftar_dinas; ?></option>
                                 <?php endforeach;?>
                             </optgroup>
                         <?php endforeach; ?>
