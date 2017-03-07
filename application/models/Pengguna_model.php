@@ -28,6 +28,25 @@ class Pengguna_model extends CI_Model {
         return $detail_user;
     }
 
+    public function tambah_penerima_otomatis() {
+        $post = $this->input->post();
+        $daftar_penerima = $post["penerima"];
+        $this->db->where("id_pengguna",$this->session->userdata("id_pengguna"));
+        $this->db->delete("penerima_otomatis");
+        foreach($daftar_penerima as $key=>$pn) {
+            $ins[$key]["penerima"] = $pn;
+            $ins[$key]["id_pengguna"] = $this->session->userdata("id_pengguna");
+        }
+        return $this->db->insert_batch("penerima_otomatis",$ins);
+    }
+
+    public function ambil_penerima_otomatis() {
+        $this->db->select("penerima");
+        $this->db->where("id_pengguna",$this->session->userdata("id_pengguna"));
+        $this->db->from("penerima_otomatis");
+        return $this->db->get()->result();
+    }
+
     public function ambil_semua() {
         $this->db->select("pengguna.id_pengguna,pengguna.nama_lengkap,pengguna.blokir,pengguna.nip,pengguna.disposisi,jabatan.nama_jabatan,dinas.nama_dinas");
         $this->db->from("pengguna");

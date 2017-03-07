@@ -13,6 +13,7 @@ class Panel extends CI_Controller {
         parent::__construct();
         $this->load->helper("pengalih");
         $this->load->helper("cektipe");
+        $this->load->helper("bool");
         proteksi_login($this->session->userdata());
         $this->load->model("Pengguna_model","pengguna");
         $this->load->model("Surat_model","surat");
@@ -52,9 +53,15 @@ class Panel extends CI_Controller {
         $judul = "Buat Surat";
         $menu = $this->set_menu("buat_surat");
         $daftar_pengguna = $this->pengguna->ambil_per_grup();
+        $penerima_otomatis = $this->pengguna->ambil_penerima_otomatis();
         $this->load->view("panel/frames/header",compact("judul","menu"));
-        $this->load->view("panel/compose",compact("daftar_pengguna"));
+        $this->load->view("panel/compose",compact("daftar_pengguna","penerima_otomatis"));
         $this->load->view("panel/frames/footer");
+    }
+
+    public function tambah_penerima_otomatis() {
+        $this->pengguna->tambah_penerima_otomatis();
+        redirect(base_url("panel/compose"));
     }
 
     public function inbox() {
