@@ -61,7 +61,7 @@ class Panel extends CI_Controller {
 
     public function tambah_penerima_otomatis() {
         $this->pengguna->tambah_penerima_otomatis();
-        redirect(base_url("panel/compose"));
+        redirect($_SERVER["HTTP_REFERER"]);
     }
 
     public function inbox() {
@@ -361,9 +361,10 @@ class Panel extends CI_Controller {
         $menu = $this->set_menu("surat_masuk");
 
         $daftar_pengguna = $this->pengguna->ambil_per_grup();
+        $penerima_otomatis = $this->pengguna->ambil_penerima_otomatis();
 
         $this->load->view("panel/frames/header",compact("judul","menu"));
-        $this->load->view("panel/buatdisposisi",compact("pesan","daftar_pengguna"));
+        $this->load->view("panel/buatdisposisi",compact("pesan","daftar_pengguna","penerima_otomatis"));
         $this->load->view("panel/frames/footer");
     }
 

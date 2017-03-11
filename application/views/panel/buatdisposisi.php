@@ -18,12 +18,12 @@
                 <div class="panel-body">
                     <form action="" method="POST" enctype="multipart/form-data">
                         <div class="form-group">
-                            <label>Penerima : </label>
-                            <select name="penerima[]" id="penerima" class="form-control" multiple required>
-                                <?php foreach($daftar_pengguna as $daftar_dinas => $daftar_pengguna): ?>
+                            <label>Penerima [<a href="#" data-toggle="modal" data-target="#modal_manage">Manage</a>]: </label>
+                            <select name="penerima[]" class="form-control penerima" multiple required>
+                                <?php foreach($daftar_pengguna as $daftar_dinas => $group_pengguna): ?>
                                     <optgroup label="<?php echo $daftar_dinas ?>">
-                                        <?php foreach($daftar_pengguna as $pengguna):?>
-                                            <option value="<?php echo $pengguna->id_pengguna; ?>"><?php echo $pengguna->nama_lengkap . ", " . $pengguna->nama_jabatan . " - " . $daftar_dinas; ?></option>
+                                        <?php foreach($group_pengguna as $pengguna):?>
+                                            <option value="<?php echo $pengguna->id_pengguna; ?>" <?php echo (termasuk_penerima($pengguna->id_pengguna,$penerima_otomatis)) ? "selected" : ""; ?>><?php echo $pengguna->nama_lengkap . ", " . $pengguna->nama_jabatan . " - " . $daftar_dinas; ?></option>
                                         <?php endforeach;?>
                                     </optgroup>
                                 <?php endforeach; ?>
@@ -90,12 +90,48 @@
 
 </div>	<!--/.main-->
 
+
+<div id="modal_manage" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <form action="<?php echo base_url("panel/tambah_penerima_otomatis/"); ?>" method="POST">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Manage Pengguna Otomatis</h4>
+                </div>
+                <div class="modal-body">
+                    <p><i>Pengguna yang dipilih di bawah ini akan otomatis tertera dalam form penerima surat saat membuat surat</i></p>
+                    <p><b>Penerima</b></p>
+                    <select style="width: 100%;" name="penerima[]" class="form-control penerima" multiple>
+                        <?php foreach($daftar_pengguna as $daftar_dinas => $group_pengguna): ?>
+                            <optgroup label="<?php echo $daftar_dinas ?>">
+                                <?php foreach($group_pengguna as $pengguna):?>
+                                    <option value="<?php echo $pengguna->id_pengguna; ?>" <?php echo (termasuk_penerima($pengguna->id_pengguna,$penerima_otomatis)) ? "selected" : ""; ?>><?php echo $pengguna->nama_lengkap . ", " . $pengguna->nama_jabatan . " - " . $daftar_dinas; ?></option>
+                                <?php endforeach;?>
+                            </optgroup>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Simpan</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
 <script>
     $(document).ready(function(){
         $("#msg").froalaEditor({
             height: 300
         });
-        $("#penerima").select2();
+        $(".penerima").select2();
         $("#instruksi").select2({
             placeholder: "Pilih item",
             allowClear: true
