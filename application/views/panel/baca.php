@@ -50,6 +50,7 @@
                         <li class="list-group-item"><a href="<?php echo base_url("panel/buatdisposisi/".$pesan->id_pesan); ?>"><i class="fa fa-external-link fa-lg fa-fw"></i>&nbsp;Buat Disposisi</a></li>
                     <?php endif; ?>
                     <li class="list-group-item"><a href="<?php echo base_url("panel/compose/?sub=Re : ".$pesan->subjek."&pn=".$pesan->dari_user); ?>"><i class="fa fa-reply fa-lg fa-fw"></i> Balas</a></li>
+                    <li class="list-group-item"><a href="<?php echo base_url("panel/compose/?sub=Fwd : ".$pesan->subjek."&id=".$pesan->id_pesan); ?>"><i class="fa fa-share fa-lg fa-fw"></i> Forward</a></li>
                 </ul>
             </div>
             <?php

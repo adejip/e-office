@@ -68,7 +68,19 @@
                                 </div>
                             </div>
                             <hr />
-                            <textarea name="isi_pesan" id="msg" required></textarea><br />
+                            <textarea name="isi_pesan" id="msg" required>
+                                <?php
+                                if(isset($_GET["id"])) {
+                                    $pesan = $this->surat->ambil_surat_berdasarkan_id($_GET["id"]);
+                                    echo "<b>-------Terusan / Forward Surat-------</b>";
+                                    echo "<p><b>Dikirim Oleh : </b>".$pesan->pengirim."</p>";
+                                    echo "<p><b>Diterima Oleh : </b>".$this->session->userdata("nama_lengkap")."</p>";
+                                    echo "<p><b>Waktu Diterima : </b>".$pesan->waktu_kirim."</p>";
+                                    echo "<hr />";
+                                    echo $pesan->isi_pesan;
+                                }
+                                ?>
+                            </textarea><br />
                             <p>Lampiran</p>
                             <input type="file" multiple id="attach" name="attach[]" class="form-control"><br />
                             <input type="submit" name="btnSubmit" class="btn btn-success" value="Kirim">
