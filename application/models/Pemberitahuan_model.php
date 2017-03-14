@@ -9,6 +9,8 @@
 class Pemberitahuan_model extends CI_Model {
 
     public function ambil() {
+        $this->db->where("id_pengguna",$this->session->userdata("id_pengguna"));
+        $this->db->order_by("waktu","desc");
         $notif = $this->db->get("pemberitahuan");
         return $notif->result();
     }

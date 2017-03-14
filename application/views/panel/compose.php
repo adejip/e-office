@@ -73,6 +73,7 @@
                                 if(isset($_GET["id"])) {
                                     $pesan = $this->surat->ambil_surat_berdasarkan_id($_GET["id"]);
                                     echo "<b>-------Terusan / Forward Surat-------</b>";
+                                    echo "<p><b>Perihal : </b>".$pesan->subjek."</p>";
                                     echo "<p><b>Dikirim Oleh : </b>".$pesan->pengirim."</p>";
                                     echo "<p><b>Diterima Oleh : </b>".$this->session->userdata("nama_lengkap")."</p>";
                                     echo "<p><b>Waktu Diterima : </b>".$pesan->waktu_kirim."</p>";

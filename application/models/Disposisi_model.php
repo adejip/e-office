@@ -9,6 +9,11 @@
 defined("BASEPATH") OR exit("Akses ditolak!");
 class Disposisi_model extends CI_Model {
 
+    public function __construct() {
+        parent::__construct();
+        $this->load->model("Pemberitahuan_model","pemberitahuan");
+    }
+
     public function kirim($post,$id_pesan) {
         unset($post["btnSubmit"]);
         $to_user = $post["penerima"];
@@ -28,6 +33,12 @@ class Disposisi_model extends CI_Model {
                     "kode_disposisi" => $kode_disposisi
                 );
                 $this->db->insert("relasi_disposisi",$relasi);
+                $this->pemberitahuan->buat(array(
+                    "id_pengguna" => $user,
+                    "dari_pengguna" => $this->session->userdata("id_pengguna"),
+                    "judul" => "Disposisi",
+                    "pesan" => $post["isi_disposisi"]
+                ));
             }
             return true;
         } else return false;

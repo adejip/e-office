@@ -26,7 +26,8 @@ class Panel extends CI_Controller {
     public function index() {
         $judul = "DevManado - Dashboard";
         $menu = $this->set_menu("dashboard");
-        $this->load->view("panel/frames/header",compact("judul","menu"));
+        $daftar_notif = $this->pemberitahuan->ambil();
+        $this->load->view("panel/frames/header",compact("judul","menu","daftar_notif"));
         $this->load->view("panel/index");
         $this->load->view("panel/frames/footer");
     }

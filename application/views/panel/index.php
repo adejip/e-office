@@ -77,18 +77,33 @@
 
                 <div class="panel-body">
                     <ul>
-<!--                        --><?php //for($i=0;$i<5;$i++): ?>
-<!--                        <li class="clearfix">-->
-<!--                            <div class="chat-body clearfix">-->
-<!--                                <div class="header">-->
-<!--                                    <strong class="primary-font">John Doe</strong> <small class="text-muted">32 mins ago</small>-->
-<!--                                </div>-->
-<!--                                <p>-->
-<!--                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ante turpis, rutrum ut ullamcorper sed, dapibus ac nunc. Vivamus luctus convallis mauris, eu gravida tortor aliquam ultricies.-->
-<!--                                </p>-->
-<!--                            </div>-->
-<!--                        </li>-->
-<!--                        --><?php //endfor; ?>
+                        <?php foreach($daftar_notif as $notif): ?>
+                        <li class="clearfix">
+                            <div class="chat-body clearfix">
+                                <div class="header">
+                                    <strong class="primary-font"><?php echo $notif->judul; ?></strong>
+                                    <small class="text-muted">
+                                        <?php
+                                        date_default_timezone_set("Asia/Manila");
+                                        $waktunotif = new DateTime($notif->waktu);
+                                        $waktusekarang = new DateTime("now");
+                                        $diff = $waktusekarang->diff($waktunotif);
+                                        if($diff->days > 0) {
+                                            echo $diff->format("%d hari %h jam lalu");
+                                        } elseif($diff->h < 1) {
+                                            echo $diff->format("%m menit lalu");
+                                        } else {
+                                            echo $diff->format("%h jam %i menit lalu");
+                                        }
+                                        ?>
+                                    </small>
+                                </div>
+                                <p>
+                                    <?php echo character_limiter(strip_tags($notif->pesan),30); ?>
+                                </p>
+                            </div>
+                        </li>
+                        <?php endforeach; ?>
                     </ul>
                 </div>
 

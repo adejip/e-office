@@ -9,6 +9,11 @@
 defined("BASEPATH") OR exit("Akses ditolak!");
 class Surat_model extends CI_model{
 
+    public function __construct() {
+        parent::__construct();
+        $this->load->model("Pemberitahuan_model","pemberitahuan");
+    }
+
     public function kirim($post) {
         unset($post["btnSubmit"]);
         $to_user = $post["penerima"];
@@ -24,6 +29,12 @@ class Surat_model extends CI_model{
                     "ke_user" => $user
                 );
                 $this->db->insert("relasi_pesan",$relasi);
+                $this->pemberitahuan->buat(array(
+                    "id_pengguna" => $user,
+                    "dari_pengguna" => $this->session->userdata("id_pengguna"),
+                    "judul" => "Pesan Baru",
+                    "pesan" => $post["isi_pesan"]
+                ));
             }
             return true;
         } else return false;
@@ -95,6 +106,7 @@ class Surat_model extends CI_model{
             "starred" => $stat
         ));
     }
+
 
 
 }
