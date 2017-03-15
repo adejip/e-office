@@ -37,7 +37,8 @@ class Disposisi_model extends CI_Model {
                     "id_pengguna" => $user,
                     "dari_pengguna" => $this->session->userdata("id_pengguna"),
                     "judul" => "Disposisi",
-                    "pesan" => $post["isi_disposisi"]
+                    "pesan" => $post["isi_disposisi"],
+                    "link" => "baca_disposisi_masuk/" . $id_disposisi . "/" . $kode_disposisi
                 ));
             }
             return true;

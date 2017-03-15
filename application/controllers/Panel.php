@@ -11,6 +11,7 @@ class Panel extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+        date_default_timezone_set("Asia/Manila");
         $this->load->helper("pengalih");
         $this->load->helper("cektipe");
         $this->load->helper("bool");
@@ -433,6 +434,16 @@ class Panel extends CI_Controller {
         $this->load->view("panel/frames/footer");
     }
 
+    public function baca_notif() {
+        $get = $this->input->get();
+        if(isset($get["rel_link"]) && isset($get["id"])) {
+            $this->pemberitahuan->baca($get["id"]);
+            redirect(base_url("panel/".$get["rel_link"]));
+        } else {
+            redirect(base_url("panel/"));
+        }
+    }
+
     public function logout() {
         $this->session->sess_destroy();
         redirect(base_url("login/"));
@@ -457,8 +468,8 @@ class Panel extends CI_Controller {
             $_FILES['images[]']['error']= $files['error'][$key];
             $_FILES['images[]']['size']= $files['size'][$key];
 
-            $d = explode(".",$image);
-            $ext = end($d);
+            $split = explode(".",$image);
+            $ext = end($split);
 
             $fileName = uniqid() .'_'. md5($image) . "." . $ext;
 
@@ -475,6 +486,7 @@ class Panel extends CI_Controller {
                 $this->upload->data();
             } else {
                 return false;
+                exit();
             }
         }
 

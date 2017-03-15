@@ -78,31 +78,32 @@
                 <div class="panel-body">
                     <ul>
                         <?php foreach($daftar_notif as $notif): ?>
-                        <li class="clearfix">
-                            <div class="chat-body clearfix">
-                                <div class="header">
-                                    <strong class="primary-font"><?php echo $notif->judul; ?></strong>
-                                    <small class="text-muted">
-                                        <?php
-                                        date_default_timezone_set("Asia/Manila");
-                                        $waktunotif = new DateTime($notif->waktu);
-                                        $waktusekarang = new DateTime("now");
-                                        $diff = $waktusekarang->diff($waktunotif);
-                                        if($diff->days > 0) {
-                                            echo $diff->format("%d hari %h jam lalu");
-                                        } elseif($diff->h < 1) {
-                                            echo $diff->format("%m menit lalu");
-                                        } else {
-                                            echo $diff->format("%h jam %i menit lalu");
-                                        }
-                                        ?>
-                                    </small>
+                        <a href="<?php echo base_url("panel/baca_notif?rel_link=".$notif->link."&id=".$notif->id_pemberitahuan); ?>" style="text-decoration: none;display: block;">
+                            <li class="clearfix" style="<?php echo ($notif->dibaca == 0) ? "background-color: #fcf8e3;" : ""; ?>">
+                                <div class="chat-body clearfix">
+                                    <div class="header">
+                                        <strong class="primary-font"><?php echo $notif->nama_lengkap; ?></strong>
+                                        <small class="text-muted">
+                                            <?php
+                                                $waktunotif = new DateTime($notif->waktu);
+                                                $waktusekarang = new DateTime("now");
+                                                $diff = $waktusekarang->diff($waktunotif);
+                                                if($diff->days > 0) {
+                                                    echo $diff->format("%d hari %h jam lalu");
+                                                } else {
+                                                    echo $diff->format("%h jam %i menit lalu");
+                                                }
+                                            ?>
+                                        </small>
+                                    </div>
+                                    <p>
+                                        <?php echo "&raquo; <b>".$notif->judul."</b>"; ?>
+                                        <br />
+                                        <?php echo character_limiter(strip_tags($notif->pesan),30); ?>
+                                    </p>
                                 </div>
-                                <p>
-                                    <?php echo character_limiter(strip_tags($notif->pesan),30); ?>
-                                </p>
-                            </div>
-                        </li>
+                            </li>
+                        </a>
                         <?php endforeach; ?>
                     </ul>
                 </div>
