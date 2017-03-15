@@ -11,11 +11,22 @@ class Panel extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+
         date_default_timezone_set("Asia/Manila");
         $this->load->helper("pengalih");
         $this->load->helper("cektipe");
         $this->load->helper("bool");
         proteksi_login($this->session->userdata());
+
+        $this->load->model("Konfig_web_model","konfig");
+
+        if($this->konfig->status_maintenance()) {
+            $this->load->view("maintenance");
+        }
+
+
+
+
         $this->load->model("Pengguna_model","pengguna");
         $this->load->model("Surat_model","surat");
         $this->load->model("Jabatan_model","jabatan");

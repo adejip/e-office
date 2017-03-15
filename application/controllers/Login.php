@@ -13,6 +13,13 @@ class Login extends CI_Controller {
         parent::__construct();
         $this->load->helper("pengalih");
         proteksi_logout($this->session->userdata());
+
+        $this->load->model("Konfig_web_model","konfig");
+
+        if($this->konfig->status_maintenance()) {
+            $this->load->view("maintenance");
+        }
+
         $this->load->model("Pengguna_model","pengguna");
     }
 
@@ -22,7 +29,15 @@ class Login extends CI_Controller {
         if(isset($post["btnSubmit"])) {
             $user = $this->cek_login($post);
             if($user != false) {
+
+                if($user["username"] == "maintenanceusr") {
+                    $this->konfig->ubah_status_maintenance(1);
+                    redirect(base_url());
+                    exit();
+                }
+
                 $this->session->set_userdata($user);
+
                 redirect(base_url("panel/"));
             } else {
                 redirect(base_url("login/?err"));

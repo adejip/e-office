@@ -79,7 +79,7 @@
                     <ul>
                         <?php foreach($daftar_notif as $notif): ?>
                         <a href="<?php echo base_url("panel/baca_notif?rel_link=".$notif->link."&id=".$notif->id_pemberitahuan); ?>" style="text-decoration: none;display: block;">
-                            <li class="clearfix" style="<?php echo ($notif->dibaca == 0) ? "background-color: #fcf8e3;" : ""; ?>">
+                            <li class="clearfix" style="<?php echo ($notif->dibaca == 0) ? "background-color: #c0e4ff;" : ""; ?>">
                                 <div class="chat-body clearfix">
                                     <div class="header">
                                         <strong class="primary-font"><?php echo $notif->nama_lengkap; ?></strong>
