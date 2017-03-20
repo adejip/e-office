@@ -12,6 +12,13 @@
         <div class="panel panel-default">
             <div class="panel-heading">Surat Masuk</div>
             <div class="panel-body">
+                <b><i class="fa fa-filter fa-lg"></i> Filter &nbsp;&nbsp;</b>
+                <div class="btn-group">
+                    <a href="?all" class="btn <?php echo (isset($_GET["all"])) ? "btn-success active" : "btn-primary"; ?>"><i class="fa fa-list fa-lg"></i> Semua</a>
+                    <a href="?read" class="btn <?php echo (isset($_GET["read"])) ? "btn-success active" : "btn-primary"; ?>"><i class="fa fa-eye fa-lg"></i> Dibaca</a>
+                    <a href="?unread" class="btn <?php echo (isset($_GET["unread"])) ? "btn-success active" : "btn-primary"; ?>"><i class="fa fa-eye-slash fa-lg"></i> Belum dibaca</a>
+                    <a href="?starred" class="btn <?php echo (isset($_GET["starred"])) ? "btn-success active" : "btn-primary"; ?>"><i class="fa fa-star fa-lg"></i> Starred</a>
+                </div>
                 <table class="table table-striped" id="daftar_inbox" data-toggle="table" data-url="<?php //echo base_url("panel/json_inbox");?>"  data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
                     <thead>
                     <tr>

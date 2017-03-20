@@ -42,6 +42,13 @@ class Surat_model extends CI_model{
     }
 
     public function ambil_daftar_surat_masuk() {
+        $get = $this->input->get();
+        if(isset($get["unread"])) {
+            $this->db->where("relasi_pesan.dibaca",0);
+        }
+        if(isset($get["starred"])) {
+            $this->db->where("relasi_pesan.starred",1);
+        }
         $id_user = $this->session->userdata("id_pengguna");
         $this->db->select("relasi_pesan.id_relasi_pesan,relasi_pesan.starred,relasi_pesan.dibaca,relasi_pesan.disposed,pesan.id_pesan,pesan.subjek,pesan.isi_pesan,pesan.waktu_kirim,pengguna.nama_lengkap AS pengirim");
         $this->db->join("pesan","relasi_pesan.id_pesan = pesan.id_pesan","left");

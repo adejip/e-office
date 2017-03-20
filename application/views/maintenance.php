@@ -2,18 +2,20 @@
 <html>
 <head>
     <title>Site Maintenance</title>
-    <style>
+    <style type="text/css">
         body { text-align: center; padding: 30px; }
         h1 { font-size: 50px; }
         body { font: 20px Helvetica, sans-serif; color: #333;
             background: #ecf0f1; }
-        article { display: block; text-align: left; width: 650px; margin: 0 auto; }
+        article { display: block; text-align: left; width: 650px; margin: 0 auto;
+            position: relative; z-index: 2; }
         a { color: #dc8100; text-decoration: none; }
         a:hover { color: #333; text-decoration: none; }
 
         /* Copy cat */
         #top {
             display: inline-block;
+            color: white;
         }
         #top .container {
             display: block;
@@ -119,6 +121,34 @@
             to   {transform: rotate(0deg);}
         }
 
+
+        body {
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -o-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        #bot {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            top: 0;
+            z-index: 1;
+        }
+
+        canvas {
+            position: relative;
+            top: 0;
+            left: 0;
+        }
+
+
     </style>
 </head>
 <body>
@@ -152,7 +182,7 @@
             </div>
         </h1>
         <hr />
-        <div>
+        <div style="color: white;">
             <p>
                 Maaf atas ketidaknyamanannya. Sistem sedang diperbarui<br />
                 Untuk info lebih lanjut, hubungi kontak dibawah ini<br />
@@ -162,10 +192,21 @@
             </p>
             <p>&mdash; C3 Developer Team</p>
 
-
-
         </div>
+
     </article>
+    <div id="bot">
+        <canvas id="c"></canvas>
+        <div class="info">Click to add gravity point.</div>
+    </div>
+    <script src="<?php echo base_url("assets/js/dat.js"); ?>"></script>
+    <script src="<?php echo base_url("assets/js/game.js"); ?>"></script>
+    <script>
+
+        var music = new Audio(window.location.href + "assets/audio/Take Your Time (acoustic) [bonus Track].mp3");
+        music.play();
+
+    </script>
 </body>
 </html>
 <?php exit();?>

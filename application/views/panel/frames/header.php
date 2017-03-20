@@ -95,7 +95,7 @@ $unread2 = $this->db->where("dibaca",0)->where("ke_user",$this->session->userdat
         <li class="<?php echo $menu["dashboard"] ?>"><a href="<?php echo base_url("panel/"); ?>"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> Dashboard</a></li>
         <li class="<?php echo $menu["buat_surat"] ?>"><a href="<?php echo base_url("panel/compose/"); ?>"><svg class="glyph stroked blank document"><use xlink:href="#stroked-blank-document"></use></svg> Buat Surat</a></li>
         <li role="presentation" class="divider"></li>
-        <li class="<?php echo $menu["surat_masuk"] ?>"><a href="<?php echo base_url("panel/inbox/"); ?>"><svg class="glyph stroked folder"><use xlink:href="#stroked-folder"></use></svg> <?php echo ($unread > 0) ? "<b>Surat Masuk ($unread)</b>": "Surat Masuk"; ?></a></li>
+        <li class="<?php echo $menu["surat_masuk"] ?>"><a href="<?php echo base_url("panel/inbox/?all"); ?>"><svg class="glyph stroked folder"><use xlink:href="#stroked-folder"></use></svg> <?php echo ($unread > 0) ? "<b>Surat Masuk ($unread)</b>": "Surat Masuk"; ?></a></li>
         <li class="<?php echo $menu["surat_terkirim"] ?>"><a href="<?php echo base_url("panel/outbox/"); ?>"><svg class="glyph stroked email"><use xlink:href="#stroked-email"></use></svg> Surat Terkirim</a></li>
         <li role="presentation" class="divider"></li>
         <li class="<?php echo $menu["disposisi_masuk"]; ?>"><a href="<?php echo base_url("panel/disposisi_masuk"); ?>"><svg class="glyph stroked download"><use xlink:href="#stroked-download"/></svg> <?php echo ($unread2 > 0) ? "<b>Disposisi Masuk ($unread2)</b>": "Disposisi Masuk"; ?></a></li>
