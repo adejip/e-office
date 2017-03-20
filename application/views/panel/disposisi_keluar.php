@@ -17,7 +17,7 @@
                     <tr>
                         <th data-field="instruksi_disposisi"  data-sortable="true">Instruksi</></th>
                         <th data-field="waktu_kirim" data-sortable="true">Tanggal Kirim</th>
-                        <th data-field="tanggal_selesai"  data-sortable="true">Tanggal Selesai</th>
+<!--                        <th data-field="tanggal_selesai"  data-sortable="true">Tanggal Selesai</th>-->
                         <!--<th data-field="selesai" data-sortable="true">Status</th>-->
                         <th>Pilihan</th>
                     </tr>
@@ -27,7 +27,7 @@
                         <tr>
                             <td><?php echo $d->instruksi_disposisi; ?></td>
                             <td><?php echo $d->waktu_kirim; ?></td>
-                            <td><?php echo $d->tanggal_selesai; ?></td>
+<!--                            <td>--><?php //echo $d->tanggal_selesai; ?><!--</td>-->
                             <!--<td>
                                 <?php
 //                                if($d->selesai == 0)
