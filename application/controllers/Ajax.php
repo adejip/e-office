@@ -11,14 +11,15 @@ class Ajax extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        if(!$this->input->is_ajax_request()) {
-            exit("Akses script tidak diizinkan!");
-        }
+//        if(!$this->input->is_ajax_request()) {
+//            exit("Akses script tidak diizinkan!");
+//        }
         $this->load->helper("pengalih");
         proteksi_login($this->session->userdata());
         $this->load->model("Agenda_model","agenda");
         $this->load->model("Pengguna_model","pengguna");
         $this->load->model("Surat_model","surat");
+        $this->load->model("Disposisi_model","disposisi");
     }
 
     public function tambah_agenda() {
@@ -66,6 +67,18 @@ class Ajax extends CI_Controller {
     public function update_star() {
         $this->surat->update_star($_POST["id_relasi_pesan"],$_POST["starred"]);
         echo 1;
+    }
+
+    public function hitung_surat_per_tanggal() {
+        header("Content-Type: application/json;charset=utf-8");
+        $tanggal = json_decode($_POST["tanggal"]);
+
+        foreach($tanggal as $tgl) {
+            $hitungan["surat"][] = $this->surat->ambil_surat_per_tanggal($tgl);
+            $hitungan["disposisi"][] = $this->disposisi->ambil_disposisi_per_tanggal($tgl);
+        }
+
+        echo json_encode($hitungan);
     }
 
 }

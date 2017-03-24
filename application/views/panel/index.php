@@ -68,9 +68,35 @@
         </div>
     </div><!--/.row-->
 
+
+<!--    <div class="row">-->
+<!--        <div class="col-lg-12">-->
+<!--            <div class="panel panel-default">-->
+<!--                <div class="panel-heading">Grafik Pembuatan Surat</div>-->
+<!--                <div class="panel-body">-->
+<!--                    <div class="canvas-wrapper">-->
+<!--                        <canvas class="main-chart" id="line-chart" height="200" width="600"></canvas>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div><!--/.row-->
+
     <hr>
 
     <div class="row">
+
+        <div class="col-lg-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">Grafik Penerimaan Surat & Disposisi</div>
+                <div class="panel-body">
+                    <div class="canvas-wrapper">
+                        <canvas class="main-chart" id="line-chart" height="200" width="600"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="col-md-4">
             <div class="panel panel-default chat">
                 <div class="panel-heading" id="accordion"><svg class="glyph stroked sound on"><use xlink:href="#stroked-sound-on"/></svg> Pemberitahuan</div>
@@ -141,19 +167,6 @@
         </div>
 
     </div>
-
-<!--    <div class="row">-->
-<!--        <div class="col-lg-12">-->
-<!--            <div class="panel panel-default">-->
-<!--                <div class="panel-heading">Grafik Pembuatan Surat</div>-->
-<!--                <div class="panel-body">-->
-<!--                    <div class="canvas-wrapper">-->
-<!--                        <canvas class="main-chart" id="line-chart" height="200" width="600"></canvas>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div><!--/.row-->
 
 </div>	<!--/.main-->
 
@@ -277,3 +290,4 @@
 
 
 </script>
+<script src="<?php echo base_url("assets/js/chart-data.js"); ?>"></script>

@@ -75,6 +75,11 @@ class Surat_model extends CI_model{
         return $pesan;
     }
 
+    public function ambil_surat_per_tanggal($tgl) {
+        $this->db->where("DATE(waktu_kirim)",$tgl);
+        return $this->db->get("pesan")->num_rows();
+    }
+
     public function baca_surat($id_pesan) {
         $this->db->where("id_pesan",$id_pesan);
         $this->db->where("ke_user",$this->session->userdata("id_pengguna"));

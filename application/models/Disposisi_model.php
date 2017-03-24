@@ -136,6 +136,11 @@ class Disposisi_model extends CI_Model {
         return $data;
     }
 
+    public function ambil_disposisi_per_tanggal($tgl) {
+        $this->db->where("DATE(waktu_kirim)",$tgl);
+        return $this->db->get("disposisi")->num_rows();
+    }
+
     public function baca_disposisi($id_disposisi,$kode_disposisi) {
         $this->db->where("id_disposisi",$id_disposisi)
             ->where("kode_disposisi",$kode_disposisi)
