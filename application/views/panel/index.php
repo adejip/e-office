@@ -88,10 +88,10 @@
 
         <div class="col-lg-8">
             <div class="panel panel-default">
-                <div class="panel-heading">Grafik Penerimaan Surat & Disposisi</div>
+                <div class="panel-heading"><i class="fa fa-line-chart fa-lg"></i> Grafik Penerimaan Surat & Disposisi</div>
                 <div class="panel-body">
                     <div class="canvas-wrapper">
-                        <canvas class="main-chart" id="line-chart" height="200" width="600"></canvas>
+                        <canvas class="main-chart" id="line-chart" height="230" width="600"></canvas>
                     </div>
                 </div>
             </div>

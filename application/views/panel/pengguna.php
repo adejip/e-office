@@ -22,25 +22,25 @@
             <div class="panel-heading">Daftar Pengguna</div>
             <div class="panel-body">
                 <a href="<?php echo base_url("panel/tambahpengguna"); ?>" class="btn btn-success"><i class="fa fa-plus-circle fa-lg fa-fw"></i> Tambah</a>
-                <table data-toggle="table" data-url="<?php //echo base_url("panel/json_inbox");?>"  data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
+                <table class="table table-striped table-responsive" data-toggle="table" data-url="<?php //echo base_url("panel/json_inbox");?>"  data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
                     <thead>
                     <tr>
-                        <th data-field="nama_lengkap"  data-sortable="true">Nama Lengkap</th>
+                        <th data-field="nama_lengkap"  data-sortable="true">Pengguna</th>
                         <th data-field="jabatan"  data-sortable="true">Jabatan</th>
                         <th data-field="dinas" data-sortable="true">Dinas</th>
-                        <th data-field="nip" data-sortable="true">NIP</th>
-                        <th data-field="disposisi" data-sortable="true">Hak Disposisi</th>
                         <th>Pilihan</th>
                     </tr>
                     </thead>
                     <tbody>
                         <?php foreach($daftar_pengguna as $pengguna): ?>
                         <tr>
-                            <td><?php echo $pengguna->nama_lengkap; ?></td>
+                            <td>
+                                <b>Nama Lengkap : </b><?php echo $pengguna->nama_lengkap; ?><hr style="margin-top: 3px;margin-bottom: 3px;"/>
+                                <b>NIP : </b><?php echo $pengguna->nip; ?><br/>
+                                <b>Hak Disposisi : </b><?php echo ($pengguna->disposisi == 1) ? "Y" : "N"; ?>
+                            </td>
                             <td><?php echo $pengguna->nama_jabatan; ?></td>
                             <td><?php echo $pengguna->nama_dinas; ?></td>
-                            <td><?php echo $pengguna->nip; ?></td>
-                            <td><?php echo ($pengguna->disposisi == 1) ? "<b>Y</b>" : "<b>N</b>"; ?></td>
                             <td>
                                 <a href="<?php echo base_url("panel/editpengguna/".$pengguna->id_pengguna); ?>" class="btn btn-primary">Edit</a>
                                 <?php if($pengguna->blokir == 0): ?>

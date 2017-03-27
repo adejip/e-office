@@ -81,4 +81,8 @@ class Ajax extends CI_Controller {
         echo json_encode($hitungan);
     }
 
+    public function ambil_userdata() {
+        var_dump($this->session->userdata());
+    }
+
 }

@@ -56,7 +56,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">Tanggal Selesai</label>
-                            <input type="text" name="tanggal_selesai" class="form-control" id="tanggal" required>
+                            <input type="text" name="tanggal_selesai" class="form-control" id="tanggal">
                         </div>
 <!--                        <div class="form-group">-->
 <!--                            <label for="">Keamanan</label>-->

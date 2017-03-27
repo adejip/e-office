@@ -8,7 +8,7 @@ window.onload = function(){
 	var hari = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
 
 	var hariIni = new Date();
-	var jumlahBalikHari = 30;//Math.round(hariIni.getDate() / 2);
+	var jumlahBalikHari = 30; //Math.round(hariIni.getDate() / 2);
 	var daftar7HariBelakang = [];
 	var daftar7TglBelakang = [];
 
@@ -17,7 +17,6 @@ window.onload = function(){
 		daftar7HariBelakang.push(/*hari[tglBaru.getDay()] + " - " + */tglBaru.getDate() + "/" + tglBaru.getMonth());
 		daftar7TglBelakang.push(tglBaru.getFullYear() + "-" + tglBaru.getMonth() + "-" + tglBaru.getDate());
 	}
-
 
     $.ajax({
         method: "POST",
@@ -37,7 +36,7 @@ window.onload = function(){
                         pointStrokeColor : "#fff",
                         pointHighlightFill : "#fff",
                         pointHighlightStroke : "rgba(220,220,220,1)",
-                        data : [response.surat[6],response.surat[5],response.surat[4],response.surat[3],response.surat[2],response.surat[1],response.surat[0]]
+                        data : response.surat.reverse()
                     },
                     {
                         label: "Disposisi",
@@ -47,7 +46,7 @@ window.onload = function(){
                         pointStrokeColor : "#fff",
                         pointHighlightFill : "#fff",
                         pointHighlightStroke : "rgba(48, 164, 255, 1)",
-                        data : [response.disposisi[6],response.disposisi[5],response.disposisi[4],response.disposisi[3],response.disposisi[2],response.disposisi[1],response.disposisi[0]]
+                        data : response.disposisi.reverse()
                     }
                 ]
             };
