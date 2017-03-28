@@ -102,7 +102,7 @@
                 curStar.removeClass('fa-spinner fa-pulse');
                 curStar.addClass("fa-star");
             }
-        })
+        });
     }
 
 </script>

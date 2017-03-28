@@ -69,6 +69,10 @@ class Ajax extends CI_Controller {
         echo 1;
     }
 
+    public function update_star_disposisi() {
+        $this->disposisi->update_star($_POST["id_relasi_disposisi"],$_POST["starred"]);
+    }
+
     public function hitung_surat_per_tanggal() {
         header("Content-Type: application/json;charset=utf-8");
         $tanggal = json_decode($_POST["tanggal"]);

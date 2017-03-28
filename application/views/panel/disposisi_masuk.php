@@ -7,7 +7,7 @@
     </ol>
 </div><!--/.row--><br />
 
-<div class="row">
+<div class="row" id="inbox-div">
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">Disposisi Masuk</div>
@@ -46,6 +46,7 @@
                 <table data-toggle="table" data-url="<?php //echo base_url("panel/json_inbox");?>"  data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
                     <thead>
                     <tr>
+                        <th data-field="starred">Star</th>
                         <th data-field="nama_lengkap"  data-sortable="true">Pengirim</></th>
                         <th data-field="waktu_kirim" data-sortable="true">Tanggal Kirim</th>
                         <th data-field="instruksi_disposisi"  data-sortable="true">Instruksi</></th>
@@ -56,6 +57,7 @@
                     <tbody>
                     <?php foreach($disposisi as $d): ?>
                         <tr class="<?php echo ($d->dibaca == 0) ? "warning" : ""; ?>">
+                            <td><i data-toggle='tooltip' title='Tandai surat' class="fa fa-star fa-lg star <?php echo ($d->starred == 1) ? "star-active" : ""; ?>" data-starred="<?php echo $d->starred; ?>" data-id="<?php echo $d->id_relasi_disposisi; ?>"></i><span style="display: none;"><?php echo ($d->starred == 1) ? $d->id_relasi_disposisi : 0; ?></span></td>
                             <td><?php echo $d->nama_lengkap; ?></td>
                             <td><?php echo $d->waktu_kirim; ?></td>
                             <td><?php echo $d->instruksi_disposisi; ?></td>
@@ -81,3 +83,41 @@
 </div><!--/.row-->
 
 </div><!--/.main-->
+
+<script>
+    $(document).ready(function(){
+        setTimeout(function() {
+            $('[data-toggle="tooltip').tooltip();
+        },1000);
+
+        $("#inbox-div").on("click",".star.fa-star",function(){
+            var curStar = $(this);
+            update_star(curStar);
+            curStar.removeClass("fa-star").addClass("fa-spinner fa-pulse");
+        });
+    });
+
+    function update_star(curStar) {
+        $.ajax({
+            url: BASE_URL + "/ajax/update_star_disposisi/",
+            method: "POST",
+            data: {
+                id_relasi_disposisi: curStar.data().id,
+                starred: (curStar.data().starred == 1) ? 0 : 1
+            },
+            success: function(response){
+                if(curStar.data().starred == 0) {
+                    curStar.data("starred",1);
+                    curStar.addClass("star-active");
+                    curStar.parent().children("span").html(1)
+                } else {
+                    curStar.data("starred",0);
+                    curStar.removeClass("star-active");
+                    curStar.parent().children('span').html(0);
+                }
+                curStar.removeClass('fa-spinner fa-pulse');
+                curStar.addClass("fa-star");
+            }
+        });
+    }
+</script>

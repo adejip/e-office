@@ -99,7 +99,7 @@ class Disposisi_model extends CI_Model {
 
         $data = $this->db->get()->row();
 
-        $this->db->select("pengguna.nama_lengkap AS pengirim,relasi_disposisi.kode_disposisi,relasi_disposisi.dibaca,relasi_disposisi.selesai AS selesai_ditangani,relasi_disposisi.catatan_selesai");
+        $this->db->select("pengguna.nama_lengkap AS pengirim,relasi_disposisi.kode_disposisi,relasi_disposisi.dibaca,relasi_disposisi.selesai AS selesai_ditangani,relasi_disposisi.catatan_selesai,relasi_disposisi.starred,relasi_disposisi.id_relasi_disposisi");
         $this->db->from("pengguna");
         $this->db->join("relasi_disposisi","relasi_disposisi.dari_user = pengguna.id_pengguna","left");
         $this->db->where("relasi_disposisi.id_disposisi",$id_disposisi);
@@ -155,6 +155,13 @@ class Disposisi_model extends CI_Model {
             ->where("ke_user",$this->session->userdata("id_pengguna"))
             ->update("relasi_disposisi",array("selesai"=>1,"catatan_selesai"=>$catatan));
         return true;
+    }
+
+    public function update_star($id_relasi_disposisi,$stat) {
+        $this->db->where("id_relasi_disposisi",$id_relasi_disposisi);
+        $this->db->update("relasi_disposisi",array(
+            "starred" => $stat
+        ));
     }
 
 }

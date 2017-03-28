@@ -63,7 +63,7 @@ class Surat_model extends CI_model{
 
     public function ambil_surat_berdasarkan_id($id_pesan,$type = "ke_user") {
         $id_user = $this->session->userdata("id_pengguna");
-        $this->db->select("relasi_pesan.dari_user,relasi_pesan.dibaca,pesan.*,pengguna.nama_lengkap AS pengirim");
+        $this->db->select("relasi_pesan.id_relasi_pesan,relasi_pesan.starred,relasi_pesan.dari_user,relasi_pesan.dibaca,pesan.*,pengguna.nama_lengkap AS pengirim");
         $this->db->join("pesan","relasi_pesan.id_pesan = pesan.id_pesan","left");
         $this->db->join("pengguna","relasi_pesan.dari_user = pengguna.id_pengguna","left");
 //        $this->db->join("pengguna","relasi_pesan.ke_user = pengguna.id_pengguna AS ke","left");

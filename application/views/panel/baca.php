@@ -23,7 +23,7 @@
                     </div>
                 <?php endif; ?>
                 <div class="panel-heading">
-                    <?php echo $pesan->subjek; ?>
+                    <i style="float: right; display: block; margin-top: 13px;" data-toggle='tooltip' title='Tandai surat' class="fa fa-star fa-lg star <?php echo ($pesan->starred == 1) ? "star-active" : ""; ?>" data-starred="<?php echo $pesan->starred; ?>" data-id="<?php echo $pesan->id_relasi_pesan; ?>"></i> <?php echo $pesan->subjek; ?>
                 </div>
                 <div class="panel-body">
                     <i>Oleh <?php echo $pesan->pengirim; ?> pada <?php echo $pesan->waktu_kirim;?></i><hr style="margin-top: 5px;margin-bottom: 5px;" />
@@ -97,5 +97,42 @@
                 return false;
             });
         })
-    })
+
+
+        setTimeout(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        },1000);
+
+        $(".star.fa-star").on("click",function(){
+            var curStar = $(this);
+            update_star(curStar);
+            curStar.removeClass("fa-star").addClass("fa-spinner fa-pulse");
+        });
+
+    });
+
+
+    function update_star(curStar) {
+        $.ajax({
+            url: BASE_URL + "/ajax/update_star/",
+            method: "POST",
+            data: {
+                id_relasi_pesan: curStar.data().id,
+                starred: (curStar.data().starred == 1) ? 0 : 1
+            },
+            success: function(response){
+                if(curStar.data().starred == 0) {
+                    curStar.data("starred",1);
+                    curStar.addClass("star-active");
+                    curStar.parent().children("span").html(1)
+                } else {
+                    curStar.data("starred",0);
+                    curStar.removeClass("star-active");
+                    curStar.parent().children('span').html(0);
+                }
+                curStar.removeClass('fa-spinner fa-pulse');
+                curStar.addClass("fa-star");
+            }
+        })
+    }
 </script>

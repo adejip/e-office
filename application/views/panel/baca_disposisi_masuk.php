@@ -24,6 +24,7 @@
                 <?php endif; ?>
                 <div class="panel-heading">
                     <h5>Detail disposisi</h5>
+                    <i style="float: right; display: block; margin-top: -27px;" data-toggle='tooltip' title='Tandai surat' class="fa fa-star fa-lg star <?php echo ($disposisi->penerima->starred == 1) ? "star-active" : ""; ?>" data-starred="<?php echo $disposisi->penerima->starred; ?>" data-id="<?php echo $disposisi->penerima->id_relasi_disposisi; ?>"></i>
                 </div>
                 <div class="panel-body">
                     <form action="" method="POST">
@@ -138,6 +139,10 @@
             type: "image"
         });
 
+        setTimeout(function() {
+            $('[data-toggle="tooltip').tooltip();
+        },1000);
+
 
         $(function(){
             $('.attach-doc').on('click',function(){
@@ -153,6 +158,36 @@
                 });
                 return false;
             });
-        })
+        });
+
+        $(".star.fa-star").on("click",function(){
+            var curStar = $(this);
+            update_star(curStar);
+            curStar.removeClass("fa-star").addClass("fa-spinner fa-pulse");
+        });
     });
+
+    function update_star(curStar) {
+        $.ajax({
+            url: BASE_URL + "/ajax/update_star_disposisi/",
+            method: "POST",
+            data: {
+                id_relasi_disposisi: curStar.data().id,
+                starred: (curStar.data().starred == 1) ? 0 : 1
+            },
+            success: function(response){
+                if(curStar.data().starred == 0) {
+                    curStar.data("starred",1);
+                    curStar.addClass("star-active");
+                    curStar.parent().children("span").html(1)
+                } else {
+                    curStar.data("starred",0);
+                    curStar.removeClass("star-active");
+                    curStar.parent().children('span').html(0);
+                }
+                curStar.removeClass('fa-spinner fa-pulse');
+                curStar.addClass("fa-star");
+            }
+        });
+    }
 </script>
