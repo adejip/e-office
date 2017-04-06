@@ -36,6 +36,23 @@ class Api extends CI_Controller {
         }
     }
 
+    public function edit_data_pengguna() {
+        if(isset($_POST["sesspassword"]) && isset($_POST["id_pengguna"])) {
+            $_SESSION["password"] = $_POST["sesspassword"];
+            $_SESSION["id_pengguna"] = $_POST["id_pengguna"];
+            unset($_POST["sesspassword"]);
+            unset($_POST["id_pengguna"]);
+        }
+
+        $code = $this->pengguna->edit_profil_pribadi();
+        $this->log(array("statusCode" => $code, "postdata"=>$this->input->post()));
+    }
+
+    public function debug() {
+        $_SESSION = array("test"=>"ajag");
+        var_dump($this->session->userdata("test"));
+    }
+
 
     private function log($s) {
         echo json_encode($s);

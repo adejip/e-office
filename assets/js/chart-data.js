@@ -12,15 +12,20 @@ window.onload = function(){
 	var daftar7HariBelakang = [];
 	var daftar7TglBelakang = [];
 
+	// console.log(hariIni);
+
 	for(var i=0;i<jumlahBalikHari;i++) {
 		var tglBaru = new Date(hariIni.setDate(hariIni.getDate() - 1));
-		daftar7HariBelakang.push(/*hari[tglBaru.getDay()] + " - " + */tglBaru.getDate() + "/" + tglBaru.getMonth());
-		daftar7TglBelakang.push(tglBaru.getFullYear() + "-" + tglBaru.getMonth() + "-" + tglBaru.getDate());
+		daftar7HariBelakang.push(tglBaru.getDate() + "/" + tglBaru.getMonth() + 1);
+		daftar7TglBelakang.push(tglBaru.getFullYear() + "-" + (tglBaru.getMonth() + 1) + "-" + tglBaru.getDate());
 	}
+
+	console.log(daftar7TglBelakang);
+
 
     $.ajax({
         method: "POST",
-        url: "http://" + window.location.host + "/disposisi/ajax/hitung_surat_per_tanggal/",
+        url: BASE_URL + "/ajax/hitung_surat_per_tanggal/",
 		data: {
 			tanggal: JSON.stringify(daftar7TglBelakang)
 		},
@@ -30,9 +35,9 @@ window.onload = function(){
                 datasets : [
                     {
                         label: "Surat",
-                        fillColor : "rgba(220,220,220,0.2)",
-                        strokeColor : "rgba(220,220,220,1)",
-                        pointColor : "rgba(220,220,220,1)",
+                        fillColor : "rgba(192, 57, 43,0.2)",
+                        strokeColor : "rgba(192, 57, 43,1.0)",
+                        pointColor : "rgba(192, 57, 43,1.0)",
                         pointStrokeColor : "#fff",
                         pointHighlightFill : "#fff",
                         pointHighlightStroke : "rgba(220,220,220,1)",

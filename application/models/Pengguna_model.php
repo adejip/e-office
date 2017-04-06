@@ -11,7 +11,13 @@ defined("BASEPATH") OR exit("Akses ditolak!");
 class Pengguna_model extends CI_Model {
 
     public function login($username,$password) {
-        $data = $this->db->where("username",$username)->where("password",md5($password))->where("blokir",0)->from("pengguna")->get();
+        $this->db->select("pengguna.*");
+        $this->db->select("jabatan.nama_jabatan");
+        $this->db->select("dinas.nama_dinas");
+        $this->db->from("pengguna");
+        $this->db->join("jabatan","pengguna.id_jabatan = jabatan.id_jabatan","left");
+        $this->db->join("dinas","pengguna.id_dinas = dinas.id_dinas","left");
+        $data = $this->db->where("username",$username)->where("password",md5($password))->where("blokir",0)->get();
         if($data->num_rows() > 0) {
             return $data->row_array();
         } else return false;
@@ -98,7 +104,6 @@ class Pengguna_model extends CI_Model {
                 $this->db->where("id_pengguna",$this->session->userdata("id_pengguna"));
                 unset($data["cpassword"]);
 
-
                 if($data["password"] == ""){
                     unset($data["password"]);
                 } else {
@@ -107,7 +112,7 @@ class Pengguna_model extends CI_Model {
                 }
 
                 $this->session->set_userdata("username",$data["username"]);
-                return $this->db->update("pengguna",$data);
+                return ($this->db->update("pengguna",$data) == true) ? 3 : 0;
 
             } else {
                 return 2;
