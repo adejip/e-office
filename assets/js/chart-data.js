@@ -20,8 +20,6 @@ window.onload = function(){
 		daftar7TglBelakang.push(tglBaru.getFullYear() + "-" + (tglBaru.getMonth() + 1) + "-" + tglBaru.getDate());
 	}
 
-	console.log(daftar7TglBelakang);
-
 
     $.ajax({
         method: "POST",
@@ -35,9 +33,9 @@ window.onload = function(){
                 datasets : [
                     {
                         label: "Surat",
-                        fillColor : "rgba(192, 57, 43,0.2)",
-                        strokeColor : "rgba(192, 57, 43,1.0)",
-                        pointColor : "rgba(192, 57, 43,1.0)",
+                        fillColor : "rgba(241, 196, 15,0.1)",
+                        strokeColor : "rgba(241, 196, 15,0.6)",
+                        pointColor : "rgba(241, 196, 15,1)",
                         pointStrokeColor : "#fff",
                         pointHighlightFill : "#fff",
                         pointHighlightStroke : "rgba(220,220,220,1)",
