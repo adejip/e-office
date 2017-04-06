@@ -16,7 +16,7 @@ window.onload = function(){
 
 	for(var i=0;i<jumlahBalikHari;i++) {
 		var tglBaru = new Date(hariIni.setDate(hariIni.getDate() - 1));
-		daftar7HariBelakang.push(tglBaru.getDate() + "/" + tglBaru.getMonth() + 1);
+		daftar7HariBelakang.push(tglBaru.getDate() + "/" + (tglBaru.getMonth() + 1));
 		daftar7TglBelakang.push(tglBaru.getFullYear() + "-" + (tglBaru.getMonth() + 1) + "-" + tglBaru.getDate());
 	}
 
