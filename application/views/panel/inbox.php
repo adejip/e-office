@@ -80,10 +80,6 @@
 <script>
     $(document).ready(function(){
 
-        setTimeout(function(){
-            $('[data-toggle="tooltip"]').tooltip();
-        },1000);
-
         $("#inbox-div").on("click",".star.fa-star",function(){
             var curStar = $(this);
             update_star(curStar);

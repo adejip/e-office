@@ -29,11 +29,11 @@
                                 foreach($disposisi->penerima as $key=>$p) {
                                     $key += 1;
                                     if ($p->selesai_ditangani == 1)
-                                        echo "<p style='cursor: pointer;' onclick=\"swal('','$p->catatan_selesai','success')\" class='alert-success'>" . $key . " . $p->nama_lengkap <i class='fa fa-check fa-lg fa-fw'></i>" . "</p>";
+                                        echo "<p data-toggle='tooltip' data-placement='left' title='Direspon (Klik untuk melihat respon)' style='padding: 5px;cursor: pointer;' onclick=\"swal('','$p->catatan_selesai','success')\" class='alert-success'><b>" . $key . " . $p->nama_lengkap <i class='fa fa-check fa-lg fa-fw'></i>" . "</b></p>";
                                     elseif($p->dibaca == 1)
-                                        echo "<p style='background-color: rgba(52, 152, 219, 0.76); color: white;'>" . $key . " . $p->nama_lengkap <i class='fa fa-eye fa-lg fa-fw'></i></p> ";
+                                        echo "<p data-toggle='tooltip' data-placement='left' title='Dibaca' style='padding: 5px;background-color: rgba(52, 152, 219, 0.76); color: white;'><b>" . $key . " . $p->nama_lengkap <i class='fa fa-eye fa-lg fa-fw'></i></b></p> ";
                                     else
-                                        echo "<p>" . $key . " . $p->nama_lengkap </p>";
+                                        echo "<p data-toggle='tooltip' data-placement='left' title='Terkirim' style='padding: 5px;background-color: rgba(241, 196, 15,.76); color: white;'><b>" . $key . " . $p->nama_lengkap </b></p>";
                                 }
                                 ?>
                             </td>

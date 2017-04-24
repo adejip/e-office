@@ -11,6 +11,11 @@
 
     $("#calendar").datepicker({});
 
+
+    setTimeout(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    },1000);
+
     !function ($) {
         $(document).on("click","ul.nav li.parent > a > span.icon", function(){
             $(this).find('em:first').toggleClass("glyphicon-minus");

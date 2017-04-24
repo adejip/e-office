@@ -12,6 +12,36 @@
         <div class="panel panel-default">
             <div class="panel-heading">Disposisi Keluar</div>
             <div class="panel-body">
+                <b><i class="fa fa-filter fa-lg"></i> Filter &nbsp;&nbsp;</b>
+                <div class="btn-group">
+                    <a href="?all" class="btn <?php echo (isset($_GET["all"])) ? "btn-success active" : "btn-primary"; ?>"><i class="fa fa-list fa-lg"></i> Semua</a>
+                    <div class="btn-group">
+                        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-bullhorn fa-lg"></i> Instruksi (<?php echo (isset($_GET["inst"]) && $_GET["inst"] != "") ? $_GET["inst"] : "Semua" ?>) <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="?">Semua Instruksi</a></li>
+                            <li><a href="?inst=Ditindak Lanjuti">Ditindak Lanjuti</a></li>
+                            <li><a href="?inst=Ditanggapi Tertulis">Ditanggapi Tertulis</a></li>
+                            <li><a href="?inst=Disiapkan makalah/sambutan/presentasi sesuai tema">Disiapkan makalah/sambutan/presentasi sesuai tema</a></li>
+                            <li><a href="?inst=Koordinasikan dengan">Koordinasikan dengan</a></li>
+                            <li><a href="?inst=Diwakili dan laporkan hasilnya">Diwakili dan laporkan hasilnya</a></li>
+                            <li><a href="?inst=Dihadiri dan laporkan hasilkan">Dihadiri dan laporkan hasilkan</a></li>
+                            <li><a href="?inst=Disiapkan surat/memo dinas internal">Disiapkan surat/memo dinas internal</a></li>
+                            <li><a href="?inst=Arsip/File">Arsip/File</a></li>
+                            <li><a href="?inst=Lain-lain">Lain-lain</a></li>
+                            <li><a href="?inst=Diketahui">Diketahui</a></li>
+                            <li><a href="?inst=Diperhatikan">Diperhatikan</a></li>
+                            <li><a href="?inst=Diberi Penjelasan">Diberi Penjelasan</a></li>
+                            <li><a href="?inst=Diwakili">Diwakili</a></li>
+                            <li><a href="?inst=Dibicarakan dengan saya">Dibicarakan dengan saya</a></li>
+                            <li><a href="?inst=Diproses sesuai ketentuan yang berlaku">Diproses sesuai ketentuan yang berlaku</a></li>
+                            <li><a href="?inst=Dilaksanakan/Diselesaikan/Disempurnakan">Dilaksanakan/Diselesaikan/Disempurnakan</a></li>
+                            <li><a href="?inst=Dijawab dengan surat">Dijawab dengan surat</a></li>
+                            <li><a href="?inst=Disiapkan sambutan tertulis">Disiapkan sambutan tertulis</a></li>
+                            <li><a href="?inst=Disiapkan atau saran-saran">Disiapkan atau saran-saran</a></li>
+                        </ul>
+                    </div>
+                </div>
                 <table data-toggle="table" data-url="<?php //echo base_url("panel/json_inbox");?>"  data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
                     <thead>
                     <tr>
@@ -32,11 +62,11 @@
                                     foreach($d->penerima as $key=>$p):
                                         $key += 1;
                                         if ($p->selesai_ditangani == 1)
-                                            echo "<p style='cursor: pointer;' onclick=\"swal('','$p->catatan_selesai','success')\" class='alert-success'><b>" . $key . " . $p->nama_lengkap <i class='fa fa-check fa-lg fa-fw'></i>" . "</b></p>";
+                                            echo "<p data-toggle='tooltip' data-placement='left' title='Direspon (Klik untuk melihat respon)' style='padding: 5px;cursor: pointer;' onclick=\"swal('','$p->catatan_selesai','success')\" class='alert-success'><b>" . $key . " . $p->nama_lengkap <i class='fa fa-check fa-lg fa-fw'></i>" . "</b></p>";
                                         elseif($p->dibaca == 1)
-                                            echo "<p style='background-color: rgba(52, 152, 219, 0.76); color: white;'><b>" . $key . " . $p->nama_lengkap <i class='fa fa-eye fa-lg fa-fw'></i></b></p> ";
+                                            echo "<p data-toggle='tooltip' data-placement='left' title='Dibaca' style='padding: 5px;background-color: rgba(52, 152, 219, 0.76); color: white;'><b>" . $key . " . $p->nama_lengkap <i class='fa fa-eye fa-lg fa-fw'></i></b></p> ";
                                         else
-                                            echo "<p><b>" . $key . " . $p->nama_lengkap </b></p>";
+                                            echo "<p data-toggle='tooltip' data-placement='left' title='Terkirim' style='padding: 5px;background-color: rgba(241, 196, 15,.76); color: white;'><b>" . $key . " . $p->nama_lengkap </b></p>";
                                     endforeach;
                                 ?>
                             </td>
