@@ -15,7 +15,8 @@
                 <table data-toggle="table" data-url="<?php //echo base_url("panel/json_inbox");?>"  data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
                     <thead>
                     <tr>
-                        <th data-field="instruksi_disposisi"  data-sortable="true">Instruksi</></th>
+                        <th data-field="instruksi_disposisi"  data-sortable="true">Instruksi</th>
+                        <th data-field="penerima">Penerima</th>
                         <th data-field="waktu_kirim" data-sortable="true">Tanggal Kirim</th>
 <!--                        <th data-field="tanggal_selesai"  data-sortable="true">Tanggal Selesai</th>-->
                         <!--<th data-field="selesai" data-sortable="true">Status</th>-->
@@ -26,6 +27,19 @@
                     <?php foreach($disposisi as $d): ?>
                         <tr>
                             <td><?php echo $d->instruksi_disposisi; ?></td>
+                            <td>
+                                <?php
+                                    foreach($d->penerima as $key=>$p):
+                                        $key += 1;
+                                        if ($p->selesai_ditangani == 1)
+                                            echo "<p style='cursor: pointer;' onclick=\"swal('','$p->catatan_selesai','success')\" class='alert-success'><b>" . $key . " . $p->nama_lengkap <i class='fa fa-check fa-lg fa-fw'></i>" . "</b></p>";
+                                        elseif($p->dibaca == 1)
+                                            echo "<p style='background-color: rgba(52, 152, 219, 0.76); color: white;'><b>" . $key . " . $p->nama_lengkap <i class='fa fa-eye fa-lg fa-fw'></i></b></p> ";
+                                        else
+                                            echo "<p><b>" . $key . " . $p->nama_lengkap </b></p>";
+                                    endforeach;
+                                ?>
+                            </td>
                             <td><?php echo $d->waktu_kirim; ?></td>
 <!--                            <td>--><?php //echo $d->tanggal_selesai; ?><!--</td>-->
                             <!--<td>

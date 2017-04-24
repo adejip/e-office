@@ -61,8 +61,20 @@ class Disposisi_model extends CI_Model {
         $this->db->join("disposisi","relasi_disposisi.id_disposisi = disposisi.id_disposisi","left");
         $this->db->where("relasi_disposisi.dari_user",$this->session->userdata("id_pengguna"));
         $this->db->group_by("relasi_disposisi.kode_disposisi");
+        $this->db->order_by("disposisi.waktu_kirim","desc");
 
         $data = $this->db->get()->result();
+
+        foreach($data as $key=>$masuk) {
+            $this->db->select("pengguna.nama_lengkap,relasi_disposisi.kode_disposisi,relasi_disposisi.dibaca,relasi_disposisi.selesai AS selesai_ditangani,relasi_disposisi.catatan_selesai");
+            $this->db->from("pengguna");
+            $this->db->join("relasi_disposisi","relasi_disposisi.ke_user = pengguna.id_pengguna","left");
+            $this->db->where("relasi_disposisi.id_disposisi",$masuk->id_disposisi);
+            $this->db->where("relasi_disposisi.kode_disposisi",$masuk->kode_disposisi);
+
+            $data[$key]->penerima = $this->db->get()->result();
+        }
+
         return $data;
     }
 

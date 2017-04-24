@@ -24,9 +24,6 @@ class Panel extends CI_Controller {
             $this->load->view("maintenance");
         }
 
-
-
-
         $this->load->model("Pengguna_model","pengguna");
         $this->load->model("Surat_model","surat");
         $this->load->model("Jabatan_model","jabatan");
@@ -81,8 +78,9 @@ class Panel extends CI_Controller {
         $judul = "Surat Masuk";
         $menu = $this->set_menu("surat_masuk");
         $surat = $this->surat->ambil_daftar_surat_masuk();
+        $daftar_dinas = $this->dinas->ambil_semua();
         $this->load->view("panel/frames/header",compact("judul","menu"));
-        $this->load->view("panel/inbox",compact("surat"));
+        $this->load->view("panel/inbox",compact("surat","daftar_dinas"));
         $this->load->view("panel/frames/footer");
     }
 

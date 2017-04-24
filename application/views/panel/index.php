@@ -86,7 +86,7 @@
 
     <div class="row">
 
-        <div class="row">
+        <div class="row" style="margin: 0;">
             <div class="col-lg-8">
                 <div class="panel panel-default">
                     <div class="panel-heading"><i class="fa fa-line-chart fa-lg"></i> Grafik Penerimaan Surat & Disposisi</div>
@@ -145,7 +145,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" style="margin: 0;">
             <div class="col-md-4">
                 <div class="panel panel-blue">
                     <div class="panel-heading dark-overlay"><svg class="glyph stroked clipboard-with-paper"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-clipboard-with-paper"></use></svg> Agenda Kerja</div>
@@ -300,4 +300,4 @@
 
 
 </script>
-<script src="<?php echo base_url("assets/js/chart-data.js"); ?>"></script>
+<script src="<?php echo base_url("assets/js/chart-data.js?v=" . microtime()); ?>"></script>
