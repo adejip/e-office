@@ -8,7 +8,7 @@ window.onload = function(){
 	var hari = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
 
 	var hariIni = new Date();
-	var jumlahBalikHari = 20; //Math.round(hariIni.getDate() / 2);
+	var jumlahBalikHari = 15; //Math.round(hariIni.getDate() / 2);
 	var daftar7HariBelakang = [];
 	var daftar7TglBelakang = [];
 

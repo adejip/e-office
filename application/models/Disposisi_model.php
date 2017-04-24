@@ -55,6 +55,10 @@ class Disposisi_model extends CI_Model {
     }
 
     public function ambil_disposisi_keluar() {
+        $get = $this->input->get();
+        if(isset($get["inst"])) {
+            $this->db->where("disposisi.instruksi_disposisi",$get["inst"]);
+        }
         $this->db->select("relasi_disposisi.*");
         $this->db->select("disposisi.*");
         $this->db->from("relasi_disposisi");
