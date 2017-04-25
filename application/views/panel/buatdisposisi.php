@@ -17,19 +17,30 @@
                 <div class="panel-heading">Isi detail disposisi</div>
                 <div class="panel-body">
                     <form action="" method="POST" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <label>Penerima [<a href="#" data-toggle="modal" data-target="#modal_manage">Manage</a>]: </label>
+                        <div class="col-md-6">
+                            <p>Penerima (Semua dinas): </p>
                             <select name="penerima[]" class="form-control penerima" multiple required>
-                                <?php foreach($daftar_pengguna as $daftar_dinas => $group_pengguna): ?>
-                                    <optgroup label="<?php echo $daftar_dinas ?>">
+                                <?php foreach($daftar_pengguna as $dinas => $group_pengguna): ?>
+                                    <optgroup label="<?php echo $dinas ?>">
                                         <?php foreach($group_pengguna as $pengguna):?>
-                                            <option value="<?php echo $pengguna->id_pengguna; ?>" <?php echo (termasuk_penerima($pengguna->id_pengguna,$penerima_otomatis)) ? "selected" : ""; ?>><?php echo $pengguna->nama_lengkap . ", " . $pengguna->nama_jabatan . " - " . $daftar_dinas; ?></option>
+                                            <option value="<?php echo $pengguna->id_pengguna; ?>" <?php echo (termasuk_penerima($pengguna->id_pengguna,$penerima_otomatis) || isset($_GET["pn"]) && $_GET["pn"] == $pengguna->id_pengguna) ? "selected" : ""; ?>><?php echo $pengguna->nama_lengkap . ", " . $pengguna->nama_jabatan . " - " . $dinas; ?></option>
                                         <?php endforeach;?>
                                     </optgroup>
                                 <?php endforeach; ?>
                             </select>
+                            <hr />
+                            <a title="Klik untuk memilih pengguna yang akan menerima pesan secara otomatis" href="#" class="btn btn-default" data-toggle="modal" data-target="#modal_manage">Pilih penerima otomatis</a>
                         </div>
-                        <div class="form-group">
+                        <div class="col-md-6">
+                            <p>Penerima (Dinas : <?php echo $this->session->userdata("nama_dinas"); ?>)</p>
+                            <select name="penerima[]" class="form-control penerima" multiple required>
+                                <?php foreach($daftar_pengguna_sedinas[$this->session->userdata("nama_dinas")] as $pengguna):?>
+                                    <option value="<?php echo $pengguna->id_pengguna; ?>" <?php echo (termasuk_penerima($pengguna->id_pengguna,$penerima_otomatis) || isset($_GET["pn"]) && $_GET["pn"] == $pengguna->id_pengguna) ? "selected" : ""; ?>><?php echo $pengguna->nama_lengkap . ", " . $pengguna->nama_jabatan;?></option>
+                                <?php endforeach;?>
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <hr />
                             <label for="">Instruksi Disposisi</label>
                             <select name="instruksi_disposisi" id="instruksi" class="form-control" required>
                                 <option value=""></option>
@@ -53,35 +64,19 @@
                                 <option value="Disiapkan sambutan tertulis">Disiapkan sambutan tertulis</option>
                                 <option value="Disiapkan atau saran-saran">Disiapkan atau saran-saran</option>
                             </select>
+                            <hr />
                         </div>
-                        <div class="form-group">
+                        <div class="col-md-12">
                             <label for="">Tanggal Selesai</label>
                             <input type="text" name="tanggal_selesai" class="form-control" id="tanggal">
+                            <hr />
                         </div>
-<!--                        <div class="form-group">-->
-<!--                            <label for="">Keamanan</label>-->
-<!--                            <select name="keamanan" id="keamanan" class="form-control">-->
-<!--                                <option value=""></option>-->
-<!--                                <option value="Biasa">Biasa</option>-->
-<!--                                <option value="Rahasia terbatas">Rahasia terbatas</option>-->
-<!--                                <option value="Rahasia">Rahasia</option>-->
-<!--                                <option value="Sangat Rahasia">Sangat Rahasia</option>-->
-<!--                            </select>-->
-<!--                        </div>-->
-<!--                        <div class="form-group">-->
-<!--                            <label for="">Kecepatan</label>-->
-<!--                            <select name="kecepatan" id="kecepatan" class="form-control">-->
-<!--                                <option value=""></option>-->
-<!--                                <option value="Biasa">Biasa</option>-->
-<!--                                <option value="Segera">Segera</option>-->
-<!--                                <option value="Amat Segera">Amat Segera</option>-->
-<!--                            </select>-->
-<!--                        </div>-->
-                        <hr />
-                        <textarea name="isi_disposisi" id="msg" required></textarea><br />
-                        <p>Lampiran</p>
-                        <input type="file" multiple id="attach" name="attach[]" class="form-control"><br />
-                        <input type="submit" name="btnSubmit" class="btn btn-success" value="Kirim">
+                        <div class="col-md-12">
+                            <textarea name="isi_disposisi" id="msg" required></textarea><br />
+                            <p>Lampiran</p>
+                            <input type="file" multiple id="attach" name="attach[]" class="form-control"><br />
+                            <input type="submit" name="btnSubmit" class="btn btn-success" value="Kirim">
+                        </div>
                     </form>
                 </div>
             </div>
@@ -106,10 +101,10 @@
                     <p><i>Pengguna yang dipilih di bawah ini akan otomatis tertera dalam form penerima surat saat membuat surat</i></p>
                     <p><b>Penerima</b></p>
                     <select style="width: 100%;" name="penerima[]" class="form-control penerima" multiple>
-                        <?php foreach($daftar_pengguna as $daftar_dinas => $group_pengguna): ?>
-                            <optgroup label="<?php echo $daftar_dinas ?>">
+                        <?php foreach(array_merge($daftar_pengguna,$daftar_pengguna_sedinas) as $dinas => $group_pengguna): ?>
+                            <optgroup label="<?php echo $dinas ?>">
                                 <?php foreach($group_pengguna as $pengguna):?>
-                                    <option value="<?php echo $pengguna->id_pengguna; ?>" <?php echo (termasuk_penerima($pengguna->id_pengguna,$penerima_otomatis)) ? "selected" : ""; ?>><?php echo $pengguna->nama_lengkap . ", " . $pengguna->nama_jabatan . " - " . $daftar_dinas; ?></option>
+                                    <option value="<?php echo $pengguna->id_pengguna; ?>" <?php echo (termasuk_penerima($pengguna->id_pengguna,$penerima_otomatis)) ? "selected" : ""; ?>><?php echo $pengguna->nama_lengkap . ", " . $pengguna->nama_jabatan . " - " . $dinas; ?></option>
                                 <?php endforeach;?>
                             </optgroup>
                         <?php endforeach; ?>

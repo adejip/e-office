@@ -64,8 +64,9 @@ class Panel extends CI_Controller {
         $menu = $this->set_menu("buat_surat");
         $daftar_pengguna = $this->pengguna->ambil_per_grup();
         $penerima_otomatis = $this->pengguna->ambil_penerima_otomatis();
+        $daftar_pengguna_sedinas = $this->pengguna->ambil_pengguna_sedinas();
         $this->load->view("panel/frames/header",compact("judul","menu"));
-        $this->load->view("panel/compose",compact("daftar_pengguna","penerima_otomatis"));
+        $this->load->view("panel/compose",compact("daftar_pengguna","penerima_otomatis","daftar_pengguna_sedinas"));
         $this->load->view("panel/frames/footer");
     }
 
@@ -373,9 +374,10 @@ class Panel extends CI_Controller {
 
         $daftar_pengguna = $this->pengguna->ambil_per_grup();
         $penerima_otomatis = $this->pengguna->ambil_penerima_otomatis();
+        $daftar_pengguna_sedinas = $this->pengguna->ambil_pengguna_sedinas();
 
         $this->load->view("panel/frames/header",compact("judul","menu"));
-        $this->load->view("panel/buatdisposisi",compact("pesan","daftar_pengguna","penerima_otomatis"));
+        $this->load->view("panel/buatdisposisi",compact("pesan","daftar_pengguna","penerima_otomatis","daftar_pengguna_sedinas"));
         $this->load->view("panel/frames/footer");
     }
 
@@ -517,6 +519,38 @@ class Panel extends CI_Controller {
         ];
         $menu[$active] = "active";
         return $menu;
+    }
+
+    // Latihan
+
+    public function latihan() {
+
+        if(isset($_POST["btnSubmit"]))
+            var_dump($this->input->post("pilih"));
+
+        echo "
+            <form action='' method='post'>
+                <select name='pilih[]' multiple='true' style='width: 300px;'>
+                    <option value='1'>1</option>
+                    <option value='2'>2</option>
+                    <option value='3'>3</option>
+                    <option value='4'>4</option>
+                    <option value='5'>5</option>
+                    <option value='6'>6</option>
+                </select>
+                <select name='pilih[]' multiple='true' style='width: 300px;'>
+                    <option value='7'>7</option>
+                    <option value='8'>8</option>
+                    <option value='9'>9</option>
+                    <option value='10'>10</option>
+                    <option value='11'>11</option>
+                    <option value='12'>12</option>
+                </select>
+                <button type='submit' name='btnSubmit'>Kirim</button>
+            </form>
+        ";
+
+
     }
 
 }

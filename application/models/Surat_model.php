@@ -134,6 +134,4 @@ class Surat_model extends CI_model{
         ));
     }
 
-
-
 }

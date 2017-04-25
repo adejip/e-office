@@ -24,6 +24,7 @@ class Pengguna_model extends CI_Model {
     }
 
     public function ambil_per_grup() {
+        $this->db->where("id_dinas !=",$this->session->userdata("id_dinas"));
         $daftar_dinas = $this->db->get("dinas")->result();
         $detail_user = array();
 
@@ -128,6 +129,15 @@ class Pengguna_model extends CI_Model {
 
     public function buka($id) {
         $this->db->where("id_pengguna",$id)->update("pengguna",array("blokir"=>0));
+    }
+
+    public function ambil_pengguna_sedinas() {
+        $this->db->select("pengguna.*,jabatan.nama_jabatan");
+        $this->db->where("pengguna.id_dinas",$this->session->userdata("id_dinas"));
+        $this->db->join("jabatan","pengguna.id_jabatan = jabatan.id_jabatan","left");
+        $daftar_pengguna = array();
+        $daftar_pengguna[$this->session->userdata("nama_dinas")] = $this->db->get("pengguna")->result();
+        return $daftar_pengguna;
     }
 
 }

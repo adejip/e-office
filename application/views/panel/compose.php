@@ -24,23 +24,34 @@
                 <div class="panel-heading">Isi detail surat</div>
                 <div class="panel-body">
                     <form action="" method="POST" enctype="multipart/form-data">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <p>Perihal : </p>
                             <input type="text" name="subjek" class="form-control" value="<?php echo (isset($_GET["sub"])) ? $_GET["sub"] : ""; ?>" autofocus required/><br />
                         </div>
                         <div class="col-md-6">
-                            <p>Penerima [<a href="#" data-toggle="modal" data-target="#modal_manage">Manage</a>]: </p>
+                            <p>Penerima (Semua dinas): </p>
                             <select name="penerima[]" class="form-control penerima" multiple required>
-                                <?php foreach($daftar_pengguna as $daftar_dinas => $group_pengguna): ?>
-                                    <optgroup label="<?php echo $daftar_dinas ?>">
+                                <?php foreach($daftar_pengguna as $dinas => $group_pengguna): ?>
+                                    <optgroup label="<?php echo $dinas ?>">
                                         <?php foreach($group_pengguna as $pengguna):?>
-                                            <option value="<?php echo $pengguna->id_pengguna; ?>" <?php echo (termasuk_penerima($pengguna->id_pengguna,$penerima_otomatis) || isset($_GET["pn"]) && $_GET["pn"] == $pengguna->id_pengguna) ? "selected" : ""; ?>><?php echo $pengguna->nama_lengkap . ", " . $pengguna->nama_jabatan . " - " . $daftar_dinas; ?></option>
+                                            <option value="<?php echo $pengguna->id_pengguna; ?>" <?php echo (termasuk_penerima($pengguna->id_pengguna,$penerima_otomatis) || isset($_GET["pn"]) && $_GET["pn"] == $pengguna->id_pengguna) ? "selected" : ""; ?>><?php echo $pengguna->nama_lengkap . ", " . $pengguna->nama_jabatan . " - " . $dinas; ?></option>
                                         <?php endforeach;?>
                                     </optgroup>
                                 <?php endforeach; ?>
                             </select>
+                            <hr />
+                            <a title="Klik untuk memilih pengguna yang akan menerima pesan secara otomatis" href="#" class="btn btn-default" data-toggle="modal" data-target="#modal_manage">Pilih penerima otomatis</a>
+                        </div>
+                        <div class="col-md-6">
+                            <p>Penerima (Dinas : <?php echo $this->session->userdata("nama_dinas"); ?>)</p>
+                            <select name="penerima[]" class="form-control penerima" multiple required>
+                                <?php foreach($daftar_pengguna_sedinas[$this->session->userdata("nama_dinas")] as $pengguna):?>
+                                    <option value="<?php echo $pengguna->id_pengguna; ?>" <?php echo (termasuk_penerima($pengguna->id_pengguna,$penerima_otomatis) || isset($_GET["pn"]) && $_GET["pn"] == $pengguna->id_pengguna) ? "selected" : ""; ?>><?php echo $pengguna->nama_lengkap . ", " . $pengguna->nama_jabatan;?></option>
+                                <?php endforeach;?>
+                            </select>
                         </div>
                         <div class="col-md-12">
+                            <hr />
                             <input type="checkbox" id="external" name="external">
                             <label for="external" style="text-decoration: none;">&raquo;&nbsp;Surat Eksternal (Centang bila benar)</label>
                             <div class="panel panel-blue" id="external_wrap">
@@ -109,10 +120,10 @@
                     <p><i>Pengguna yang dipilih di bawah ini akan otomatis tertera dalam form penerima surat saat membuat surat</i></p>
                     <p><b>Penerima</b></p>
                     <select style="width: 100%;" name="penerima[]" class="form-control penerima" multiple>
-                        <?php foreach($daftar_pengguna as $daftar_dinas => $group_pengguna): ?>
-                            <optgroup label="<?php echo $daftar_dinas ?>">
+                        <?php foreach(array_merge($daftar_pengguna,$daftar_pengguna_sedinas) as $dinas => $group_pengguna): ?>
+                            <optgroup label="<?php echo $dinas ?>">
                                 <?php foreach($group_pengguna as $pengguna):?>
-                                    <option value="<?php echo $pengguna->id_pengguna; ?>" <?php echo (termasuk_penerima($pengguna->id_pengguna,$penerima_otomatis)) ? "selected" : ""; ?>><?php echo $pengguna->nama_lengkap . ", " . $pengguna->nama_jabatan . " - " . $daftar_dinas; ?></option>
+                                    <option value="<?php echo $pengguna->id_pengguna; ?>" <?php echo (termasuk_penerima($pengguna->id_pengguna,$penerima_otomatis)) ? "selected" : ""; ?>><?php echo $pengguna->nama_lengkap . ", " . $pengguna->nama_jabatan . " - " . $dinas; ?></option>
                                 <?php endforeach;?>
                             </optgroup>
                         <?php endforeach; ?>
@@ -129,27 +140,4 @@
     </div>
 </div>
 
-<script>
-    $(document).ready(function(){
-        $("#external_wrap").hide();
-        $("#msg").froalaEditor({
-            height: 300
-        });
-        $(".penerima").select2();
-        $("#attach").fileinput({'showUpload':false, 'previewFileType':'any'});
-
-        $("#external").on("change",function(){
-            if(this.checked){
-                $("#external_wrap").slideDown();
-                $("#external_wrap input").val("").prop("disabled",false);
-            } else {
-                $("#external_wrap").slideUp();
-                $("#external_wrap input").val("").prop("disabled",true);
-            }
-        });
-
-        $(".tanggal").datepicker({
-            format: "yyyy-mm-dd"
-        });
-    })
-</script>
+<script src="<?php echo base_url("assets/js/compose.js"); ?>"></script>
