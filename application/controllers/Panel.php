@@ -180,8 +180,13 @@ class Panel extends CI_Controller {
         if($this->session->userdata("id_jabatan") != 1)
             redirect(base_url("panel/"));
         $post = $this->input->post();
-
         if(isset($post["btnSubmit"])) {
+            if(isset($post["password"])){
+                if($post["password"] == "")
+                    unset($post["password"]);
+                else
+                    $post["password"] = md5($post["password"]);
+            }
             $edt = $this->pengguna->edit();
             if($edt != false) {
                 redirect(base_url("panel/editpengguna/".$post["id_pengguna"]."?succ"));

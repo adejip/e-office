@@ -35,6 +35,10 @@
                             <input type="text" name="username" class="form-control" value="<?php echo $pengguna->username ?>" required/>
                         </div>
                         <div class="form-group">
+                            <label for="">Password (<label for="bPassword">Ubah</label> <input type="checkbox" id="bPassword"/>)</label>
+                            <input type="text" id="iPassword" name="password" class="form-control" disabled="true" required/>
+                        </div>
+                        <div class="form-group">
                             <label for="">Nomor Induk Pegawai</label>
                             <input type="text" name="nip" class="form-control" value="<?php echo $pengguna->nip ?>" required/>
                         </div>
@@ -83,5 +87,14 @@
             placeholder: "Pilih dinas",
             allowClear: true
         });
+
+        $("#bPassword").on("change",function(){
+            if(this.checked){
+                $("#iPassword").prop("disabled",false).val("");
+            } else {
+                $("#iPassword").prop("disabled",true).val("");
+            }
+        })
+
     })
 </script>

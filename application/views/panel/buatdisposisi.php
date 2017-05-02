@@ -18,7 +18,7 @@
                 <div class="panel-body">
                     <form action="" method="POST" enctype="multipart/form-data">
                         <div class="col-md-6">
-                            <p>Penerima (Semua dinas): </p>
+                            <p>Penerima (Semua dinas): </p>he
                             <select name="penerima[]" class="form-control penerima" multiple required>
                                 <?php foreach($daftar_pengguna as $dinas => $group_pengguna): ?>
                                     <optgroup label="<?php echo $dinas ?>">

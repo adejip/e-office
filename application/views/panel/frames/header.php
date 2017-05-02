@@ -14,6 +14,8 @@ $unread2 = $this->db->where("dibaca",0)->where("ke_user",$this->session->userdat
     <link href="<?php echo base_url("assets/css/datepicker3.css");?>" rel="stylesheet">
     <link href="<?php echo base_url("assets/css/styles.css");?>" rel="stylesheet">
 
+    <link rel="icon" href="<?php echo base_url("favicon.png"); ?>" type="image/png" sizes="14x5">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.3.6/css/fileinput.min.css">
 
     <!-- Include Editor style. -->

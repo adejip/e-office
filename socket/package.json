@@ -1,0 +1,29 @@
+{
+  "name": "eofficesocket",
+  "version": "1.0.0",
+  "description": "Socket untuk broadcast aplikasi android e-Office ke backend sistem http://eoffice.manadokota.go.id/",
+  "main": "index.js",
+  "scripts": {
+    "test": "console.log(\"test\");"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EdgarJeremy/e-office.git"
+  },
+  "keywords": [
+    "eoffice"
+  ],
+  "author": "EdgarJeremy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EdgarJeremy/e-office/issues"
+  },
+  "homepage": "https://github.com/EdgarJeremy/e-office#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express.js": "^1.0.0",
+    "mysql": "^2.13.0",
+    "nodemon": "^1.11.0",
+    "socket.io": "^1.7.3"
+  }
+}

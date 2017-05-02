@@ -85,6 +85,14 @@ class Pengguna_model extends CI_Model {
 
     public function edit() {
         $post = $this->input->post();
+
+        if(isset($post["password"])) {
+            if($post["password"] == "")
+                unset($post["password"]);
+            else
+                $post["password"] = md5($post["password"]);
+        }
+
         unset($post["btnSubmit"]);
 
         if(isset($post["nama_lengkap"]) && isset($post["id_jabatan"]) && isset($post["id_dinas"]) && isset($post["username"])) {
