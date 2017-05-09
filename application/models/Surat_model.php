@@ -29,6 +29,7 @@ class Surat_model extends CI_model{
                     "ke_user" => $user
                 );
                 $this->db->insert("relasi_pesan",$relasi);
+                curl_post(SOCKET_URL . "/notif_surat_baru",array("id_pesan"=>$id_pesan,"id_pengguna"=>$user,"subjek"=>$post["subjek"]));
                 $this->pemberitahuan->buat(array(
                     "id_pengguna" => $user,
                     "dari_pengguna" => $this->session->userdata("id_pengguna"),
@@ -41,7 +42,7 @@ class Surat_model extends CI_model{
         } else return false;
     }
 
-    public function ambil_daftar_surat_masuk() {
+    public function ambil_daftar_surat_masuk($id_user = null) {
         $get = $this->input->get();
         if(isset($get["unread"])) {
             $this->db->where("relasi_pesan.dibaca",0);
@@ -53,11 +54,12 @@ class Surat_model extends CI_model{
             $this->db->where("pengguna.id_dinas",$get["id_dinas"]);
         }
 
-        $id_user = $this->session->userdata("id_pengguna");
+        if($id_user == null)
+            $id_user = $this->session->userdata("id_pengguna");
+
         $this->db->select("relasi_pesan.id_relasi_pesan,relasi_pesan.starred,relasi_pesan.dibaca,relasi_pesan.disposed,pesan.id_pesan,pesan.subjek,pesan.isi_pesan,pesan.waktu_kirim,pengguna.nama_lengkap AS pengirim");
         $this->db->join("pesan","relasi_pesan.id_pesan = pesan.id_pesan","left");
         $this->db->join("pengguna","relasi_pesan.dari_user = pengguna.id_pengguna","left");
-//        $this->db->join("pengguna","relasi_pesan.ke_user = pengguna.id_pengguna AS ke","left");
         $this->db->from("relasi_pesan");
         $this->db->where("relasi_pesan.ke_user",$id_user);
         $this->db->order_by("pesan.waktu_kirim","desc");
@@ -65,12 +67,12 @@ class Surat_model extends CI_model{
         return $inbox;
     }
 
-    public function ambil_surat_berdasarkan_id($id_pesan,$type = "ke_user") {
-        $id_user = $this->session->userdata("id_pengguna");
+    public function ambil_surat_berdasarkan_id($id_pesan,$type = "ke_user",$id_user = null) {
+        if($id_user == null)
+            $id_user = $this->session->userdata("id_pengguna");
         $this->db->select("relasi_pesan.id_relasi_pesan,relasi_pesan.starred,relasi_pesan.dari_user,relasi_pesan.dibaca,pesan.*,pengguna.nama_lengkap AS pengirim");
         $this->db->join("pesan","relasi_pesan.id_pesan = pesan.id_pesan","left");
         $this->db->join("pengguna","relasi_pesan.dari_user = pengguna.id_pengguna","left");
-//        $this->db->join("pengguna","relasi_pesan.ke_user = pengguna.id_pengguna AS ke","left");
         $this->db->from("relasi_pesan");
         $this->db->where("relasi_pesan.".$type,$id_user);
         $this->db->where("relasi_pesan.id_pesan",$id_pesan);
@@ -94,9 +96,9 @@ class Surat_model extends CI_model{
         return $this->db->get()->num_rows();
     }
 
-    public function baca_surat($id_pesan) {
+    public function baca_surat($id_pesan,$id_user = null) {
         $this->db->where("id_pesan",$id_pesan);
-        $this->db->where("ke_user",$this->session->userdata("id_pengguna"));
+        $this->db->where("ke_user",($id_user == null) ? $this->session->userdata("id_pengguna") : $id_user);
         $this->db->from("relasi_pesan");
         $this->db->update("relasi_pesan",array("dibaca"=>1));
     }

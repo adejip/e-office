@@ -80,11 +80,21 @@
                         <tr>
                             <td><b>Respon</b></td>
                             <td>
+                                <div>
+                                    <ol style="list-style-position: inside; margin: 0; padding: 0;">
+                                        <li>Lorem Ipsum</li>
+                                        <li>Lorem Ipsum</li>
+                                        <li>Lorem Ipsum</li>
+                                        <li>Lorem Ipsum</li>
+                                        <li>Lorem Ipsum</li>
+                                    </ol>
+                                    <hr />
+                                </div>
                                 <textarea name="catatan_selesai" class="form-control" placeholder="Ketik respon.." required></textarea>
                             </td>
                         </tr>
                         <tr>
-                            <td><button class="btn btn-success" name="btnSubmit" type="submit"><i class="fa fa-send fa-lg fa-fw"></i> Selesai</button></td>
+                            <td><button class="btn btn-success" name="btnSubmit" type="submit"><i class="fa fa-send fa-lg fa-fw"></i> Kirim</button></td>
                         </tr>
                         <?php else: ?>
                         <tr>

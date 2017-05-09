@@ -25,12 +25,12 @@ class Api extends CI_Controller {
 
         $user = $this->pengguna->login($post["username"],$post["password"]);
         if($user != false) {
-            $this->log(array(
+            $this->kirimJSON(array(
                 "status" => 1,
                 "userdata" => $user
             ));
         } else {
-            $this->log(array(
+            $this->kirimJSON(array(
                 "status" => 0
             ));
         }
@@ -45,7 +45,20 @@ class Api extends CI_Controller {
         }
 
         $code = $this->pengguna->edit_profil_pribadi();
-        $this->log(array("statusCode" => $code, "postdata"=>$this->input->post()));
+        $this->kirimJSON(array("statusCode" => $code, "postdata"=>$this->input->post()));
+    }
+
+    public function ambil_surat_masuk() {
+        $daftar_surat = $this->surat->ambil_daftar_surat_masuk($_POST["id_pengguna"]);
+        $this->kirimJSON($daftar_surat);
+    }
+
+    public function ambil_satu_surat() {
+        $id_pesan = $this->input->post("id_pesan");
+        $id_user = $this->input->post("id_pengguna");
+        $this->surat->baca_surat($id_pesan,$id_user);
+        $surat = $this->surat->ambil_surat_berdasarkan_id($id_pesan,"ke_user",$id_user);
+        $this->kirimJSON($surat);
     }
 
     public function debug() {
@@ -53,8 +66,7 @@ class Api extends CI_Controller {
         var_dump($this->session->userdata("test"));
     }
 
-
-    private function log($s) {
+    private function kirimJSON($s) {
         echo json_encode($s);
     }
 
