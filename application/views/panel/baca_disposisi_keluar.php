@@ -13,10 +13,20 @@
     <div class="row">
         <div class="col-lg-6" id="disposisi">
             <div class="panel panel-default">
+                <?php if(isset($_GET["err"])): ?>
+                    <div class="alert bg-danger" role="alert">
+                        <svg class="glyph stroked cancel"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-cancel"></use></svg> Gagal mengirim respon! Coba lagi nanti <a href="#" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
+                    </div>
+                <?php elseif(isset($_GET["succ"])):?>
+                    <div class="alert bg-success" role="alert">
+                        <svg class="glyph stroked checkmark"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-checkmark"></use></svg> Respon berhasil dikirim ke tujuan! <a href="#" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
+                    </div>
+                <?php endif; ?>
                 <div class="panel-heading">
                     <h5>Detail disposisi</h5>
                 </div>
                 <div class="panel-body">
+                    <form action="" method="POST" enctype="multipart/form-data">
                     <table class="table table-responsive">
                         <tr>
                             <td><b>Waktu Kirim</b></td>
@@ -28,9 +38,7 @@
                                 <?php
                                 foreach($disposisi->penerima as $key=>$p) {
                                     $key += 1;
-                                    if ($p->selesai_ditangani == 1)
-                                        echo "<p data-toggle='tooltip' data-placement='left' title='Direspon (Klik untuk melihat respon)' style='padding: 5px;cursor: pointer;' onclick=\"swal('','$p->catatan_selesai','success')\" class='alert-success'><b>" . $key . " . $p->nama_lengkap <i class='fa fa-check fa-lg fa-fw'></i>" . "</b></p>";
-                                    elseif($p->dibaca == 1)
+                                    if($p->dibaca == 1)
                                         echo "<p data-toggle='tooltip' data-placement='left' title='Dibaca' style='padding: 5px;background-color: rgba(52, 152, 219, 0.76); color: white;'><b>" . $key . " . $p->nama_lengkap <i class='fa fa-eye fa-lg fa-fw'></i></b></p> ";
                                     else
                                         echo "<p data-toggle='tooltip' data-placement='left' title='Terkirim' style='padding: 5px;background-color: rgba(241, 196, 15,.76); color: white;'><b>" . $key . " . $p->nama_lengkap </b></p>";
@@ -56,7 +64,7 @@
                         </tr>
                         <tr>
                             <td><b>Isi disposisi</b></td>
-                            <td><?php echo $disposisi->isi_disposisi; ?></td>
+                            <td id="isi_disposisi" style="text-align: justify;"><?php echo $disposisi->isi_disposisi; ?></td>
                         </tr>
                         <?php
                         $lampiran = $disposisi->lampiran;
@@ -77,7 +85,55 @@
                                 </td>
                             </tr>
                         <?php endif;?>
+                            <tr>
+                                <td><b>Follow Up</b></td>
+                                <td>
+                                    <div id="followUp" style="max-height: 200px;overflow-x: scroll;">
+                                        <?php
+                                        if(empty($follow_up)):
+                                            ?>
+                                            <b>Belum ada follow-up untuk disposisi ini</b>
+                                        <?php else:?>
+                                            <ul style="list-style-position: inside; margin: 0; padding: 0; list-style-type: square">
+                                                <?php foreach($follow_up as $fu):?>
+                                                    <?php if($fu->lampiran_follow_up == null): ?>
+                                                        <li data-placement="left" data-toggle="tooltip" title="<?php echo $fu->waktu_kirim; ?>">
+                                                            <b>[<?php echo ($fu->id_pengguna == $this->session->userdata("id_pengguna")) ? "Anda" : $fu->nama_lengkap; ?>]</b>
+                                                            <?php echo $fu->isi_follow_up; ?>
+                                                        </li>
+                                                    <?php else:?>
+                                                        <li data-placement="left" data-toggle="tooltip" title="<?php echo $fu->waktu_kirim; ?>">
+                                                            <a href="#" class="attach" data-file='<?php echo $fu->lampiran_follow_up; ?>'>
+                                                                <b>[<?php echo ($fu->id_pengguna == $this->session->userdata("id_pengguna")) ? "Anda" : $fu->nama_lengkap; ?>]</b>
+                                                                <?php echo $fu->isi_follow_up; ?>
+                                                            </a>
+                                                        </li>
+                                                    <?php endif;?>
+                                                <?php endforeach;?>
+                                            </ul>
+                                        <?php endif;?>
+                                    </div>
+                                    <hr />
+                                </td>
+                            </tr>
+                        <?php if($disposisi->selesai != 1): ?>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <textarea name="isi_follow_up" class="form-control" placeholder="Ketik follow-up.." required></textarea>
+                                    <input type="file" name="lampiran_follow_up[]" id="attach" multiple>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><button class="btn btn-success" name="btnSubmit" type="submit"><i class="fa fa-send fa-lg fa-fw"></i> Kirim</button></td>
+                            </tr>
+                            <tr style="text-align: center">
+                                <td colspan="2"><a id="selesai" class="btn btn-block btn-success" href="#"><i class="fa fa-check fa-lg"></i> Selesai</a></td>
+                            </tr>
+                        <?php endif; ?>
                     </table>
+                    </form>
                 </div>
             </div>
         </div>
@@ -99,8 +155,7 @@
                         <p>Lampiran:</p>
                         <ol>
                             <?php foreach($lampiran as $l):
-                                $ext = explode(".",$l->file);
-                                $cls = (end($ext) == "pdf") ? "attach-doc" : "attach-img";
+                                $cls = (is_doc($l->file)) ? "attach-doc" : "attach-img";
                                 ?>
                                 <a class="<?php echo $cls; ?>" href="<?php echo base_url("assets/uploads/lampiran/".$l->file); ?>" data-judul="<?php echo $l->judul; ?>"><li><?php echo $l->judul; ?></li></a>
                             <?php endforeach;?>
@@ -115,12 +170,96 @@
         </div>
     </div><!--/.row-->
 
+    <form action="" method="post" style="display: none;">
+        <input type="hidden" name="password" id="confirmPassword">
+        <input type="submit" name="selesaiBtnSubmit" id="selesaiBtnSubmit">
+    </form>
+
 </div>	<!--/.main-->
 
 <script>
     $(document).ready(function(){
         $(".attach-img").magnificPopup({
             type: "image"
+        });
+
+
+        $("#isi_disposisi").shorten({
+            moreText: "Selengkapnya",
+            lessText: "Kecilkan",
+            showChars: 300
+        });
+
+        $("#attach").fileinput({'showUpload':false});
+
+        $(".attach").on("click",function(ev){
+            var data_file = $(this).data().file;
+            var content = "<ol>";
+
+            $.each(data_file,function(key,item){
+                var cls = item.file.split(".").length;
+                var tipe_gambar = ["jpg","png","jpeg","bmp","gif"];
+                cls = ($.inArray(item.file.split(".")[cls-1],tipe_gambar) == -1) ? "attach-doc" : "attach-img";
+                content += "" +
+                    "<li><a class='"+cls+"' href='"+BASE_URL+"assets/uploads/lampiran/follow_up_disposisi/"+item.file+"'>"+item.judul+"</a></li>";
+            });
+
+            content += "</ol>";
+
+            bootbox.alert({
+                size: "normal",
+                title: "Lampiran follow-up",
+                message: content
+            });
+
+
+            $(".attach-img").magnificPopup({
+                type: "image"
+            });
+
+
+            $('.attach-doc').on('click',function(){
+                var pdf_link = $(this).attr('href');
+                var title = $(this).data().judul;
+                var iframe = '<div class="iframe-container"><iframe src="http://docs.google.com/gview?url='+pdf_link+'&embedded=true"></iframe></div>'
+                $.createModal({
+                    title: title,
+                    message: iframe,
+                    closeButton:true,
+                    scrollable:false,
+                    link: pdf_link
+                });
+                $("#myModal").css("z-index",2000);
+                return false;
+            });
+
+
+            ev.preventDefault();
+        });
+
+
+        $("#selesai").on("click",function(ev){
+
+            swal({
+                title: "Konfirmasi Penyelesaian",
+                text: "Masukkan password anda untuk mengkonfirmasi akun",
+                type: "prompt",
+                showCancelButton: true,
+                closeOnConfirm: false
+            },function(input){
+                if(input === false) return false;
+
+                if(input == "") {
+                    swal.showInputError("Masukkan password anda!");
+                    return false;
+                }
+                $("#confirmPassword").val(input);
+                $("#selesaiBtnSubmit").trigger("click");
+            });
+
+            $(".sweet-alert fieldset input").prop("type","password");
+
+            ev.preventDefault();
         });
 
 

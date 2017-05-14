@@ -70,7 +70,7 @@ class Disposisi_model extends CI_Model {
         $data = $this->db->get()->result();
 
         foreach($data as $key=>$masuk) {
-            $this->db->select("pengguna.nama_lengkap,relasi_disposisi.kode_disposisi,relasi_disposisi.dibaca,relasi_disposisi.selesai AS selesai_ditangani,relasi_disposisi.catatan_selesai");
+            $this->db->select("pengguna.nama_lengkap,relasi_disposisi.kode_disposisi,relasi_disposisi.dibaca");
             $this->db->from("pengguna");
             $this->db->join("relasi_disposisi","relasi_disposisi.ke_user = pengguna.id_pengguna","left");
             $this->db->where("relasi_disposisi.id_disposisi",$masuk->id_disposisi);
@@ -89,7 +89,7 @@ class Disposisi_model extends CI_Model {
 
         $data = $this->db->get()->row();
 
-        $this->db->select("pengguna.nama_lengkap,relasi_disposisi.kode_disposisi,relasi_disposisi.dibaca,relasi_disposisi.selesai AS selesai_ditangani,relasi_disposisi.catatan_selesai");
+        $this->db->select("pengguna.nama_lengkap,relasi_disposisi.dari_user,relasi_disposisi.kode_disposisi,relasi_disposisi.dibaca");
         $this->db->from("pengguna");
         $this->db->join("relasi_disposisi","relasi_disposisi.ke_user = pengguna.id_pengguna","left");
         $this->db->where("relasi_disposisi.id_disposisi",$id_disposisi);
@@ -115,7 +115,7 @@ class Disposisi_model extends CI_Model {
 
         $data = $this->db->get()->row();
 
-        $this->db->select("pengguna.nama_lengkap AS pengirim,relasi_disposisi.kode_disposisi,relasi_disposisi.dibaca,relasi_disposisi.selesai AS selesai_ditangani,relasi_disposisi.catatan_selesai,relasi_disposisi.starred,relasi_disposisi.id_relasi_disposisi");
+        $this->db->select("pengguna.nama_lengkap AS pengirim,relasi_disposisi.dari_user,relasi_disposisi.ke_user,relasi_disposisi.kode_disposisi,relasi_disposisi.dibaca,relasi_disposisi.starred,relasi_disposisi.id_relasi_disposisi");
         $this->db->from("pengguna");
         $this->db->join("relasi_disposisi","relasi_disposisi.dari_user = pengguna.id_pengguna","left");
         $this->db->where("relasi_disposisi.id_disposisi",$id_disposisi);
@@ -142,7 +142,6 @@ class Disposisi_model extends CI_Model {
         }
 
         $this->db->select("relasi_disposisi.*");
-        $this->db->select("relasi_disposisi.selesai AS pengguna_selesai");
         $this->db->select("disposisi.*");
         $this->db->select("disposisi.selesai AS disposisi_selesai");
         $this->db->select("pengguna.nama_lengkap");
@@ -170,12 +169,23 @@ class Disposisi_model extends CI_Model {
         return true;
     }
 
-    public function selesai($catatan,$id_disposisi,$kode_disposisi) {
+    public function selesai($id_disposisi) {
         $this->db->where("id_disposisi",$id_disposisi)
-            ->where("kode_disposisi",$kode_disposisi)
-            ->where("ke_user",$this->session->userdata("id_pengguna"))
-            ->update("relasi_disposisi",array("selesai"=>1,"catatan_selesai"=>$catatan));
+            ->update("disposisi",array("selesai"=>1));
         return true;
+    }
+
+    public function follow_up($post) {
+        return $this->db->insert("follow_up_disposisi",$post);
+    }
+
+    public function ambil_follow_up($id_disposisi) {
+        $this->db->select("follow_up_disposisi.*,pengguna.nama_lengkap");
+        $this->db->from("follow_up_disposisi");
+        $this->db->join("pengguna","follow_up_disposisi.id_pengguna = pengguna.id_pengguna","left");
+        return $this->db
+            ->where("id_disposisi",$id_disposisi)
+            ->get()->result();
     }
 
     public function update_star($id_relasi_disposisi,$stat) {

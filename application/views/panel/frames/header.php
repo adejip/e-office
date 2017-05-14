@@ -49,6 +49,8 @@ $unread2 = $this->db->where("dibaca",0)->where("ke_user",$this->session->userdat
 
     <script src="<?php echo base_url("assets/js/jquery.magnific-popup.min.js"); ?>"></script>
     <script src="<?php echo base_url("assets/js/jQuery.print.js"); ?>"></script>
+    <script src="<?php echo base_url("assets/js/bootbox.min.js"); ?>"></script>
+    <script src="<?php echo base_url("assets/js/jquery.shorten.min.js"); ?>"></script>
 
     <!-- Include JS file. -->
     <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.4.0/js/froala_editor.min.js'></script>
@@ -57,7 +59,6 @@ $unread2 = $this->db->where("dibaca",0)->where("ke_user",$this->session->userdat
         BASE_URL = "<?php echo base_url(); ?>";
 	    $.FroalaEditor.DEFAULTS.key = "bvA-21sD-16A-13ojmweC8ahD6f1n==";
     </script>
-
 </head>
 
 <body>
@@ -70,7 +71,7 @@ $unread2 = $this->db->where("dibaca",0)->where("ke_user",$this->session->userdat
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#"><span>E-OFFICE</span>Manado</a>
+            <a class="navbar-brand" href="#"><span>e-officev2</span>Manado</a>
             <ul class="user-menu">
                 <li class="dropdown pull-right">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> <?php echo $this->session->userdata("nama_lengkap"); ?> <span class="caret"></span></a>

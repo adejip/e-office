@@ -63,8 +63,7 @@
                 </div>
                 <ul class="list-group">
                     <?php foreach($lampiran as $item):
-                        $ext = explode(".",$item->file);
-                        $cls = (is_doc(end($ext))) ? "attach-doc" : "attach-img";
+                        $cls = (is_doc($item->file)) ? "attach-doc" : "attach-img";
                         ?>
                         <li class="list-group-item"><a href="<?php echo base_url("assets/uploads/lampiran/".$item->file); ?>" class="<?php echo $cls; ?>" data-judul="<?php echo $item->judul; ?>"><?php echo $item->judul; ?></a></li>
                     <?php endforeach; ?>

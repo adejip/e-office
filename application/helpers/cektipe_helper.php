@@ -3,9 +3,12 @@
 defined("BASEPATH") OR exit("Akses ditolak!");
 
 if(!function_exists("is_doc")) {
-    function is_doc($ext) {
+    function is_doc($file) {
+        $ext = explode(".",$file);
+        $ext = strtolower(end($ext));
+        $tipe_gambar = array("jpg","png","jpeg","bmp","gif");
         return
-            ($ext != "jpg" && $ext != "png" && $ext != "jpeg" && $ext != "bmp" && $ext != "gif")
+            (!in_array($ext,$tipe_gambar))
             ? true : false;
     }
 }

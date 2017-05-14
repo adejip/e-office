@@ -64,7 +64,7 @@
                             <td><?php echo $d->instruksi_disposisi; ?></td>
                             <td>
                                 <?php
-                                if($d->pengguna_selesai == 0)
+                                if($d->selesai == 0)
                                     echo "<b><i class='fa fa-times fa-lg fa-fw'></i> Belum selesai</b>";
                                 else
                                     echo "<b><i class='fa fa-check fa-lg fa-fw'></i> Selesai</b>";

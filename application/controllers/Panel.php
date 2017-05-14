@@ -403,14 +403,48 @@ class Panel extends CI_Controller {
         if($this->session->userdata("disposisi") == 0)
             redirect(base_url("panel/"));
 
+        $post = $this->input->post();
+
         $disposisi = $this->disposisi->ambil_satu_disposisi($id_disposisi,$kode_disposisi);
         if($disposisi == null) redirect(base_url("panel/disposisi_keluar"));
+
+        if(isset($post["btnSubmit"])) {
+            unset($post["btnSubmit"]);
+            if($_FILES["lampiran_follow_up"]["name"][0] != "") {
+                $gambar = $this->upload_files($_FILES["lampiran_follow_up"],"assets/uploads/lampiran/follow_up_disposisi/");
+                if($gambar == false) {
+                    redirect(base_url("panel/baca_disposisi_masuk/".$id_disposisi."/".$kode_disposisi."?err"));
+                    exit();
+                }
+                $post["lampiran_follow_up"] = json_encode($gambar);
+            }
+            $post["id_pengguna"] = $this->session->userdata("id_pengguna");
+            $post["id_disposisi"] = $id_disposisi;
+            $in = $this->disposisi->follow_up($post);
+            if($in)
+                redirect(base_url("panel/baca_disposisi_keluar/".$id_disposisi."/".$kode_disposisi."?succ"));
+            else
+                redirect(base_url("panel/baca_disposisi_keluar/".$id_disposisi."/".$kode_disposisi."?err"));
+            exit();
+        }
+
+        if(isset($post["selesaiBtnSubmit"])) {
+            if(md5($post["password"]) == $this->session->userdata("password") && $disposisi->penerima[0]->dari_user == $this->session->userdata("id_pengguna")) {
+                $this->disposisi->selesai($id_disposisi);
+                redirect(base_url("panel/baca_disposisi_keluar/".$id_disposisi."/".$kode_disposisi."?succ"));
+            } else {
+                redirect(base_url("panel/baca_disposisi_keluar/".$id_disposisi."/".$kode_disposisi."?err"));
+            }
+        }
+
+
+        $follow_up = $this->disposisi->ambil_follow_up($id_disposisi);
 
         $judul = "Baca Disposisi";
         $menu = $this->set_menu("disposisi_keluar");
 
         $this->load->view("panel/frames/header",compact("judul","menu"));
-        $this->load->view("panel/baca_disposisi_keluar",compact("disposisi"));
+        $this->load->view("panel/baca_disposisi_keluar",compact("disposisi","follow_up"));
         $this->load->view("panel/frames/footer");
     }
 
@@ -427,9 +461,26 @@ class Panel extends CI_Controller {
 
     public function baca_disposisi_masuk($id_disposisi,$kode_disposisi) {
         $post = $this->input->post();
+
+        $disposisi = $this->disposisi->ambil_satu_disposisi_masuk($id_disposisi,$kode_disposisi);
+        if($disposisi == null) redirect(base_url("panel/disposisi_masuk"));
+
+        $this->disposisi->baca_disposisi($id_disposisi,$kode_disposisi);
+
         if(isset($post["btnSubmit"])) {
+            if($disposisi->selesai == 1) redirect(base_url("panel/baca_disposisi_masuk/".$id_disposisi."/".$kode_disposisi));
             unset($post["btnSubmit"]);
-            $in = $this->disposisi->selesai($post["catatan_selesai"],$id_disposisi,$kode_disposisi);
+            if($_FILES["lampiran_follow_up"]["name"][0] != "") {
+                $gambar = $this->upload_files($_FILES["lampiran_follow_up"],"assets/uploads/lampiran/follow_up_disposisi/");
+                if($gambar == false) {
+                    redirect(base_url("panel/baca_disposisi_masuk/".$id_disposisi."/".$kode_disposisi."?err"));
+                    exit();
+                }
+                $post["lampiran_follow_up"] = json_encode($gambar);
+            }
+            $post["id_pengguna"] = $this->session->userdata("id_pengguna");
+            $post["id_disposisi"] = $id_disposisi;
+            $in = $this->disposisi->follow_up($post);
             if($in)
                 redirect(base_url("panel/baca_disposisi_masuk/".$id_disposisi."/".$kode_disposisi."?succ"));
             else
@@ -437,16 +488,14 @@ class Panel extends CI_Controller {
             exit();
         }
 
-        $disposisi = $this->disposisi->ambil_satu_disposisi_masuk($id_disposisi,$kode_disposisi);
-        if($disposisi == null) redirect(base_url("panel/disposisi_masuk"));
-
-        $this->disposisi->baca_disposisi($id_disposisi,$kode_disposisi);
-
         $judul = "Baca Disposisi";
         $menu = $this->set_menu("disposisi_masuk");
 
+        $follow_up = $this->disposisi->ambil_follow_up($id_disposisi);
+
+
         $this->load->view("panel/frames/header",compact("judul","menu"));
-        $this->load->view("panel/baca_disposisi_masuk",compact("disposisi"));
+        $this->load->view("panel/baca_disposisi_masuk",compact("disposisi","follow_up"));
         $this->load->view("panel/frames/footer");
     }
 
@@ -465,10 +514,10 @@ class Panel extends CI_Controller {
         redirect(base_url("login/"));
     }
 
-    private function upload_files($files)
+    private function upload_files($files,$path = "assets/uploads/lampiran/")
     {
         $config = array(
-            'upload_path'   => "assets/uploads/lampiran/",
+            'upload_path'   => $path,
             'allowed_types' => 'jpg|png|pdf|jpeg|bmp|gif|doc|docx|xls|xlsx|ppt|pptx',
             'overwrite'     => 1,
         );

@@ -29,7 +29,7 @@ class Pengguna_model extends CI_Model {
         $detail_user = array();
 
         foreach($daftar_dinas as $dinas) {
-            $detail_user[$dinas->nama_dinas] = $this->db->select("pengguna.id_pengguna,pengguna.nama_lengkap,jabatan.nama_jabatan")->join("jabatan","pengguna.id_jabatan = jabatan.id_jabatan")->where("pengguna.id_dinas",$dinas->id_dinas)->get("pengguna")->result();
+            $detail_user[$dinas->nama_dinas] = $this->db->where("id_pengguna !=",$this->session->userdata("id_pengguna"))->select("pengguna.id_pengguna,pengguna.nama_lengkap,jabatan.nama_jabatan")->join("jabatan","pengguna.id_jabatan = jabatan.id_jabatan")->where("pengguna.id_dinas",$dinas->id_dinas)->get("pengguna")->result();
         }
 
         return $detail_user;
