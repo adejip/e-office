@@ -83,7 +83,7 @@ class CI_DB_mssql_driver extends CI_DB {
 	/**
 	 * Class constructor
 	 *
-	 * Appends the port number to the hostname, if needed.
+	 * Appends the webPort number to the hostname, if needed.
 	 *
 	 * @param	array	$params
 	 * @return	void

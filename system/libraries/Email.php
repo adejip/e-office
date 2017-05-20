@@ -93,7 +93,7 @@ class CI_Email {
 	public $smtp_pass	= '';
 
 	/**
-	 * SMTP Server port
+	 * SMTP Server webPort
 	 *
 	 * @var	int
 	 */

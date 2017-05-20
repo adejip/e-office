@@ -61,6 +61,12 @@ class Api extends CI_Controller {
         $this->kirimJSON($surat);
     }
 
+    public function update_bintang() {
+        $post = $this->input->post();
+        $this->surat->update_star($post["id_relasi_pesan"],$post["starred"]);
+        echo 1;
+    }
+
     public function debug() {
         $_SESSION = array("test"=>"ajag");
         var_dump($this->session->userdata("test"));

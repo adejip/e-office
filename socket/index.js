@@ -3,14 +3,17 @@ var server = require("http").Server(app);
 var io = require("socket.io")(server);
 var bodyParser = require("body-parser");
 
-server.listen(7008);
+
+var webPort = process.env.PORT || 8080;
+var socketPort = 7008;
+
+server.listen(socketPort);
 
 var clients = {};
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-var port = process.env.PORT || 8080;
 
 app.get("/",function(req,res){
 	res.send("Siap tempur!");
@@ -46,9 +49,9 @@ io.on("connection",function(socket){
 });
 
 
-app.listen(port);
+app.listen(webPort);
 
-console.log("e-Office socket server siap tempur di port " + port);
+console.log("e-Office socket server siap tempur di web port " + webPort + " dan socket port " + socketPort);
 
 Object.size = function(obj) {
     var size = 0, key;

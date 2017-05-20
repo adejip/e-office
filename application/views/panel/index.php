@@ -92,11 +92,11 @@
                     <div class="panel-heading"><i class="fa fa-line-chart fa-lg"></i> Grafik Penerimaan Surat & Disposisi</div>
                     <div class="panel-body">
                         <div class="info">
-                            <i style="color: #f1c40f;" class="fa fa-circle fa-lg"></i>&nbsp;&nbsp;Surat Masuk&nbsp;&nbsp;
-                            <i style="color: #3498db;" class="fa fa-circle fa-lg"></i>&nbsp;&nbsp;Disposisi Masuk<br />
+                            <i style="color: #3498db;" class="fa fa-circle fa-lg"></i>&nbsp;&nbsp;Surat Masuk&nbsp;&nbsp;
+                            <i style="color: #555555;" class="fa fa-circle fa-lg"></i>&nbsp;&nbsp;Disposisi Masuk<br />
                         </div>
                         <div class="canvas-wrapper">
-                            <canvas class="main-chart" id="line-chart" height="230" width="600"></canvas>
+                            <div id="hChartContainer" style="height: 400px;width: 100%;"></div>
                         </div>
                     </div>
                 </div>

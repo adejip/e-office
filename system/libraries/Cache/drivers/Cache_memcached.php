@@ -63,7 +63,7 @@ class CI_Cache_memcached extends CI_Driver {
 	protected $_config = array(
 		'default' => array(
 			'host'		=> '127.0.0.1',
-			'port'		=> 11211,
+			'webPort'		=> 11211,
 			'weight'	=> 1
 		)
 	);
@@ -105,7 +105,7 @@ class CI_Cache_memcached extends CI_Driver {
 		foreach ($this->_config as $cache_server)
 		{
 			isset($cache_server['hostname']) OR $cache_server['hostname'] = $defaults['host'];
-			isset($cache_server['port']) OR $cache_server['port'] = $defaults['port'];
+			isset($cache_server['webPort']) OR $cache_server['webPort'] = $defaults['webPort'];
 			isset($cache_server['weight']) OR $cache_server['weight'] = $defaults['weight'];
 
 			if ($this->_memcached instanceof Memcache)
@@ -113,7 +113,7 @@ class CI_Cache_memcached extends CI_Driver {
 				// Third parameter is persistance and defaults to TRUE.
 				$this->_memcached->addServer(
 					$cache_server['hostname'],
-					$cache_server['port'],
+					$cache_server['webPort'],
 					TRUE,
 					$cache_server['weight']
 				);
@@ -122,7 +122,7 @@ class CI_Cache_memcached extends CI_Driver {
 			{
 				$this->_memcached->addServer(
 					$cache_server['hostname'],
-					$cache_server['port'],
+					$cache_server['webPort'],
 					$cache_server['weight']
 				);
 			}

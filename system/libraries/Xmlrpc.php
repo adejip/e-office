@@ -578,7 +578,7 @@ class XML_RPC_Client extends CI_Xmlrpc
 	public $server			= '';
 
 	/**
-	 * Server port
+	 * Server webPort
 	 *
 	 * @var	int
 	 */
@@ -607,7 +607,7 @@ class XML_RPC_Client extends CI_Xmlrpc
 	public $proxy			= FALSE;
 
 	/**
-	 * Proxy port
+	 * Proxy webPort
 	 *
 	 * @var	int
 	 */

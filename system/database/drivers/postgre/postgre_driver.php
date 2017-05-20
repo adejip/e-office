@@ -98,7 +98,7 @@ class CI_DB_postgre_driver extends CI_DB {
 
 		if (strpos($this->hostname, '/') !== FALSE)
 		{
-			// If UNIX sockets are used, we shouldn't set a port
+			// If UNIX sockets are used, we shouldn't set a webPort
 			$this->port = '';
 		}
 
@@ -106,7 +106,7 @@ class CI_DB_postgre_driver extends CI_DB {
 
 		if ( ! empty($this->port) && ctype_digit($this->port))
 		{
-			$this->dsn .= 'port='.$this->port.' ';
+			$this->dsn .= 'webPort='.$this->port.' ';
 		}
 
 		if ($this->username !== '')

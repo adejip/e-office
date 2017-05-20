@@ -110,7 +110,7 @@ class CI_Session_memcached_driver extends CI_Session_driver implements SessionHa
 		$server_list = array();
 		foreach ($this->_memcached->getServerList() as $server)
 		{
-			$server_list[] = $server['host'].':'.$server['port'];
+			$server_list[] = $server['host'].':'.$server['webPort'];
 		}
 
 		if ( ! preg_match_all('#,?([^,:]+)\:(\d{1,5})(?:\:(\d+))?#', $this->_config['save_path'], $matches, PREG_SET_ORDER))
@@ -122,7 +122,7 @@ class CI_Session_memcached_driver extends CI_Session_driver implements SessionHa
 
 		foreach ($matches as $match)
 		{
-			// If Memcached already has this server (or if the port is invalid), skip it
+			// If Memcached already has this server (or if the webPort is invalid), skip it
 			if (in_array($match[1].':'.$match[2], $server_list, TRUE))
 			{
 				log_message('debug', 'Session: Memcached server pool already has '.$match[1].':'.$match[2]);

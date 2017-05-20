@@ -138,7 +138,7 @@ abstract class CI_DB_driver {
 	public $swap_pre		= '';
 
 	/**
-	 * Database port
+	 * Database webPort
 	 *
 	 * @var	int
 	 */

@@ -75,14 +75,43 @@ class Ajax extends CI_Controller {
 
     public function hitung_surat_per_tanggal() {
         header("Content-Type: application/json;charset=utf-8");
-        $tanggal = json_decode($_POST["tanggal"]);
+        $dari_tanggal = strtotime("2017-01-01");
+        $ke_tanggal = strtotime(date("Y-m-d"));
 
-        foreach($tanggal as $tgl) {
-            $hitungan["surat"][] = $this->surat->ambil_surat_per_tanggal($tgl);
-            $hitungan["disposisi"][] = $this->disposisi->ambil_disposisi_per_tanggal($tgl);
+        $daftar_surat = $this->surat->ambil_surat_per_tanggal();
+        $daftar_disposisi = $this->disposisi->ambil_disposisi_per_tanggal();
+
+        echo json_encode(array(
+            "surat" => $this->generate_data_per_tanggal($dari_tanggal,$ke_tanggal,$daftar_surat),
+            "disposisi" => $this->generate_data_per_tanggal($dari_tanggal,$ke_tanggal,$daftar_disposisi)
+        ));
+    }
+
+    private function generate_data_per_tanggal($dari_tanggal,$ke_tanggal,$data){
+        $arr_days = array();
+        $day_passed = ($ke_tanggal - $dari_tanggal); //seconds
+        $day_passed = ($day_passed/86400); //days
+
+        $counter = 0;
+        $day_to_display = $dari_tanggal;
+        while($counter < $day_passed){
+            $arr_days[date('Y-m-d',$day_to_display)] = 0;
+            $day_to_display += 86400;
+            $counter++;
+        }
+        $arr_days[date("Y-m-d",$ke_tanggal)] = 0;
+
+        $ret = [];
+
+        foreach($data as $row) {
+            $arr_days[$row->waktu_kirim] = $row->jumlah;
         }
 
-        echo json_encode($hitungan);
+        foreach($arr_days as $tanggal=>$jumlah) {
+            $ret[] = array($tanggal,(int)$jumlah);
+        }
+
+        return $ret;
     }
 
     public function ambil_userdata() {

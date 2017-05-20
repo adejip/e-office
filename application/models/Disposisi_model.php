@@ -156,9 +156,18 @@ class Disposisi_model extends CI_Model {
         return $data;
     }
 
-    public function ambil_disposisi_per_tanggal($tgl) {
-        $this->db->where("DATE(waktu_kirim)",$tgl);
-        return $this->db->get("disposisi")->num_rows();
+    public function ambil_disposisi_per_tanggal() {
+        $this->db->select("COUNT(relasi_disposisi.id_relasi_disposisi) AS jumlah");
+        $this->db->select("DATE(disposisi.waktu_kirim) AS waktu_kirim");
+        $this->db->from("relasi_disposisi");
+        $this->db->join("disposisi","relasi_disposisi.id_disposisi = disposisi.id_disposisi","left");
+
+        if($this->session->userdata("id_jabatan") != 1)
+            $this->db->where("relasi_disposisi.ke_user",$this->session->userdata("id_pengguna"));
+
+        $this->db->group_by("DATE(disposisi.waktu_kirim)");
+
+        return $this->db->get()->result();
     }
 
     public function baca_disposisi($id_disposisi,$kode_disposisi) {

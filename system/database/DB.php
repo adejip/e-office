@@ -120,7 +120,7 @@ function &DB($params = '', $query_builder_override = NULL)
 		$params = array(
 			'dbdriver'	=> $dsn['scheme'],
 			'hostname'	=> isset($dsn['host']) ? rawurldecode($dsn['host']) : '',
-			'port'		=> isset($dsn['port']) ? rawurldecode($dsn['port']) : '',
+			'webPort'		=> isset($dsn['webPort']) ? rawurldecode($dsn['webPort']) : '',
 			'username'	=> isset($dsn['user']) ? rawurldecode($dsn['user']) : '',
 			'password'	=> isset($dsn['pass']) ? rawurldecode($dsn['pass']) : '',
 			'database'	=> isset($dsn['path']) ? rawurldecode(substr($dsn['path'], 1)) : ''

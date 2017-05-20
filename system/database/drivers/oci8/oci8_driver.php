@@ -181,7 +181,7 @@ class CI_DB_oci8_driver extends CI_DB {
 			&& (( ! empty($this->port) && ctype_digit($this->port)) OR $this->database !== ''))
 		{
 			/* If the hostname field isn't empty, doesn't contain
-			 * ':' and/or '/' and if port and/or database aren't
+			 * ':' and/or '/' and if webPort and/or database aren't
 			 * empty, then the hostname field is most likely indeed
 			 * just a hostname. Therefore we'll try and build an
 			 * Easy Connect string from these 3 settings, assuming

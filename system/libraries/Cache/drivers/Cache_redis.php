@@ -58,7 +58,7 @@ class CI_Cache_redis extends CI_Driver
 		'socket_type' => 'tcp',
 		'host' => '127.0.0.1',
 		'password' => NULL,
-		'port' => 6379,
+		'webPort' => 6379,
 		'timeout' => 0
 	);
 
@@ -118,7 +118,7 @@ class CI_Cache_redis extends CI_Driver
 			}
 			else // tcp socket
 			{
-				$success = $this->_redis->connect($config['host'], $config['port'], $config['timeout']);
+				$success = $this->_redis->connect($config['host'], $config['webPort'], $config['timeout']);
 			}
 
 			if ( ! $success)

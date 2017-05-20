@@ -93,7 +93,7 @@ class CI_DB_pdo_pgsql_driver extends CI_DB_pdo_driver {
 		{
 			$this->dsn = 'pgsql:host='.(empty($this->hostname) ? '127.0.0.1' : $this->hostname);
 
-			empty($this->port) OR $this->dsn .= ';port='.$this->port;
+			empty($this->port) OR $this->dsn .= ';webPort='.$this->port;
 			empty($this->database) OR $this->dsn .= ';dbname='.$this->database;
 
 			if ( ! empty($this->username))

@@ -91,7 +91,7 @@ class CI_DB_pdo_cubrid_driver extends CI_DB_pdo_driver {
 		{
 			$this->dsn = 'cubrid:host='.(empty($this->hostname) ? '127.0.0.1' : $this->hostname);
 
-			empty($this->port) OR $this->dsn .= ';port='.$this->port;
+			empty($this->port) OR $this->dsn .= ';webPort='.$this->port;
 			empty($this->database) OR $this->dsn .= ';dbname='.$this->database;
 			empty($this->char_set) OR $this->dsn .= ';charset='.$this->char_set;
 		}

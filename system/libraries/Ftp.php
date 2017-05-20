@@ -70,7 +70,7 @@ class CI_FTP {
 	public $password = '';
 
 	/**
-	 * FTP Server port
+	 * FTP Server webPort
 	 *
 	 * @var	int
 	 */

@@ -55,6 +55,8 @@ $unread2 = $this->db->where("dibaca",0)->where("ke_user",$this->session->userdat
     <!-- Include JS file. -->
     <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.4.0/js/froala_editor.min.js'></script>
 
+    <script type="text/javascript" src="<?php echo base_url("assets/js/highstock.js");?>"></script>
+
     <script>
         BASE_URL = "<?php echo base_url(); ?>";
 	    $.FroalaEditor.DEFAULTS.key = "bvA-21sD-16A-13ojmweC8ahD6f1n==";
