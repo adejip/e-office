@@ -12,7 +12,6 @@ window.onload = function(){
             disposisi.push([new Date(item[0]).getTime(),item[1]]);
         });
 
-        console.log(disposisi);
         Highcharts.stockChart("hChartContainer",{
             rangeSelector: {
                 selected: 2

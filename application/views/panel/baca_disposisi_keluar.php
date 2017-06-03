@@ -104,7 +104,7 @@
                                                     <?php else:?>
                                                         <li data-placement="left" data-toggle="tooltip" title="<?php echo $fu->waktu_kirim; ?>">
                                                             <a href="#" class="attach" data-file='<?php echo $fu->lampiran_follow_up; ?>'>
-                                                                <b>[<?php echo ($fu->id_pengguna == $this->session->userdata("id_pengguna")) ? "Anda" : $fu->nama_lengkap; ?>]</b>
+                                                                <b>[<?php echo ($fu->id_pengguna == $this->session->userdata("id_pengguna")) ? "Anda" : $fu->nama_lengkap; ?>] <i class="fa fa-paperclip fa-lg"></i> </b>
                                                                 <?php echo $fu->isi_follow_up; ?>
                                                             </a>
                                                         </li>
@@ -120,6 +120,9 @@
                             <tr>
                                 <td></td>
                                 <td>
+                                    <?php foreach($disposisi->penerima as $penerima):?>
+                                    <input type="hidden" name="penerima[]" value="<?php echo $penerima->ke_user; ?>">
+                                    <?php endforeach;?>
                                     <textarea name="isi_follow_up" class="form-control" placeholder="Ketik follow-up.." required></textarea>
                                     <input type="file" name="lampiran_follow_up[]" id="attach" multiple>
                                 </td>
@@ -142,6 +145,7 @@
                 <div class="panel-heading">
                     <h5>Lampiran surat terkait</h5>
                 </div>
+                <?php if($disposisi->lampiran_surat != null):?>
                 <div class="panel-body">
                     <b><?php echo $disposisi->lampiran_surat->subjek; ?></b><br />
                     <i>Waktu kirim : <?php echo $disposisi->lampiran_surat->waktu_kirim; ?></i>
@@ -171,6 +175,9 @@
     </div><!--/.row-->
 
     <form action="" method="post" style="display: none;">
+        <?php foreach($disposisi->penerima as $penerima):?>
+            <input type="hidden" name="penerima[]" value="<?php echo $penerima->ke_user; ?>">
+        <?php endforeach;?>
         <input type="hidden" name="password" id="confirmPassword">
         <input type="submit" name="selesaiBtnSubmit" id="selesaiBtnSubmit">
     </form>

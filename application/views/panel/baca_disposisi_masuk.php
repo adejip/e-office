@@ -110,6 +110,7 @@
                             <td></td>
                             <td>
                                 <hr />
+                                <input type="hidden" name="pembuat" value="<?php echo $disposisi->penerima->dari_user; ?>">
                                 <textarea name="isi_follow_up" class="form-control" placeholder="Ketik follow-up.." required></textarea>
                                 <input type="file" name="lampiran_follow_up[]" id="attach" multiple>
                             </td>
@@ -133,9 +134,18 @@
                 <div class="panel-heading">
                     <h5>Lampiran surat terkait</h5>
                 </div>
+                <?php if($disposisi->lampiran_surat != null):?>
                 <div class="panel-body">
                     <b>Subjek : <?php echo $disposisi->lampiran_surat->subjek; ?></b><br />
-                    <i>Waktu kirim : <?php echo $disposisi->lampiran_surat->waktu_kirim; ?></i>
+                    <i>W
+                        <?php else:?>
+                            <div class="panel-body">
+                                <h3 style="color: #999999;text-align: center;">Tidak ada lampiran surat</h3>
+                            </div>
+                            <div class="panel-footer">
+
+                            </div>
+                        <?php endif;?>aktu kirim : <?php echo $disposisi->lampiran_surat->waktu_kirim; ?></i>
                     <p><?php echo $disposisi->lampiran_surat->isi_pesan; ?></p>
 
                     <?php
@@ -157,6 +167,14 @@
                     <button onclick="$.print('#disposisi')" class="btn btn-primary"><i class="fa fa-print fa-lg fa-fw"></i> Print Lembar Disposisi</button>
                     <button onclick="$.print('#surat')" class="btn btn-success"><i class="fa fa-print fa-lg fa-fw"></i> Print Lampiran Surat</button>
                 </div>
+                <?php else:?>
+                    <div class="panel-body">
+                        <h3 style="color: #999999;text-align: center;">Tidak ada lampiran surat</h3>
+                    </div>
+                    <div class="panel-footer">
+
+                    </div>
+                <?php endif;?>
             </div>
         </div>
     </div><!--/.row-->

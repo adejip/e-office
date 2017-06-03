@@ -29,12 +29,11 @@ class Surat_model extends CI_model{
                     "ke_user" => $user
                 );
                 $this->db->insert("relasi_pesan",$relasi);
-                curl_post(SOCKET_URL . "/notif_surat_baru",array("id_pesan"=>$id_pesan,"id_pengguna"=>$user,"subjek"=>$post["subjek"]));
                 $this->pemberitahuan->buat(array(
                     "id_pengguna" => $user,
                     "dari_pengguna" => $this->session->userdata("id_pengguna"),
                     "judul" => "Pesan Baru",
-                    "pesan" => $post["isi_pesan"],
+                    "pesan" => "Anda baru saja menerima pesan masuk",
                     "link" => "baca/".$id_pesan
                 ));
             }
@@ -104,10 +103,20 @@ class Surat_model extends CI_model{
     }
 
     public function ambil_data_surat_dikirim() {
+        $get = $this->input->get();
+        if(isset($get["unread"])) {
+            $this->db->where("relasi_pesan.dibaca",0);
+        }
+
         $id_user = $this->session->userdata("id_pengguna");
         $daftar_pesan = $this->db->select("pesan.subjek,pesan.isi_pesan,pesan.waktu_kirim,relasi_pesan.id_pesan")->from("pesan")->join("relasi_pesan","pesan.id_pesan = relasi_pesan.id_pesan")->where("dari_user",$id_user)->group_by("id_pesan")->order_by("waktu_kirim","desc")->get()->result();
         foreach($daftar_pesan as $key=>$pesan) {
             $id = $pesan->id_pesan;
+
+            if(isset($get["id_dinas"])) {
+                $this->db->where("pengguna.id_dinas",$get["id_dinas"]);
+            }
+
             $this->db->select("relasi_pesan.dibaca,pengguna.nama_lengkap");
             $this->db->from("relasi_pesan");
             $this->db->join("pengguna","relasi_pesan.ke_user = pengguna.id_pengguna","left");

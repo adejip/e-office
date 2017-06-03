@@ -12,6 +12,20 @@
         <div class="panel panel-default">
             <div class="panel-heading">Surat Terkirim</div>
             <div class="panel-body">
+                <b><i class="fa fa-filter fa-lg"></i> Filter &nbsp;&nbsp;</b>
+                <div class="btn-group">
+                    <a href="?all" class="btn <?php echo (isset($_GET["all"])) ? "btn-success active" : "btn-primary"; ?>"><i class="fa fa-list fa-lg"></i> Semua</a>
+                    <div class="btn-group">
+                        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-chain fa-lg"></i> Dinas (<?php echo (isset($_GET["dinas"]) && $_GET["dinas"] != "") ? $_GET["dinas"] : "Semua" ?>) <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu" style="height: 300px;overflow: scroll;">
+                            <li><a href="?">Semua Dinas</a></li>
+                            <?php foreach($daftar_dinas as $dinas): ?>
+                                <li><a href="?id_dinas=<?php echo $dinas->id_dinas; ?>&dinas=<?php echo $dinas->nama_dinas; ?>"><?php echo $dinas->nama_dinas; ?></a></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                </div>
                 <table data-toggle="table" data-url="<?php //echo base_url("panel/json_inbox");?>"  data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
                     <thead>
                     <tr>

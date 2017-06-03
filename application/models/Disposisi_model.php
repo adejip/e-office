@@ -89,7 +89,7 @@ class Disposisi_model extends CI_Model {
 
         $data = $this->db->get()->row();
 
-        $this->db->select("pengguna.nama_lengkap,relasi_disposisi.dari_user,relasi_disposisi.kode_disposisi,relasi_disposisi.dibaca");
+        $this->db->select("pengguna.nama_lengkap,relasi_disposisi.dari_user,relasi_disposisi.ke_user,relasi_disposisi.kode_disposisi,relasi_disposisi.dibaca");
         $this->db->from("pengguna");
         $this->db->join("relasi_disposisi","relasi_disposisi.ke_user = pengguna.id_pengguna","left");
         $this->db->where("relasi_disposisi.id_disposisi",$id_disposisi);
@@ -178,13 +178,45 @@ class Disposisi_model extends CI_Model {
         return true;
     }
 
-    public function selesai($id_disposisi) {
+    public function selesai($id_disposisi,$kode_disposisi,$targetNotif) {
+        foreach($targetNotif as $penerimaNotif) {
+            $this->pemberitahuan->buat(array(
+                "id_pengguna" => $penerimaNotif,
+                "dari_pengguna" => $this->session->userdata("id_pengguna"),
+                "judul" => "Disposisi selesai",
+                "pesan" => "Pembuat disposisi menyatakan disposisi sudah selesai",
+                "link" => "baca_disposisi_masuk/" . $id_disposisi . "/" . $kode_disposisi
+            ));
+        }
         $this->db->where("id_disposisi",$id_disposisi)
             ->update("disposisi",array("selesai"=>1));
         return true;
     }
 
-    public function follow_up($post) {
+    public function follow_up($post,$id_disposisi,$kode_disposisi,Array $targetNotif = null) {
+        if($targetNotif == null) {
+            $this->pemberitahuan->buat(array(
+                "id_pengguna" => $post["pembuat"],
+                "dari_pengguna" => $this->session->userdata("id_pengguna"),
+                "judul" => "Respon disposisi",
+                "pesan" => "Disposisi anda sudah direspon",
+                "link" => "baca_disposisi_keluar/" . $id_disposisi . "/" . $kode_disposisi
+            ));
+        } else {
+            foreach($targetNotif as $penerimaNotif) {
+                $this->pemberitahuan->buat(array(
+                    "id_pengguna" => $penerimaNotif,
+                    "dari_pengguna" => $this->session->userdata("id_pengguna"),
+                    "judul" => "Respon disposisi",
+                    "pesan" => "Pembuat disposisi yang anda terima merespon",
+                    "link" => "baca_disposisi_masuk/" . $id_disposisi . "/" . $kode_disposisi
+                ));
+            }
+        }
+        if(isset($post["pembuat"]))
+            unset($post["pembuat"]);
+        if(isset($post["penerima"]))
+            unset($post["penerima"]);
         return $this->db->insert("follow_up_disposisi",$post);
     }
 

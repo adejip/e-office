@@ -28,7 +28,6 @@
                             <?php endforeach; ?>
                         </ul>
                     </div>
-
                 </div>
                 <table class="table table-striped" id="daftar_inbox" data-toggle="table" data-url="<?php //echo base_url("panel/json_inbox");?>"  data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
                     <thead>

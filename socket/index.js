@@ -9,7 +9,7 @@ var socketPort = 7008;
 
 server.listen(socketPort);
 
-var clients = {};
+var clients = [];
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -21,42 +21,46 @@ app.get("/",function(req,res){
 	console.log(req.query);
 });
 
-app.post("/notif_surat_baru",function(req,res){
+app.post("/kirimNotif",function(req,res){
+	console.log(req.body);
 	var id_pengguna = req.body.id_pengguna;
 	delete(req.body.id_pengguna);
-	if(io.sockets.connected[clients["id_"+id_pengguna]])
-		io.sockets.connected[clients["id_"+id_pengguna]].emit("surat_baru",req.body);
+
+	clients.forEach(function(item,index){
+		if(item.id_pengguna == id_pengguna)
+			if(io.sockets.connected[item.clientId])
+				io.sockets.connected[item.clientId].emit("notifBaru",req.body);
+	});
+
 	res.send("OK");
 });
 
 io.on("connection",function(socket){
 	var clientId = socket.id;
 
+
 	socket.on("join",function(id_pengguna){
-        clients["id_"+id_pengguna] = clientId;
+        clients.push({
+			id_pengguna: id_pengguna,
+			clientId: clientId
+		});
         console.log("Client terhubung dengan ID : " + clientId);
-        console.log("Jumlah client : " + Object.size(clients));
-        console.log(clients);
+        console.log("Jumlah client : " + clients.length);
 	});
 
-	socket.on("leave",function(id_pengguna){
-		delete(clients["id_"+id_pengguna]);
+	socket.on("leave",function(){
+		clients.forEach(function(item,index){
+			if(item.clientId == clientId)
+				clients.splice(index,1);
+		});
 		console.log("Client dengan ID : " + clientId + " terputus");
-		console.log("Jumlah client : " + Object.size(clients));
-		console.log(clients);
+		console.log("Jumlah client : " + clients.length);
 	});
 
 });
 
 
+
 app.listen(webPort);
 
-console.log("e-Office socket server siap tempur di web port " + webPort + " dan socket port " + socketPort);
-
-Object.size = function(obj) {
-    var size = 0, key;
-    for (key in obj) {
-        if (obj.hasOwnProperty(key)) size++;
-    }
-    return size;
-}
+console.log("e-Office ready..");

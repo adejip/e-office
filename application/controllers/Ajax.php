@@ -53,11 +53,6 @@ class Ajax extends CI_Controller {
         $this->agenda->edit($post);
     }
 
-    public function ambil_data_pengguna() {
-        header("Content-Type: application/json;charset=utf-8");
-        echo json_encode($this->session->userdata());
-    }
-
     public function edit_data_pengguna() {
         $code = $this->pengguna->edit_profil_pribadi();
         header("Content-Type: application/json;charset=utf-8");
@@ -114,8 +109,25 @@ class Ajax extends CI_Controller {
         return $ret;
     }
 
-    public function ambil_userdata() {
-        var_dump($this->session->userdata());
+    public function ambil_pemberitahuan() {
+        $daftar_pemberitahuan = $this->pemberitahuan->ambil();
+        $i = 0;
+        foreach($daftar_pemberitahuan as $pemberitahuan) {
+            if($pemberitahuan->dibaca == 0)
+                $i++;
+        }
+        echo json_encode(array(
+            "data" => $daftar_pemberitahuan,
+            "belum_dibaca" => $i
+        ));
+    }
+
+    public function ambil_data_pengguna() {
+        $datauser = $this->session->userdata();
+        unset($datauser["password"]);
+        echo json_encode(array(
+            "data"=>$datauser
+        ));
     }
 
 }

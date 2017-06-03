@@ -975,3 +975,17 @@ h1.page-header {
 	width: 10px;
 	text-align: center;
 }
+
+a.btnToast {
+	color: white !important;
+	background-color: rgba(41, 128, 185,1.0) !important;
+}
+
+#notifList a.active {
+	background-color: rgba(52, 152, 219,0.3);
+}
+
+#notifList hr {
+	margin: 0;
+	margin-bottom: 10px;
+}

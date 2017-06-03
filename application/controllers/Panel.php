@@ -126,10 +126,12 @@ class Panel extends CI_Controller {
 
     public function outbox() {
         $dikirim = $this->surat->ambil_data_surat_dikirim();
+        $daftar_dinas = $this->dinas->ambil_semua();
+
         $judul = "Surat Dikirim";
         $menu = $this->set_menu("surat_terkirim");
 
-        $this->load->view("panel/frames/header",compact("judul","menu"));
+        $this->load->view("panel/frames/header",compact("judul","menu","daftar_dinas"));
         $this->load->view("panel/outbox",compact("dikirim"));
         $this->load->view("panel/frames/footer");
     }
@@ -363,18 +365,31 @@ class Panel extends CI_Controller {
                 $post["lampiran"] = json_encode($gambar);
             }
             $kirim = $this->disposisi->kirim($post,$id_pesan);
-            if($kirim)
-                redirect(base_url("panel/baca/".$id_pesan."?succ"));
-            else
-                redirect(base_url("panel/baca/".$id_pesan."?err"));
+            if($kirim) {
+                if($id_pesan != null)
+                    redirect(base_url("panel/baca/" . $id_pesan . "?succ"));
+                else
+                    redirect(base_url("panel/buatdisposisi/?succ"));
+            } else {
+                if($id_pesan != null)
+                    redirect(base_url("panel/baca/" . $id_pesan . "?err"));
+                else
+                    redirect(base_url("panel/buatdisposisi/?err"));
+            }
             exit();
         }
 
-        if($id_pesan == null) redirect(base_url("panel/inbox"));
-        $pesan = $this->surat->ambil_surat_berdasarkan_id($id_pesan,"ke_user");
-        if($pesan == null) redirect(base_url("panel/inbox"));
+        if($id_pesan != null) {
+            $pesan = $this->surat->ambil_surat_berdasarkan_id($id_pesan,"ke_user");
+            if($pesan == null) redirect(base_url("panel/inbox"));
+            $judul = "Buat disposisi : " . $pesan->subjek;
+        }
+        else {
+            $pesan = null;
+            $judul = "Buat disposisi mandiri";
+        }
 
-        $judul = "Buat disposisi : " . $pesan->subjek;
+
         $menu = $this->set_menu("surat_masuk");
 
         $daftar_pengguna = $this->pengguna->ambil_per_grup();
@@ -420,7 +435,7 @@ class Panel extends CI_Controller {
             }
             $post["id_pengguna"] = $this->session->userdata("id_pengguna");
             $post["id_disposisi"] = $id_disposisi;
-            $in = $this->disposisi->follow_up($post);
+            $in = $this->disposisi->follow_up($post,$id_disposisi,$kode_disposisi,$post["penerima"]);
             if($in)
                 redirect(base_url("panel/baca_disposisi_keluar/".$id_disposisi."/".$kode_disposisi."?succ"));
             else
@@ -430,7 +445,8 @@ class Panel extends CI_Controller {
 
         if(isset($post["selesaiBtnSubmit"])) {
             if(md5($post["password"]) == $this->session->userdata("password") && $disposisi->penerima[0]->dari_user == $this->session->userdata("id_pengguna")) {
-                $this->disposisi->selesai($id_disposisi);
+
+                $this->disposisi->selesai($id_disposisi,$kode_disposisi,$post["penerima"]);
                 redirect(base_url("panel/baca_disposisi_keluar/".$id_disposisi."/".$kode_disposisi."?succ"));
             } else {
                 redirect(base_url("panel/baca_disposisi_keluar/".$id_disposisi."/".$kode_disposisi."?err"));
@@ -480,7 +496,7 @@ class Panel extends CI_Controller {
             }
             $post["id_pengguna"] = $this->session->userdata("id_pengguna");
             $post["id_disposisi"] = $id_disposisi;
-            $in = $this->disposisi->follow_up($post);
+            $in = $this->disposisi->follow_up($post,$id_disposisi,$kode_disposisi);
             if($in)
                 redirect(base_url("panel/baca_disposisi_masuk/".$id_disposisi."/".$kode_disposisi."?succ"));
             else
@@ -579,7 +595,7 @@ class Panel extends CI_Controller {
 
     public function latihan() {
 
-        curl_post("http://localhost:7008/notif_pesan_baru",array("id_pesan"=>138));
+        curl_post("http://localhost:7008/kirimNotif",array("id_pesan"=>138));
 
     }
 

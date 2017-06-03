@@ -13,7 +13,7 @@ $unread2 = $this->db->where("dibaca",0)->where("ke_user",$this->session->userdat
     <link href="<?php echo base_url("assets/css/bootstrap-table.css");?>" rel="stylesheet">
     <link href="<?php echo base_url("assets/css/datepicker3.css");?>" rel="stylesheet">
     <link href="<?php echo base_url("assets/css/styles.css");?>" rel="stylesheet">
-
+    <link href="<?php echo base_url("assets/css/iziToast.min.css");?>" rel="stylesheet">
     <link rel="icon" href="<?php echo base_url("favicon.png"); ?>" type="image/png" sizes="14x5">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.3.6/css/fileinput.min.css">
@@ -51,11 +51,15 @@ $unread2 = $this->db->where("dibaca",0)->where("ke_user",$this->session->userdat
     <script src="<?php echo base_url("assets/js/jQuery.print.js"); ?>"></script>
     <script src="<?php echo base_url("assets/js/bootbox.min.js"); ?>"></script>
     <script src="<?php echo base_url("assets/js/jquery.shorten.min.js"); ?>"></script>
+    <script src="<?php echo base_url("assets/js/iziToast.min.js"); ?>"></script>
 
     <!-- Include JS file. -->
     <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.4.0/js/froala_editor.min.js'></script>
 
     <script type="text/javascript" src="<?php echo base_url("assets/js/highstock.js");?>"></script>
+    <script type="text/javascript" src="<?php echo base_url("assets/js/moment.js");?>"></script>
+
+    <script type="text/javascript" src="http://192.168.137.62:7008/socket.io/socket.io.js"></script>
 
     <script>
         BASE_URL = "<?php echo base_url(); ?>";
@@ -80,8 +84,23 @@ $unread2 = $this->db->where("dibaca",0)->where("ke_user",$this->session->userdat
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="#"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Profil</a></li>
                         <li><a href="#" id="pengaturan"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg> Pengaturan</a></li>
-                        <li><a href="<?php echo base_url("panel/logout/"); ?>"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
+                        <li><a id="btnLogout" href="<?php echo base_url("panel/logout/"); ?>"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
                     </ul>
+                </li>
+                <li class="dropdown pull-right" style="margin-right: 30px;">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked clipboard with paper"><use xlink:href="#stroked-clipboard-with-paper"/></svg> Pemberitahuan <i class="badge" id="notifCount"></i> <span class="caret"></span></a>
+                    <div style="width: 400px;border: 2px dotted;box-shadow: rgba(0,0,0,.2) 3px 0px 12px;" class="panel panel-default chat dropdown-menu" role="menu" id="notifWrap">
+                        <div class="panel-heading" id="accordion"><svg class="glyph stroked clipboard with paper"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-clipboard-with-paper"></use></svg> Pemberitahuan</div>
+
+                        <div class="panel-body">
+                            <ul id="notifList"></ul>
+                        </div>
+
+                        <div class="panel-footer">
+                            <a href="#" style="color: inherit;"><i class="fa fa-check fa-lg"></i> Tandai semua sudah dibaca</a>
+                        </div>
+                    </div>
+
                 </li>
             </ul>
         </div>

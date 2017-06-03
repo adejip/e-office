@@ -18,6 +18,15 @@ class Pemberitahuan_model extends CI_Model {
     }
 
     public function buat(Array $konfig) {
+        $konfig["dibaca"] = 0;
+        $konfig["waktu"] = "Baru saja";
+        $konfig["nama_lengkap"] = $this->db
+            ->select("nama_lengkap")
+            ->where("id_pengguna",$konfig["id_pengguna"])
+            ->get("pengguna")->row()->nama_lengkap;
+        curl_post(SOCKET_URL . "/kirimNotif",$konfig);
+        unset($konfig["nama_lengkap"]);
+        unset($konfig["waktu"]);
         return $this->db->insert("pemberitahuan",$konfig);
     }
 

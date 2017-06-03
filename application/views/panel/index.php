@@ -68,26 +68,12 @@
         </div>
     </div><!--/.row-->
 
-
-<!--    <div class="row">-->
-<!--        <div class="col-lg-12">-->
-<!--            <div class="panel panel-default">-->
-<!--                <div class="panel-heading">Grafik Pembuatan Surat</div>-->
-<!--                <div class="panel-body">-->
-<!--                    <div class="canvas-wrapper">-->
-<!--                        <canvas class="main-chart" id="line-chart" height="200" width="600"></canvas>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div><!--/.row-->
-
     <hr>
 
     <div class="row">
 
         <div class="row" style="margin: 0;">
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading"><i class="fa fa-line-chart fa-lg"></i> Grafik Penerimaan Surat & Disposisi</div>
                     <div class="panel-body">
@@ -102,47 +88,6 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="panel panel-default chat">
-                    <div class="panel-heading" id="accordion"><svg class="glyph stroked sound on"><use xlink:href="#stroked-sound-on"/></svg> Pemberitahuan</div>
-
-                    <div class="panel-body">
-                        <ul>
-                            <?php foreach($daftar_notif as $notif): ?>
-                                <a href="<?php echo base_url("panel/baca_notif?rel_link=".$notif->link."&id=".$notif->id_pemberitahuan); ?>" style="text-decoration: none;display: block;">
-                                    <li class="clearfix" style="<?php echo ($notif->dibaca == 0) ? "background-color: #c0e4ff;" : ""; ?>">
-                                        <div class="chat-body clearfix">
-                                            <div class="header">
-                                                <strong class="primary-font"><?php echo $notif->nama_lengkap; ?></strong>
-                                                <small class="text-muted">
-                                                    <?php
-                                                    $waktunotif = new DateTime($notif->waktu);
-                                                    $waktusekarang = new DateTime("now");
-                                                    $diff = $waktusekarang->diff($waktunotif);
-                                                    if($diff->days > 0) {
-                                                        echo $diff->format("%d hari %h jam lalu");
-                                                    } else {
-                                                        echo $diff->format("%h jam %i menit lalu");
-                                                    }
-                                                    ?>
-                                                </small>
-                                            </div>
-                                            <p>
-                                                <?php echo "&raquo; <b>".$notif->judul."</b>"; ?>
-                                                <br />
-                                                <?php echo character_limiter(strip_tags($notif->pesan),30); ?>
-                                            </p>
-                                        </div>
-                                    </li>
-                                </a>
-                            <?php endforeach; ?>
-                        </ul>
-                    </div>
-
-                    <div class="panel-footer">
-                    </div>
-                </div>
-            </div>
         </div>
 
         <div class="row" style="margin: 0;">

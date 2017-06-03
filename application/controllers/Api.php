@@ -67,6 +67,11 @@ class Api extends CI_Controller {
         echo 1;
     }
 
+    public function ambil_pengguna() {
+        $daftar_pengguna = $this->pengguna->ambil_semua();
+        $this->kirimJSON($daftar_pengguna);
+    }
+
     public function debug() {
         $_SESSION = array("test"=>"ajag");
         var_dump($this->session->userdata("test"));

@@ -3,9 +3,13 @@
     <div class="row">
         <ol class="breadcrumb">
             <li><a href="#"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
+            <?php if($pesan != null): ?>
             <li><a href="<?php echo base_url("panel/inbox/"); ?>">Surat Masuk</a></li>
             <li><a href="<?php echo base_url("panel/baca/".$pesan->id_pesan); ?>"><?php echo $pesan->subjek; ?></a></li>
             <li class="active">Buat Disposisi : <?php echo $pesan->subjek; ?></li>
+            <?php else:?>
+            <li><a href="<?php echo base_url("panel/disposisi_masuk/"); ?>">Disposisi Masuk</a></li>
+            <?php endif;?>
         </ol>
     </div><!--/.row-->
 
@@ -14,6 +18,15 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
+                <?php if(isset($_GET["err"])): ?>
+                    <div class="alert bg-danger" role="alert">
+                        <svg class="glyph stroked cancel"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-cancel"></use></svg> Gagal mengirim disposisi! Coba lagi nanti <a href="#" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
+                    </div>
+                <?php elseif(isset($_GET["succ"])):?>
+                    <div class="alert bg-success" role="alert">
+                        <svg class="glyph stroked checkmark"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-checkmark"></use></svg> Disposisi berhasil dikirim ke tujuan! <a href="#" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
+                    </div>
+                <?php endif; ?>
                 <div class="panel-heading">Isi detail disposisi</div>
                 <div class="panel-body">
                     <form action="" method="POST" enctype="multipart/form-data">
