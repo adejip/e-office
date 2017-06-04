@@ -59,7 +59,7 @@ $unread2 = $this->db->where("dibaca",0)->where("ke_user",$this->session->userdat
     <script type="text/javascript" src="<?php echo base_url("assets/js/highstock.js");?>"></script>
     <script type="text/javascript" src="<?php echo base_url("assets/js/moment.js");?>"></script>
 
-    <script type="text/javascript" src="http://192.168.137.62:7008/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="http://localhost:7008/socket.io/socket.io.js"></script>
 
     <script>
         BASE_URL = "<?php echo base_url(); ?>";

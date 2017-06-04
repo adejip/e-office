@@ -170,6 +170,14 @@
                     <button onclick="$.print('#disposisi')" class="btn btn-primary"><i class="fa fa-print fa-lg fa-fw"></i> Print Lembar Disposisi</button>
                     <button onclick="$.print('#surat')" class="btn btn-success"><i class="fa fa-print fa-lg fa-fw"></i> Print Lampiran Surat</button>
                 </div>
+                <?php else:?>
+                <div class="panel-body">
+                    <h3 style="color: #999999;text-align: center;">Tidak ada lampiran surat</h3>
+                </div>
+                <div class="panel-footer">
+
+                </div>
+                <?php endif;?>
             </div>
         </div>
     </div><!--/.row-->

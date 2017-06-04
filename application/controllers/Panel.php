@@ -44,6 +44,7 @@ class Panel extends CI_Controller {
     public function compose() {
         $post = $this->input->post();
         if(isset($post["btnSubmit"])) {
+            if(count($post["penerima"]) == 0) redirect(base_url("panel/compose/?err"));
             if($_FILES["attach"]["name"][0] != "") {
                 $gambar = $this->upload_files($_FILES["attach"]);
                 if($gambar == false) {
@@ -356,6 +357,12 @@ class Panel extends CI_Controller {
 
         $post = $this->input->post();
         if(isset($post["btnSubmit"])) {
+            if(count($post["penerima"]) == 0) {
+                if($id_pesan != null)
+                    redirect(base_url("panel/baca/" . $id_pesan . "?err"));
+                else
+                    redirect(base_url("panel/buatdisposisi/?err"));
+            }
             if($_FILES["attach"]["name"][0] != "") {
                 $gambar = $this->upload_files($_FILES["attach"]);
                 if($gambar == false) {
