@@ -49,6 +49,7 @@
                     <thead>
                     <tr>
                         <th data-field="starred">Star</th>
+                        <th data-field="subjek">Subjek surat terlampir</th>
                         <th data-field="nama_lengkap"  data-sortable="true">Pengirim</></th>
                         <th data-field="waktu_kirim" data-sortable="true">Tanggal Kirim</th>
                         <th data-field="instruksi_disposisi"  data-sortable="true">Instruksi</></th>
@@ -60,6 +61,7 @@
                     <?php foreach($disposisi as $d): ?>
                         <tr class="<?php echo ($d->dibaca == 0) ? "warning" : ""; ?>">
                             <td><i data-toggle='tooltip' title='Tandai surat' class="fa fa-star fa-lg star <?php echo ($d->starred == 1) ? "star-active" : ""; ?>" data-starred="<?php echo $d->starred; ?>" data-id="<?php echo $d->id_relasi_disposisi; ?>"></i><span style="display: none;"><?php echo ($d->starred == 1) ? $d->id_relasi_disposisi : 0; ?></span></td>
+                            <td><?php echo ($d->subjek != null && $d->subjek != "") ? $d->subjek : "<b>Tidak ada surat terlampir</b>"; ?></td>
                             <td><?php echo $d->nama_lengkap; ?></td>
                             <td><?php echo $d->waktu_kirim; ?></td>
                             <td><?php echo $d->instruksi_disposisi; ?></td>
@@ -72,8 +74,8 @@
                                 ?>
                             </td>
                             <td>
-                                <a href="<?php echo base_url("panel/baca_disposisi_masuk/" . $d->id_disposisi . "/" . $d->kode_disposisi); ?>" class="btn btn-success">Baca</a>
-                                <a href="#" class="btn btn-warning">Hapus</a>
+                                <a href="<?php echo base_url("panel/baca_disposisi_masuk/" . $d->id_disposisi . "/" . $d->kode_disposisi); ?>" class="btn btn-success"><i class="fa fa-eye fa-lg"></i></a>
+                                <a href="#" class="btn btn-warning"><i class="fa fa-trash fa-lg"></i></a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

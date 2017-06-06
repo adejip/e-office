@@ -27,6 +27,10 @@ class Pemberitahuan_model extends CI_Model {
         curl_post(SOCKET_URL . "/kirimNotif",$konfig);
         unset($konfig["nama_lengkap"]);
         unset($konfig["waktu"]);
+
+        if(isset($konfig["id_pesan"]))
+            unset($konfig["id_pesan"]);
+
         return $this->db->insert("pemberitahuan",$konfig);
     }
 

@@ -34,6 +34,7 @@ class Surat_model extends CI_model{
                     "dari_pengguna" => $this->session->userdata("id_pengguna"),
                     "judul" => "Pesan Baru",
                     "pesan" => "Anda baru saja menerima pesan masuk",
+                    "id_pesan" => $id_pesan,
                     "link" => "baca/".$id_pesan
                 ));
             }

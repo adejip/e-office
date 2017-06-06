@@ -45,6 +45,7 @@
                 <table data-toggle="table" data-url="<?php //echo base_url("panel/json_inbox");?>"  data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
                     <thead>
                     <tr>
+                        <th data-field="subjek">Subjek surat terlampir</th>
                         <th data-field="instruksi_disposisi"  data-sortable="true">Instruksi</th>
                         <th data-field="penerima">Penerima</th>
                         <th data-field="waktu_kirim" data-sortable="true">Tanggal Kirim</th>
@@ -56,6 +57,7 @@
                     <tbody>
                     <?php foreach($disposisi as $d): ?>
                         <tr>
+                            <td><?php echo ($d->subjek != null && $d->subjek != "") ? $d->subjek : "<b>Tidak ada surat terlampir</b>"; ?></td>
                             <td><?php echo $d->instruksi_disposisi; ?></td>
                             <td>
                                 <?php

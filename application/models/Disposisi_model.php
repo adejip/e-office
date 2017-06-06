@@ -61,8 +61,10 @@ class Disposisi_model extends CI_Model {
         }
         $this->db->select("relasi_disposisi.*");
         $this->db->select("disposisi.*");
+        $this->db->select("pesan.subjek");
         $this->db->from("relasi_disposisi");
         $this->db->join("disposisi","relasi_disposisi.id_disposisi = disposisi.id_disposisi","left");
+        $this->db->join("pesan","relasi_disposisi.id_pesan = pesan.id_pesan","left");
         $this->db->where("relasi_disposisi.dari_user",$this->session->userdata("id_pengguna"));
         $this->db->group_by("relasi_disposisi.kode_disposisi");
         $this->db->order_by("disposisi.waktu_kirim","desc");
@@ -143,11 +145,13 @@ class Disposisi_model extends CI_Model {
 
         $this->db->select("relasi_disposisi.*");
         $this->db->select("disposisi.*");
+        $this->db->select("pesan.subjek");
         $this->db->select("disposisi.selesai AS disposisi_selesai");
         $this->db->select("pengguna.nama_lengkap");
         $this->db->from("relasi_disposisi");
         $this->db->join("disposisi","relasi_disposisi.id_disposisi = disposisi.id_disposisi");
         $this->db->join("pengguna","relasi_disposisi.dari_user = pengguna.id_pengguna","left");
+        $this->db->join("pesan","relasi_disposisi.id_pesan = pesan.id_pesan","left");
         $this->db->where("relasi_disposisi.ke_user",$this->session->userdata("id_pengguna"));
         $this->db->group_by("relasi_disposisi.kode_disposisi");
         $this->db->order_by("disposisi.waktu_kirim","desc");
