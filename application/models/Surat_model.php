@@ -14,8 +14,8 @@ class Surat_model extends CI_model{
         $this->load->model("Pemberitahuan_model","pemberitahuan");
     }
 
-    public function kirim($post) {
-        unset($post["btnSubmit"]);
+    public function kirim($post,$id_pengguna = null) {
+        if(isset($post["btnSubmit"])) unset($post["btnSubmit"]);
         $to_user = $post["penerima"];
         if(count($to_user) == 0) return false;
         unset($post["penerima"]);
@@ -25,13 +25,13 @@ class Surat_model extends CI_model{
             foreach($to_user as $user) {
                 $relasi = array(
                     "id_pesan" => $id_pesan,
-                    "dari_user" => $this->session->userdata("id_pengguna"),
+                    "dari_user" => ($this->session->userdata("id_pengguna") == null) ? $id_pengguna : $this->session->userdata("id_pengguna"),
                     "ke_user" => $user
                 );
                 $this->db->insert("relasi_pesan",$relasi);
                 $this->pemberitahuan->buat(array(
                     "id_pengguna" => $user,
-                    "dari_pengguna" => $this->session->userdata("id_pengguna"),
+                    "dari_pengguna" => ($this->session->userdata("id_pengguna") == null) ? $id_pengguna : $this->session->userdata("id_pengguna"),
                     "judul" => "Pesan Baru",
                     "pesan" => "Anda baru saja menerima pesan masuk",
                     "id_pesan" => $id_pesan,
@@ -103,13 +103,13 @@ class Surat_model extends CI_model{
         $this->db->update("relasi_pesan",array("dibaca"=>1));
     }
 
-    public function ambil_data_surat_dikirim() {
+    public function ambil_data_surat_dikirim($id_pengguna = null) {
         $get = $this->input->get();
         if(isset($get["unread"])) {
             $this->db->where("relasi_pesan.dibaca",0);
         }
 
-        $id_user = $this->session->userdata("id_pengguna");
+        $id_user = ($this->session->userdata("id_pengguna") == null) ? $id_pengguna : $this->session->userdata("id_pengguna");
         $daftar_pesan = $this->db->select("pesan.subjek,pesan.isi_pesan,pesan.waktu_kirim,relasi_pesan.id_pesan")->from("pesan")->join("relasi_pesan","pesan.id_pesan = relasi_pesan.id_pesan")->where("dari_user",$id_user)->group_by("id_pesan")->order_by("waktu_kirim","desc")->get()->result();
         foreach($daftar_pesan as $key=>$pesan) {
             $id = $pesan->id_pesan;
@@ -127,8 +127,8 @@ class Surat_model extends CI_model{
         return $daftar_pesan;
     }
 
-    public function baca_data_surat_dikirim($id_pesan) {
-        $id_user = $this->session->userdata("id_pengguna");
+    public function baca_data_surat_dikirim($id_pesan,$id_pengguna) {
+        $id_user = ($this->session->userdata("id_pengguna") == null) ? $id_pengguna : $this->session->userdata("id_pengguna");
         $pesan = $this->db->select("pesan.subjek,pesan.isi_pesan,pesan.waktu_kirim,pesan.lampiran,relasi_pesan.id_pesan")->from("pesan")->join("relasi_pesan","pesan.id_pesan = relasi_pesan.id_pesan")->where("relasi_pesan.dari_user",$id_user)->where("pesan.id_pesan",$id_pesan)->group_by("id_pesan")->order_by("waktu_kirim","desc")->get()->row();
 
         $this->db->select("relasi_pesan.dibaca,pengguna.nama_lengkap");

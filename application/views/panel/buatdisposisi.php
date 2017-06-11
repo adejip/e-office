@@ -31,6 +31,16 @@
                 <div class="panel-body">
                     <form action="" method="POST" enctype="multipart/form-data">
                         <div class="col-md-6">
+                            <p>Penerima (Dinas : <?php echo $this->session->userdata("nama_dinas"); ?>)</p>
+                            <select name="penerima[]" class="form-control penerima" multiple>
+                                <?php foreach($daftar_pengguna_sedinas[$this->session->userdata("nama_dinas")] as $pengguna):?>
+                                    <option value="<?php echo $pengguna->id_pengguna; ?>" <?php echo (termasuk_penerima($pengguna->id_pengguna,$penerima_otomatis) || isset($_GET["pn"]) && $_GET["pn"] == $pengguna->id_pengguna) ? "selected" : ""; ?>><?php echo $pengguna->nama_lengkap . ", " . $pengguna->nama_jabatan;?></option>
+                                <?php endforeach;?>
+                            </select>
+                            <hr />
+                            <a title="Klik untuk memilih pengguna yang akan menerima pesan secara otomatis" href="#" class="btn btn-default" data-toggle="modal" data-target="#modal_manage">Pilih penerima otomatis</a>
+                        </div>
+                        <div class="col-md-6">
                             <p>Penerima (Semua dinas): </p>
                             <select name="penerima[]" class="form-control penerima" multiple>
                                 <?php foreach($daftar_pengguna as $dinas => $group_pengguna): ?>
@@ -40,16 +50,6 @@
                                         <?php endforeach;?>
                                     </optgroup>
                                 <?php endforeach; ?>
-                            </select>
-                            <hr />
-                            <a title="Klik untuk memilih pengguna yang akan menerima pesan secara otomatis" href="#" class="btn btn-default" data-toggle="modal" data-target="#modal_manage">Pilih penerima otomatis</a>
-                        </div>
-                        <div class="col-md-6">
-                            <p>Penerima (Dinas : <?php echo $this->session->userdata("nama_dinas"); ?>)</p>
-                            <select name="penerima[]" class="form-control penerima" multiple>
-                                <?php foreach($daftar_pengguna_sedinas[$this->session->userdata("nama_dinas")] as $pengguna):?>
-                                    <option value="<?php echo $pengguna->id_pengguna; ?>" <?php echo (termasuk_penerima($pengguna->id_pengguna,$penerima_otomatis) || isset($_GET["pn"]) && $_GET["pn"] == $pengguna->id_pengguna) ? "selected" : ""; ?>><?php echo $pengguna->nama_lengkap . ", " . $pengguna->nama_jabatan;?></option>
-                                <?php endforeach;?>
                             </select>
                         </div>
                         <div class="col-md-12">

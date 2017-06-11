@@ -397,7 +397,11 @@ class Panel extends CI_Controller {
         }
 
 
-        $menu = $this->set_menu("surat_masuk");
+        if($id_pesan == null) {
+            $menu = $this->set_menu("buat_disposisi");
+        } else {
+            $menu = $this->set_menu("surat_masuk");
+        }
 
         $daftar_pengguna = $this->pengguna->ambil_per_grup();
         $penerima_otomatis = $this->pengguna->ambil_penerima_otomatis();
@@ -588,6 +592,7 @@ class Panel extends CI_Controller {
             "buat_surat"=>"",
             "surat_masuk"=>"",
             "surat_terkirim"=>"",
+            "buat_disposisi" => "",
             "disposisi_keluar"=>"",
             "disposisi_masuk"=>"",
             "pengguna"=>"",

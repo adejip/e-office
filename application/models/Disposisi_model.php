@@ -14,7 +14,7 @@ class Disposisi_model extends CI_Model {
         $this->load->model("Pemberitahuan_model","pemberitahuan");
     }
 
-    public function kirim($post,$id_pesan) {
+    public function kirim($post,$id_pesan,$id_pengguna = null) {
         unset($post["btnSubmit"]);
         $to_user = $post["penerima"];
         if(count($to_user) == 0) return false;
@@ -28,14 +28,14 @@ class Disposisi_model extends CI_Model {
                 $relasi = array(
                     "id_disposisi" => $id_disposisi,
                     "id_pesan" => $id_pesan,
-                    "dari_user" => $this->session->userdata("id_pengguna"),
+                    "dari_user" => ($this->session->userdata("id_pengguna") == null) ? $id_pengguna : $this->session->userdata("id_pengguna"),
                     "ke_user" => $user,
                     "kode_disposisi" => $kode_disposisi
                 );
                 $this->db->insert("relasi_disposisi",$relasi);
                 $this->pemberitahuan->buat(array(
                     "id_pengguna" => $user,
-                    "dari_pengguna" => $this->session->userdata("id_pengguna"),
+                    "dari_pengguna" => ($this->session->userdata("id_pengguna") == null) ? $id_pengguna : $this->session->userdata("id_pengguna"),
                     "judul" => "Disposisi",
                     "pesan" => $post["isi_disposisi"],
                     "link" => "baca_disposisi_masuk/" . $id_disposisi . "/" . $kode_disposisi

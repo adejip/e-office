@@ -122,6 +122,9 @@ $unread2 = $this->db->where("dibaca",0)->where("ke_user",$this->session->userdat
         <li class="<?php echo $menu["surat_masuk"] ?>"><a href="<?php echo base_url("panel/inbox/?all"); ?>"><svg class="glyph stroked folder"><use xlink:href="#stroked-folder"></use></svg> <?php echo ($unread > 0) ? "<b>Surat Masuk ($unread)</b>": "Surat Masuk"; ?></a></li>
         <li class="<?php echo $menu["surat_terkirim"] ?>"><a href="<?php echo base_url("panel/outbox/"); ?>"><svg class="glyph stroked email"><use xlink:href="#stroked-email"></use></svg> Surat Terkirim</a></li>
         <li role="presentation" class="divider"></li>
+        <?php if($this->session->userdata("disposisi") == 1): ?>
+            <li class="<?php echo $menu["buat_disposisi"]; ?>"><a href="<?php echo base_url("panel/buatdisposisi"); ?>"><svg class="glyph stroked upload"><use xlink:href="#stroked-upload"/></svg> Buat Disposisi (Mandiri)</a></li>
+        <?php endif;?>
         <li class="<?php echo $menu["disposisi_masuk"]; ?>"><a href="<?php echo base_url("panel/disposisi_masuk"); ?>"><svg class="glyph stroked download"><use xlink:href="#stroked-download"/></svg> <?php echo ($unread2 > 0) ? "<b>Disposisi Masuk ($unread2)</b>": "Disposisi Masuk"; ?></a></li>
         <?php if($this->session->userdata("disposisi") == 1): ?>
         <li class="<?php echo $menu["disposisi_keluar"]; ?>"><a href="<?php echo base_url("panel/disposisi_keluar"); ?>"><svg class="glyph stroked upload"><use xlink:href="#stroked-upload"/></svg> Disposisi Keluar</a></li>

@@ -61,6 +61,16 @@ class Api extends CI_Controller {
         $this->kirimJSON($surat);
     }
 
+    public function ambil_surat_keluar() {
+        $daftar_surat = $this->surat->ambil_data_surat_dikirim($_POST["id_pengguna"]);
+        $this->kirimJSON($daftar_surat);
+    }
+
+    public function ambil_satu_surat_keluar() {
+        $daftar_surat = $this->surat->baca_data_surat_dikirim($_POST["id_pesan"],$_POST["id_pengguna"]);
+        $this->kirimJSON($daftar_surat);
+    }
+
     public function update_bintang() {
         $post = $this->input->post();
         $this->surat->update_star($post["id_relasi_pesan"],$post["starred"]);
@@ -72,9 +82,106 @@ class Api extends CI_Controller {
         $this->kirimJSON($daftar_pengguna);
     }
 
+    public function kirim_surat() {
+        $post = $this->input->post();
+        $post["penerima"] = json_decode($post["penerima"]);
+        if(isset($_FILES["file"])) {
+            $gambar = $this->upload_files($_FILES["file"]);
+            if($gambar === false) {
+                $this->kirimJSON(array(
+                    "status" => 0,
+                    "pesan" => "File gagal terupload!"
+                ));
+                exit();
+            }
+            $post["lampiran"] = json_encode($gambar);
+        }
+        $id_pengguna = $post["id_pengguna"];
+        unset($post["id_pengguna"]);
+        $kirim = $this->surat->kirim($post,$id_pengguna);
+        if($kirim) {
+            $this->kirimJSON(array(
+                "status" => 1,
+                "pesan" => "Surat terkirim"
+            ));
+        } else {
+            $this->kirimJSON(array(
+                "status" => 0,
+                "pesan" => "Surat gagal terkirim"
+            ));
+        }
+    }
+
+    public function kirim_disposisi() {
+        $post = $this->input->post();
+        $post["penerima"] = json_decode($post["penerima"]);
+        if(isset($_FILES["file"])) {
+            $gambar = $this->upload_files($_FILES["file"]);
+            if($gambar === false) {
+                $this->kirimJSON(array(
+                    "status" => 0,
+                    "pesan" => "File gagal terupload!"
+                ));
+                exit();
+            }
+            $post["lampiran"] = json_encode($gambar);
+        }
+        $id_pesan = $post["idpesan"];
+        $id_pengguna = $post["idpengguna"];
+        unset($post["idpesan"]);
+        unset($post["idpengguna"]);
+        $kirim = $this->disposisi->kirim($post,$id_pesan,$id_pengguna);
+        if($kirim) {
+            $this->kirimJSON(array(
+                "status" => 1,
+                "pesan" => "Disposisi terkirim"
+            ));
+        } else {
+            $this->kirimJSON(array(
+                "status" => 0,
+                "pesan" => "Disposisi gagal terkirim"
+            ));
+        }
+    }
+
     public function debug() {
         $_SESSION = array("test"=>"ajag");
         var_dump($this->session->userdata("test"));
+    }
+
+    private function upload_files($files,$path = "assets/uploads/lampiran/") {
+        $config = array(
+            'upload_path'   => $path,
+            'allowed_types' => 'jpg|png|pdf|jpeg|bmp|gif|doc|docx|xls|xlsx|ppt|pptx',
+            'overwrite'     => 1,
+        );
+
+        $this->load->library('upload', $config);
+
+        $images = array();
+
+        $split = explode(".",$files["name"]);
+        $ext = end($split);
+
+        $fileName = uniqid() .'_'. md5($files["name"]) . "." . $ext;
+
+        $obj = new stdClass();
+        $obj->file = $fileName;
+        $obj->judul = $files["name"];
+        $images[] = $obj;
+
+        $config['file_name'] = $fileName;
+
+        $this->upload->initialize($config);
+
+        if ($this->upload->do_upload('file')) {
+            $this->upload->data();
+        } else {
+            return false;
+            exit();
+        }
+
+        return $images;
     }
 
     private function kirimJSON($s) {

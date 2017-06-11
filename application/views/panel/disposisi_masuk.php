@@ -44,7 +44,6 @@
                             </ul>
                     </div>
                 </div>
-                <a href="<?php echo base_url("panel/buatdisposisi/"); ?>" class="btn btn-success"><i class="fa fa-plus fa-lg"></i> Buat Disposisi</a>
                 <table data-toggle="table" data-url="<?php //echo base_url("panel/json_inbox");?>"  data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
                     <thead>
                     <tr>
