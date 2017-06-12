@@ -91,6 +91,7 @@ class Api extends CI_Controller {
     public function ambil_satu_disposisi_masuk() {
         $post = $this->input->post();
         $disposisi = $this->disposisi->ambil_satu_disposisi_masuk($post["id_disposisi"],$post["kode_disposisi"],$post["id_pengguna"]);
+        $disposisi->follow_up = $this->disposisi->ambil_follow_up($post["id_disposisi"]);
         $this->disposisi->baca_disposisi($post["id_disposisi"],$post["kode_disposisi"],$post["id_pengguna"]);
         $this->kirimJSON($disposisi);
     }
