@@ -77,6 +77,24 @@ class Api extends CI_Controller {
         echo 1;
     }
 
+    public function update_bintang_disposisi() {
+        $post = $this->input->post();
+        $this->disposisi->update_star($post["id_relasi_disposisi"],$post["starred"]);
+        echo 1;
+    }
+
+    public function ambil_disposisi_masuk() {
+        $daftar_disposisi = $this->disposisi->ambil_disposisi_masuk($_POST["id_pengguna"]);
+        $this->kirimJSON($daftar_disposisi);
+    }
+
+    public function ambil_satu_disposisi_masuk() {
+        $post = $this->input->post();
+        $disposisi = $this->disposisi->ambil_satu_disposisi_masuk($post["id_disposisi"],$post["kode_disposisi"],$post["id_pengguna"]);
+        $this->disposisi->baca_disposisi($post["id_disposisi"],$post["kode_disposisi"],$post["id_pengguna"]);
+        $this->kirimJSON($disposisi);
+    }
+
     public function ambil_pengguna() {
         $daftar_pengguna = $this->pengguna->ambil_semua();
         $this->kirimJSON($daftar_pengguna);

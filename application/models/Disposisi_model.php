@@ -110,7 +110,7 @@ class Disposisi_model extends CI_Model {
         return $data;
     }
 
-    public function ambil_satu_disposisi_masuk($id_disposisi,$kode_disposisi) {
+    public function ambil_satu_disposisi_masuk($id_disposisi,$kode_disposisi,$id_pengguna = null) {
         $this->db->select("disposisi.*");
         $this->db->where("disposisi.id_disposisi",$id_disposisi);
         $this->db->from("disposisi");
@@ -122,7 +122,7 @@ class Disposisi_model extends CI_Model {
         $this->db->join("relasi_disposisi","relasi_disposisi.dari_user = pengguna.id_pengguna","left");
         $this->db->where("relasi_disposisi.id_disposisi",$id_disposisi);
         $this->db->where("relasi_disposisi.kode_disposisi",$kode_disposisi);
-        $this->db->where("relasi_disposisi.ke_user",$this->session->userdata("id_pengguna"));
+        $this->db->where("relasi_disposisi.ke_user",($this->session->userdata("id_pengguna") == null) ? $id_pengguna : $this->session->userdata("id_pengguna"));
 
         $pengguna = $this->db->get()->row();
 
@@ -137,7 +137,7 @@ class Disposisi_model extends CI_Model {
         return $data;
     }
 
-    public function ambil_disposisi_masuk() {
+    public function ambil_disposisi_masuk($id_pengguna = null) {
         $get = $this->input->get();
         if(isset($get["inst"])) {
             $this->db->where("disposisi.instruksi_disposisi",$get["inst"]);
@@ -152,7 +152,7 @@ class Disposisi_model extends CI_Model {
         $this->db->join("disposisi","relasi_disposisi.id_disposisi = disposisi.id_disposisi");
         $this->db->join("pengguna","relasi_disposisi.dari_user = pengguna.id_pengguna","left");
         $this->db->join("pesan","relasi_disposisi.id_pesan = pesan.id_pesan","left");
-        $this->db->where("relasi_disposisi.ke_user",$this->session->userdata("id_pengguna"));
+        $this->db->where("relasi_disposisi.ke_user",($this->session->userdata("id_pengguna") == null) ? $id_pengguna : $this->session->userdata("id_pengguna"));
         $this->db->group_by("relasi_disposisi.kode_disposisi");
         $this->db->order_by("disposisi.waktu_kirim","desc");
 
@@ -174,10 +174,10 @@ class Disposisi_model extends CI_Model {
         return $this->db->get()->result();
     }
 
-    public function baca_disposisi($id_disposisi,$kode_disposisi) {
+    public function baca_disposisi($id_disposisi,$kode_disposisi,$id_pengguna = null) {
         $this->db->where("id_disposisi",$id_disposisi)
             ->where("kode_disposisi",$kode_disposisi)
-            ->where("ke_user",$this->session->userdata("id_pengguna"))
+            ->where("ke_user",($this->session->userdata("id_pengguna") == null) ? $id_pengguna : $this->session->userdata("id_pengguna"))
             ->update("relasi_disposisi",array("dibaca"=>1));
         return true;
     }
