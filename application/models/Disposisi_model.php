@@ -54,7 +54,7 @@ class Disposisi_model extends CI_Model {
         return true;
     }
 
-    public function ambil_disposisi_keluar() {
+    public function ambil_disposisi_keluar($id_pengguna = null) {
         $get = $this->input->get();
         if(isset($get["inst"])) {
             $this->db->where("disposisi.instruksi_disposisi",$get["inst"]);
@@ -65,7 +65,7 @@ class Disposisi_model extends CI_Model {
         $this->db->from("relasi_disposisi");
         $this->db->join("disposisi","relasi_disposisi.id_disposisi = disposisi.id_disposisi","left");
         $this->db->join("pesan","relasi_disposisi.id_pesan = pesan.id_pesan","left");
-        $this->db->where("relasi_disposisi.dari_user",$this->session->userdata("id_pengguna"));
+        $this->db->where("relasi_disposisi.dari_user",($this->session->userdata("id_pengguna") == null) ? $id_pengguna : $this->session->userdata("id_pengguna"));
         $this->db->group_by("relasi_disposisi.kode_disposisi");
         $this->db->order_by("disposisi.waktu_kirim","desc");
 
@@ -197,11 +197,11 @@ class Disposisi_model extends CI_Model {
         return true;
     }
 
-    public function follow_up($post,$id_disposisi,$kode_disposisi,Array $targetNotif = null) {
+    public function follow_up($post,$id_disposisi,$kode_disposisi,Array $targetNotif = null,$id_pengguna = null) {
         if($targetNotif == null) {
             $this->pemberitahuan->buat(array(
                 "id_pengguna" => $post["pembuat"],
-                "dari_pengguna" => $this->session->userdata("id_pengguna"),
+                "dari_pengguna" => ($this->session->userdata("id_pengguna") == null) ? $id_pengguna : $this->session->userdata("id_pengguna"),
                 "judul" => "Respon disposisi",
                 "pesan" => "Disposisi anda sudah direspon",
                 "link" => "baca_disposisi_keluar/" . $id_disposisi . "/" . $kode_disposisi
@@ -210,7 +210,7 @@ class Disposisi_model extends CI_Model {
             foreach($targetNotif as $penerimaNotif) {
                 $this->pemberitahuan->buat(array(
                     "id_pengguna" => $penerimaNotif,
-                    "dari_pengguna" => $this->session->userdata("id_pengguna"),
+                    "dari_pengguna" => ($this->session->userdata("id_pengguna") == null) ? $id_pengguna : $this->session->userdata("id_pengguna"),
                     "judul" => "Respon disposisi",
                     "pesan" => "Pembuat disposisi yang anda terima merespon",
                     "link" => "baca_disposisi_masuk/" . $id_disposisi . "/" . $kode_disposisi

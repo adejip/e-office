@@ -163,9 +163,27 @@ class Api extends CI_Controller {
         }
     }
 
-    public function debug() {
-        $_SESSION = array("test"=>"ajag");
-        var_dump($this->session->userdata("test"));
+    public function kirim_follow_up() {
+        $post = $this->input->post();
+        $id_disposisi = $post["id_disposisi"];
+        $kode_disposisi = $post["kode_disposisi"];
+        unset($post["kode_disposisi"]);
+        $id_pengguna = $post["id_pengguna"];
+        $follow_up = $this->disposisi->follow_up($post,$id_disposisi,$kode_disposisi,null,$id_pengguna);
+        $this->kirimJSON($follow_up);
+    }
+
+    public function ambil_disposisi_keluar() {
+        $post = $this->input->post();
+        $daftar_disposisi = $this->disposisi->ambil_disposisi_keluar($post["id_pengguna"]);
+        $this->kirimJSON($daftar_disposisi);
+    }
+
+    public function ambil_satu_disposisi_keluar() {
+        $post = $this->input->post();
+        $disposisi = $this->disposisi->ambil_satu_disposisi($post["id_disposisi"],$post["kode_disposisi"]);
+        $disposisi->follow_up = $this->disposisi->ambil_follow_up($post["id_disposisi"]);
+        $this->kirimJSON($disposisi);
     }
 
     private function upload_files($files,$path = "assets/uploads/lampiran/") {
