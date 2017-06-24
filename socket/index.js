@@ -6,10 +6,6 @@ var bodyParser = require("body-parser");
 // Model
 var surat = require("./surat.model.js");
 
-surat.ambil_daftar_surat_masuk(8,function(err,response){
-	console.log(err,response);
-});
-
 var webPort = process.env.PORT || 8080;
 var socketPort = 7008;
 

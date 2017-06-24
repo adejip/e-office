@@ -47,9 +47,9 @@ $(document).ready(function(){
 
         socket.emit("join",respon.data.id_pengguna);
 
-        $(window).on("beforeunload",function(){
-            socket.emit("leave");
-        });
+       // $(window).on("beforeunload",function(){
+       //     socket.emit("leave");
+       // });
 
     });
 

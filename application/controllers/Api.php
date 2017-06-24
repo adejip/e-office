@@ -169,7 +169,13 @@ class Api extends CI_Controller {
         $kode_disposisi = $post["kode_disposisi"];
         unset($post["kode_disposisi"]);
         $id_pengguna = $post["id_pengguna"];
-        $follow_up = $this->disposisi->follow_up($post,$id_disposisi,$kode_disposisi,null,$id_pengguna);
+        $follow_up = $this->disposisi->follow_up(
+            $post,
+            $id_disposisi,
+            $kode_disposisi,
+            (isset($post["penerima"])) ? json_decode($post["penerima"]) : null,
+            $id_pengguna
+        );
         $this->kirimJSON($follow_up);
     }
 
@@ -184,6 +190,22 @@ class Api extends CI_Controller {
         $disposisi = $this->disposisi->ambil_satu_disposisi($post["id_disposisi"],$post["kode_disposisi"]);
         $disposisi->follow_up = $this->disposisi->ambil_follow_up($post["id_disposisi"]);
         $this->kirimJSON($disposisi);
+    }
+
+    public function selesai_disposisi() {
+        $post = $this->input->post();
+        if(md5($post["password"]) == $post["sess_password"]){
+            $selesai = $this->disposisi->selesai(
+                $post["id_disposisi"],
+                $post["kode_disposisi"],
+                json_decode($post["penerima"]),
+                $post["id_pengguna"]
+            );
+        } else {
+            $selesai = false;
+        }
+
+        $this->kirimJSON($selesai);
     }
 
     private function upload_files($files,$path = "assets/uploads/lampiran/") {

@@ -182,11 +182,11 @@ class Disposisi_model extends CI_Model {
         return true;
     }
 
-    public function selesai($id_disposisi,$kode_disposisi,$targetNotif) {
+    public function selesai($id_disposisi,$kode_disposisi,$targetNotif,$id_pengguna = null) {
         foreach($targetNotif as $penerimaNotif) {
             $this->pemberitahuan->buat(array(
                 "id_pengguna" => $penerimaNotif,
-                "dari_pengguna" => $this->session->userdata("id_pengguna"),
+                "dari_pengguna" => ($this->session->userdata("id_pengguna") == null) ? $id_pengguna : $this->session->userdata("id_pengguna"),
                 "judul" => "Disposisi selesai",
                 "pesan" => "Pembuat disposisi menyatakan disposisi sudah selesai",
                 "link" => "baca_disposisi_masuk/" . $id_disposisi . "/" . $kode_disposisi
@@ -221,6 +221,7 @@ class Disposisi_model extends CI_Model {
             unset($post["pembuat"]);
         if(isset($post["penerima"]))
             unset($post["penerima"]);
+
         return $this->db->insert("follow_up_disposisi",$post);
     }
 
