@@ -14,6 +14,7 @@ $unread2 = $this->db->where("dibaca",0)->where("ke_user",$this->session->userdat
     <link href="<?php echo base_url("assets/css/datepicker3.css");?>" rel="stylesheet">
     <link href="<?php echo base_url("assets/css/styles.css");?>" rel="stylesheet">
     <link href="<?php echo base_url("assets/css/iziToast.min.css");?>" rel="stylesheet">
+    <link href="<?php echo base_url("assets/css/bootstrap-tagsinput.css");?>" rel="stylesheet">
     <link rel="icon" href="<?php echo base_url("favicon.png"); ?>" type="image/png" sizes="14x5">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.3.6/css/fileinput.min.css">
@@ -58,8 +59,9 @@ $unread2 = $this->db->where("dibaca",0)->where("ke_user",$this->session->userdat
 
     <script type="text/javascript" src="<?php echo base_url("assets/js/highstock.js");?>"></script>
     <script type="text/javascript" src="<?php echo base_url("assets/js/moment.js");?>"></script>
+    <script type="text/javascript" src="<?php echo base_url("assets/js/socket.io.js");?>"></script>
 
-    <script type="text/javascript" src="http://localhost:7008/socket.io/socket.io.js"></script>
+<!--    <script type="text/javascript" src="http://localhost:7008/socket.io/socket.io.js"></script>-->
 
     <script>
         BASE_URL = "<?php echo base_url(); ?>";

@@ -1,4 +1,30 @@
 
+<div id="compose_email_container" class="tutup">
+    <div id="compose_header">
+        <i class="fa fa-envelope fa-lg"></i>&nbsp;&nbsp;Kirim Email Eksternal
+    </div>
+    <div id="compose_body">
+        <form action="" method="post" id="email_form">
+            <div id="pampele"></div>
+            <div class="form-group">
+                Pengirim [<a href="#">Ubah</a>]<input id="pengirim_email" name="pengirim" type="text" disabled="disabled" style="width: 85%;"/>
+            </div>
+            <div class="form-group">
+                Penerima <input id="penerima_email" name="penerima" type="text" data-role="tagsinput">
+            </div>
+            <div class="form-group">
+                Perihal <input type="subjek" name="subjek" style="border: none;">
+            </div>
+            <div class="form-group" style="padding: 0;">
+                <textarea name="isi" id="isi_email" cols="30" rows="10"></textarea>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" id="send_email" type="button"><i class="fa fa-send fa-lg"></i> Kirim</button> <b id="errors"><i class="fa fa-warning fa-lg"></i> Isi semua field</b>
+            </div>
+        </form>
+    </div>
+</div>
+
 <script src="<?php echo base_url("assets/js/bootstrap.min.js");?>"></script>
 <script src="<?php echo base_url("assets/js/chart.min.js");?>"></script>
 <!--<script src="--><?php //echo base_url("assets/js/chart-data.js");?><!--"></script>-->
@@ -7,11 +33,18 @@
 <script src="<?php echo base_url("assets/js/bootstrap-datepicker.js");?>"></script>
 <script src="<?php echo base_url("assets/js/bootstrap-table.js");?>"></script>
 <script src="<?php echo base_url("assets/js/notif.js");?>"></script>
+<script src="<?php echo base_url("assets/js/bootstrap-tagsinput.min.js");?>"></script>
+
+<script src="<?php echo base_url("assets/js/email.js"); ?>"></script>
 
 <script>
 
     $("#calendar").datepicker({});
 
+    $("#isi_email").froalaEditor({
+        height: 300,
+        toolbarSticky: false
+    });
 
     setTimeout(function(){
         $('[data-toggle="tooltip"]').tooltip();
@@ -26,7 +59,7 @@
 
     $(window).on('resize', function () {
         if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
-    })
+    });
     $(window).on('resize', function () {
         if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
     });
@@ -48,14 +81,12 @@
             method: "GET",
             url: BASE_URL + "/ajax/ambil_data_pengguna",
             success: function(response){
-                console.log(response);
-
                 swal({
                     title: "Pengaturan",
                     text: "" +
                     "<form action='' method='POST' id='form_pengaturan'>" +
                     "   <b>&raquo; Username</b>" +
-                    "   <input type='text' name='username' value='" + response.username + "'>" +
+                    "   <input type='text' name='username' value='" + response.data.username + "'>" +
                     "   <b>&raquo; Password</b>" +
                     "   <input type='password' name='password' placeholder='Kosongkan jika tidak ingin merubah password'>" +
                     "   <b>&raquo; Input password lama (Wajib)</p>" +
@@ -79,7 +110,7 @@
                             } else if(response.statusCode == 2) {
                                 swal.showInputError("Password lama tidak cocok!");
                                 window.rt = false;
-                            } else if(response.statusCode === true) {
+                            } else if(response.statusCode === 3) {
                                 window.rt = true;
                                 swal("Sukses!","Data berhasil diupdate!","success");
                             }

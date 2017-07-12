@@ -607,7 +607,23 @@ class Panel extends CI_Controller {
 
     public function latihan() {
 
-        curl_post("http://localhost:7008/kirimNotif",array("id_pesan"=>138));
+        $this->load->library("email");
+        $config['protocol'] = "smtp";
+        $config['smtp_host'] = "ssl://smtp.gmail.com";
+        $config['smtp_port'] = "465";
+        $config['smtp_user'] = "eoffice.manadokota@gmail.com";
+        $config['smtp_pass'] = "eoffice221b#$;";
+        $config['charset'] = "utf-8";
+        $config['mailtype'] = "html";
+        $config['newline'] = "\r\n";
+        $this->email->initialize($config);
+
+        $this->email->from("eoffice@manadokota.go.id","e-Office Manadokota");
+        $this->email->subject("Notifikasi e-Office");
+        $this->email->message("Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi architecto, assumenda blanditiis commodi consequatur distinctio eligendi exercitationem minima obcaecati quam quas qui, quia, sed. Cum laborum maxime quibusdam quo veniam!");
+        $this->email->to("edgarpontoh3141@gmail.com");
+
+        $s = $this->email->send();
 
     }
 

@@ -20,6 +20,7 @@ class Ajax extends CI_Controller {
         $this->load->model("Pengguna_model","pengguna");
         $this->load->model("Surat_model","surat");
         $this->load->model("Disposisi_model","disposisi");
+        header("Content-Type: application/json;charset=utf-8");
     }
 
     public function tambah_agenda() {
@@ -128,6 +129,90 @@ class Ajax extends CI_Controller {
         echo json_encode(array(
             "data"=>$datauser
         ));
+    }
+
+    public function cek_konfig_email() {
+        if(isset($_SESSION["config_email"])) {
+            echo json_encode(array(
+                "status" => true,
+                "data" => $_SESSION["config_email"]
+            ));
+        } else {
+            echo json_encode(array(
+                "status" => false
+            ));
+        }
+    }
+
+    public function config_email() {
+        $posts = $this->input->post();
+        $status = true;
+        $_SESSION["config_email"] = [];
+        foreach($posts as $key=>$post) {
+            if($post == ""){
+                $status = false;
+                unset($_SESSION["config_email"]);
+                break;
+            } else {
+
+                $_SESSION["config_email"][$key] = $post;
+            }
+        }
+        $config = $_SESSION["config_email"];
+        unset($config["password"]);
+        echo json_encode(array(
+            "status" => $status,
+            "data" => $config
+        ));
+    }
+
+    public function kirim_email() {
+        $posts = $this->input->post();
+        if(count($posts) == 3) {
+            foreach($posts as $key=>$post) {
+                if($post == ""){
+                    echo json_encode(array(
+                        "status" => false,
+                        "msg" => $key . " harus diisi"
+                    ));
+                    exit();
+                    break;
+                }
+            }
+            $this->load->library("email");
+            $config['protocol'] = "smtp";
+//            $config['smtp_host'] = ($_SESSION["config_email"]["tipe"] == "gmail") ? "ssl://smtp.gmail.com" : "smtp.mail.yahoo.com";
+            $config['smtp_host'] = "ssl://smtp.gmail.com";
+            $config['smtp_port'] = "465";
+//            $config['smtp_user'] = $_SESSION["config_email"]["email"];
+            $config['smtp_user'] = "edgarpontoh3141@gmail.com";
+//            $config['smtp_pass'] = $_SESSION["config_email"]["password"];
+            $config['smtp_pass'] = "3141aperture";
+            $config['charset'] = "utf-8";
+            $config['mailtype'] = "html";
+            $config['newline'] = "\r\n";
+            $this->email->initialize($config);
+            $penerima = explode(",",$posts["penerima"]);
+
+            $this->email->from($_SESSION["config_email"]["email"],"e-Office : " . $this->session->userdata("nama_lengkap"));
+            $this->email->subject($posts["subjek"]);
+            $this->email->message($posts["isi"]);
+            $this->email->to("bnajoan@gmail.com");
+            $statusKirim = $this->email->send();
+            echo json_encode(array(
+                "status" => $statusKirim,
+                "data" => ($statusKirim) ? $posts : $this->email->print_debugger()
+            ));
+        } else {
+            echo json_encode(array(
+                "status" => false,
+                "msg" => "Tidak lengkap"
+            ));
+        }
+    }
+
+    public function unset_konfig_email() {
+        unset($_SESSION["config_email"]);
     }
 
 }
