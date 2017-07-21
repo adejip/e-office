@@ -65,6 +65,7 @@ $unread2 = $this->db->where("dibaca",0)->where("ke_user",$this->session->userdat
 
     <script>
         BASE_URL = "<?php echo base_url(); ?>";
+        BASE_DOMAIN = "<?php echo $_SERVER["HTTP_HOST"]; ?>";
 	    $.FroalaEditor.DEFAULTS.key = "bvA-21sD-16A-13ojmweC8ahD6f1n==";
     </script>
 </head>

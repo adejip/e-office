@@ -7,19 +7,19 @@
         <form action="" method="post" id="email_form">
             <div id="pampele"></div>
             <div class="form-group">
-                Pengirim [<a href="#">Ubah</a>]<input id="pengirim_email" name="pengirim" type="text" disabled="disabled" style="width: 85%;"/>
+                Pengirim [<a href="#" id="change_email">Ubah</a>]<input id="pengirim_email" name="pengirim" type="text" disabled="disabled" style="width: 85%;"/>
             </div>
             <div class="form-group">
                 Penerima <input id="penerima_email" name="penerima" type="text" data-role="tagsinput">
             </div>
             <div class="form-group">
-                Perihal <input type="subjek" name="subjek" style="border: none;">
+                Perihal <input id="subjek_email" type="subjek" name="subjek" style="border: none;">
             </div>
             <div class="form-group" style="padding: 0;">
                 <textarea name="isi" id="isi_email" cols="30" rows="10"></textarea>
             </div>
             <div class="form-group">
-                <button class="btn btn-primary" id="send_email" type="button"><i class="fa fa-send fa-lg"></i> Kirim</button> <b id="errors"><i class="fa fa-warning fa-lg"></i> Isi semua field</b>
+                <button class="btn btn-primary" id="send_email" type="button"><i class="fa fa-send fa-lg"></i> Kirim</button> <b id="errors"><i class="fa fa-warning fa-lg"></i> <b id="errors_msg"></b></b>
             </div>
         </form>
     </div>
@@ -41,10 +41,6 @@
 
     $("#calendar").datepicker({});
 
-    $("#isi_email").froalaEditor({
-        height: 300,
-        toolbarSticky: false
-    });
 
     setTimeout(function(){
         $('[data-toggle="tooltip"]').tooltip();

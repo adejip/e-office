@@ -132,38 +132,27 @@ class Ajax extends CI_Controller {
     }
 
     public function cek_konfig_email() {
-        if(isset($_SESSION["config_email"])) {
+        if(isset($_SESSION["emailAddress"])) {
             echo json_encode(array(
                 "status" => true,
-                "data" => $_SESSION["config_email"]
+                "data" => array(
+                    "email" => $_SESSION{"emailAddress"}
+                )
             ));
         } else {
+            $settings = (array)json_decode(file_get_contents((base_url("gmail-api/settings.json.php"))));
             echo json_encode(array(
-                "status" => false
+                "status" => false,
+                "data" => $settings
             ));
         }
     }
 
     public function config_email() {
-        $posts = $this->input->post();
-        $status = true;
-        $_SESSION["config_email"] = [];
-        foreach($posts as $key=>$post) {
-            if($post == ""){
-                $status = false;
-                unset($_SESSION["config_email"]);
-                break;
-            } else {
-
-                $_SESSION["config_email"][$key] = $post;
-            }
+        if(isset($_GET["email"])) {
+            $_SESSION["emailAddress"] = $_GET["email"];
+            redirect(base_url());
         }
-        $config = $_SESSION["config_email"];
-        unset($config["password"]);
-        echo json_encode(array(
-            "status" => $status,
-            "data" => $config
-        ));
     }
 
     public function kirim_email() {
@@ -181,13 +170,13 @@ class Ajax extends CI_Controller {
             }
             $this->load->library("email");
             $config['protocol'] = "smtp";
-//            $config['smtp_host'] = ($_SESSION["config_email"]["tipe"] == "gmail") ? "ssl://smtp.gmail.com" : "smtp.mail.yahoo.com";
-            $config['smtp_host'] = "ssl://smtp.gmail.com";
+            $config['smtp_host'] = ($_SESSION["config_email"]["tipe"] == "gmail") ? "ssl://smtp.gmail.com" : "ssl://smtp.mail.yahoo.com";
+//            $config['smtp_host'] = "ssl://smtp.gmail.com";
             $config['smtp_port'] = "465";
-//            $config['smtp_user'] = $_SESSION["config_email"]["email"];
-            $config['smtp_user'] = "edgarpontoh3141@gmail.com";
-//            $config['smtp_pass'] = $_SESSION["config_email"]["password"];
-            $config['smtp_pass'] = "3141aperture";
+            $config['smtp_user'] = $_SESSION["config_email"]["email"];
+//            $config['smtp_user'] = "edgarpontoh3141@gmail.com";
+            $config['smtp_pass'] = $_SESSION["config_email"]["password"];
+//            $config['smtp_pass'] = "3141aperture";
             $config['charset'] = "utf-8";
             $config['mailtype'] = "html";
             $config['newline'] = "\r\n";
@@ -197,8 +186,9 @@ class Ajax extends CI_Controller {
             $this->email->from($_SESSION["config_email"]["email"],"e-Office : " . $this->session->userdata("nama_lengkap"));
             $this->email->subject($posts["subjek"]);
             $this->email->message($posts["isi"]);
-            $this->email->to("bnajoan@gmail.com");
+            $this->email->to($penerima);
             $statusKirim = $this->email->send();
+
             echo json_encode(array(
                 "status" => $statusKirim,
                 "data" => ($statusKirim) ? $posts : $this->email->print_debugger()

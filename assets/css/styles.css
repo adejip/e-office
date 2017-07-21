@@ -1073,3 +1073,20 @@ a.btnToast {
 	color: red;
 	margin-left: 20px;
 }
+
+.google-btn {
+	display: block;
+	background-color: white;
+	padding: 20px;
+	color: #555555 !important;
+	font-size: 20px;
+	text-decoration: none !important;
+	border-radius: 5px;
+}
+.google-btn img {
+	width: 30px;
+	margin-right: 10px;
+}
+.sweet-alert {
+	background-color: #eee !important;
+}
